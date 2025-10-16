@@ -1,0 +1,225 @@
+# File: interview-agent/technologies/csharp/config.yaml
+
+technology:
+  id: csharp
+  name: C# & .NET
+  icon: "#️⃣"
+  version: 1.0.0
+
+  description: |
+    Comprehensive C# and .NET interview questions covering language fundamentals,
+    object-oriented programming, framework knowledge, and best practices.
+
+  topics:
+    - C# Language Fundamentals
+    - Object-Oriented Programming (OOP)
+    - Memory Management & Performance
+    - Collections & Data Structures
+    - Threading & Concurrency
+    - .NET Framework & CLR
+    - ASP.NET & Web Development
+    - ASP.NET Core
+    - Data Access
+    - XML & Configuration
+    - Advanced Topics
+
+  frameworks:
+    - name: .NET Framework
+      versions: [4.8, 4.7, 4.6]
+    - name: .NET Core / .NET 5+
+      versions: [8.0, 7.0, 6.0, 5.0]
+    - name: ASP.NET Core
+      versions: [8.0, 7.0, 6.0]
+    - name: Entity Framework
+      versions: [Core 8.0, Core 7.0, 6.x]
+
+  key_concepts:
+    language:
+      - Value types vs Reference types
+      - Generics
+      - LINQ
+      - Async/Await
+      - Delegates & Events
+      - Extension Methods
+      - Reflection
+
+    oop:
+      - Inheritance & Polymorphism
+      - Interfaces vs Abstract Classes
+      - Encapsulation
+      - Design Patterns
+
+    framework:
+      - CLR & Garbage Collection
+      - Assembly & GAC
+      - Dependency Injection
+      - Middleware Pipeline
+      - Configuration System
+
+    advanced:
+      - Performance Optimization
+      - Thread Safety
+      - Memory Leaks
+      - Security Best Practices
+
+  experience_levels:
+    fresher:
+      focus: [C# Fundamentals, Basic OOP, Collections]
+      typical_interview_topics: 8-10
+
+    junior:
+      focus: [C# Fundamentals, OOP, Collections, Basic .NET]
+      typical_interview_topics: 10-12
+
+    mid_level:
+      focus: [All core topics, ASP.NET, Data Access, Threading]
+      typical_interview_topics: 12-15
+
+    senior:
+      focus: [All topics, Advanced, Performance, Design Patterns]
+      typical_interview_topics: 15-18
+
+    architect:
+      focus: [Architecture, System Design, Best Practices, All Topics]
+      typical_interview_topics: 18-20
+
+  resources:
+    official_docs:
+      - name: Microsoft C# Documentation
+        url: https://docs.microsoft.com/en-us/dotnet/csharp/
+        focus: Language reference and tutorials
+
+      - name: .NET API Browser
+        url: https://docs.microsoft.com/en-us/dotnet/api/
+        focus: Complete API reference
+
+      - name: ASP.NET Core Documentation
+        url: https://docs.microsoft.com/en-us/aspnet/core/
+        focus: Web development
+
+    books:
+      - title: C# 12 in a Nutshell
+        author: Joseph Albahari
+        level: [intermediate, advanced]
+        focus: Comprehensive language reference
+
+      - title: Pro ASP.NET Core 7
+        author: Adam Freeman
+        level: [intermediate, advanced]
+        focus: Web development
+
+      - title: CLR via C#
+        author: Jeffrey Richter
+        level: [advanced]
+        focus: Deep dive into runtime
+
+    online_courses:
+      - platform: Pluralsight
+        courses:
+          - C# Fundamentals
+          - ASP.NET Core Path
+          - Design Patterns in C#
+
+      - platform: Udemy
+        courses:
+          - Complete C# Masterclass
+          - ASP.NET Core Bootcamp
+
+    practice_platforms:
+      - name: LeetCode
+        url: https://leetcode.com
+        focus: Algorithms & Data Structures
+
+      - name: HackerRank
+        url: https://hackerrank.com/domains/dotnet
+        focus: .NET specific challenges
+
+      - name: Exercism
+        url: https://exercism.io/tracks/csharp
+        focus: Mentored practice
+
+    communities:
+      - name: Stack Overflow
+        url: https://stackoverflow.com/questions/tagged/c%23
+        type: Q&A
+
+      - name: r/dotnet
+        url: https://reddit.com/r/dotnet
+        type: Community
+
+      - name: C# Discord
+        url: https://discord.gg/csharp
+        type: Chat
+
+      - name: .NET Foundation
+        url: https://dotnetfoundation.org
+        type: Official
+
+  common_pitfalls:
+    - topic: String Concatenation
+      issue: Using + in loops instead of StringBuilder
+      impact: Performance degradation
+
+    - topic: Async/Await
+      issue: Using .Result or .Wait() causing deadlocks
+      impact: Application freeze
+
+    - topic: IDisposable
+      issue: Not disposing resources properly
+      impact: Memory leaks
+
+    - topic: LINQ
+      issue: Multiple enumeration of IEnumerable
+      impact: Performance and unexpected behavior
+
+    - topic: Boxing/Unboxing
+      issue: Unnecessary boxing in collections
+      impact: Performance and memory overhead
+
+  interview_tips:
+    preparation:
+      - Review SOLID principles with C# examples
+      - Practice common design patterns implementation
+      - Understand async/await deeply
+      - Know difference between .NET Framework and .NET Core
+      - Be ready to write code on whiteboard
+
+    during_interview:
+      - Explain trade-offs when discussing solutions
+      - Mention real-world use cases
+      - Discuss performance implications
+      - Show awareness of .NET ecosystem evolution
+      - Ask clarifying questions about requirements
+
+    common_questions_to_prepare:
+      - Difference between value types and reference types
+      - How garbage collection works
+      - Async/await vs Task.Run
+      - When to use interface vs abstract class
+      - Dependency injection in ASP.NET Core
+      - Entity Framework vs Dapper
+      - Middleware pipeline in ASP.NET Core
+      - Thread safety mechanisms
+
+  project_ideas:
+    beginner:
+      - Console-based TODO application with file persistence
+      - Simple calculator with unit tests
+      - Library management system (CRUD operations)
+
+    intermediate:
+      - RESTful API with ASP.NET Core and EF Core
+      - Real-time chat application using SignalR
+      - Blog engine with authentication and authorization
+
+    advanced:
+      - Microservices architecture with message queues
+      - High-performance web API with caching strategies
+      - Real-time data processing pipeline
+      - OAuth2 authentication server
+
+metadata:
+  last_updated: 2025-10-16
+  question_count: 200+
+  maintainer: Interview Agent Team
+  contribution_guide: See CONTRIBUTING.md for adding new questions
