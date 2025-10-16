@@ -1,0 +1,69 @@
+{
+  "technologies": [
+    {
+      "id": "csharp",
+      "name": "C# & .NET",
+      "icon": "#️⃣",
+      "status": "active",
+      "description": "C# language fundamentals, .NET Framework/Core, ASP.NET Core, Entity Framework",
+      "topics": [
+        "C# Language Fundamentals",
+        "Object-Oriented Programming",
+        "Memory Management & Performance",
+        "Collections & Data Structures",
+        "Threading & Concurrency",
+        ".NET Framework & CLR",
+        "ASP.NET & Web Development",
+        "ASP.NET Core",
+        "Data Access",
+        "Advanced Topics"
+      ],
+      "experience_levels": [
+        "fresher",
+        "junior",
+        "mid-level",
+        "senior",
+        "architect"
+      ],
+      "question_count": 200
+    },
+    {
+      "id": "frontend-react",
+      "name": "JavaScript/TypeScript",
+      "icon": "🟦",
+      "status": "coming_soon",
+      "description": "Frontend/React",
+      "topics": [],
+      "experience_levels": [
+        "fresher",
+        "junior",
+        "mid-level",
+        "senior",
+        "architect"
+      ],
+      "question_count": 0
+    },
+    {
+      "id": "frontend-angular",
+      "name": "Frontend/Angular",
+      "icon": "🅰️",
+      "status": "coming_soon",
+      "description": "JavaScript/TypeScript, Node.js",
+      "topics": [],
+      "experience_levels": [
+        "fresher",
+        "junior",
+        "mid-level",
+        "senior",
+        "architect"
+      ],
+      "question_count": 0
+    }
+  ],
+  "metadata": {
+    "last_updated": "2025-10-16",
+    "total_technologies": 5,
+    "active_technologies": 1,
+    "total_questions": 200
+  }
+}

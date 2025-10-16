@@ -1,0 +1,119 @@
+# Interview Session State Template
+# File: interview-agent/templates/interview-session-tmpl.yaml
+# This file defines the structure for tracking interview session state
+
+session:
+  # Session Metadata
+  session_id: ""  # Unique identifier for this session
+  candidate_name: ""
+  experience_level: ""  # fresher|junior|mid-level|senior|architect
+  detected_language: ""  # en|ru|es|etc
+  start_time: ""  # ISO8601 timestamp
+  end_time: ""  # ISO8601 timestamp (null until completed)
+  total_duration_seconds: 0
+
+  # Session Configuration (from experience level)
+  configuration:
+    question_count_target: 0
+    topics: []  # List of topics to cover
+    hint_threshold: ""  # low|medium|high
+    complexity_range: []  # [min, max] difficulty levels
+
+  # Current Progress
+  progress:
+    current_phase: ""  # warmup|core_assessment|deep_dive|conclusion
+    current_topic: ""
+    current_question_number: 0
+    questions_asked: 0
+    questions_remaining: 0
+    paused: false
+    pause_timestamp: null
+
+  # Overall Performance Metrics
+  performance:
+    total_questions: 0
+    questions_answered: 0
+    questions_skipped: 0
+    correct_answers: 0  # score >= 85
+    partial_answers: 0  # 50 <= score < 85
+    incorrect_answers: 0  # score < 50
+    average_score: 0.0
+    hints_used_total: 0
+    time_per_question_avg_seconds: 0
+
+  # Performance by Topic
+  topic_performance: {}
+    # Example structure:
+    # "C# Fundamentals":
+    #   questions_count: 3
+    #   average_score: 75.0
+    #   hints_used: 2
+    #   time_spent_seconds: 180
+    #   classification: "competent"  # mastered|competent|needs_improvement|critical_gap
+    #   questions:
+    #     - question_number: 1
+    #       score: 100
+    #     - question_number: 2
+    #       score: 75
+
+  # Complete Question History
+  question_history: []
+    # Example structure:
+    # - number: 1
+    #   topic: "C# Fundamentals"
+    #   difficulty: "easy"
+    #   question_text: "What's the difference between value types and reference types?"
+    #   expected_answer_key_points:
+    #     - "Value types store actual data"
+    #     - "Reference types store memory reference"
+    #   candidate_answer_summary: "Value types are on stack, reference on heap..."
+    #   candidate_answer_full: "..." # Full verbatim response
+    #   score: 75
+    #   evaluation: "Good answer, mentioned key concepts but missed..."
+    #   hints_given: 1
+    #   hint_texts:
+    #     - "Think about memory allocation..."
+    #   timestamp: "2025-01-15T10:30:00Z"
+    #   time_spent_seconds: 45
+    #   skipped: false
+
+  # Identified Areas
+  identified_strengths: []
+    # - topic: "ASP.NET Core"
+    #   score: 90
+    #   note: "Strong understanding of middleware pipeline"
+
+  identified_weaknesses: []
+    # - topic: "Threading"
+    #   score: 35
+    #   priority: 1  # 1=critical, 2=needs improvement
+    #   note: "Fundamental gaps in synchronization concepts"
+
+  identified_patterns: []
+    # - pattern: "Strong in theory, weak in application"
+    #   topics: ["OOP", "LINQ"]
+    #   recommendation: "Focus on hands-on practice"
+
+  # Performance Trend
+  performance_trend:
+    recent_scores: []  # Last 5 question scores
+    trend: ""  # improving|declining|steady
+    trend_note: ""
+
+  # Session Notes
+  notes: []
+    # - timestamp: "..."
+    #   type: "observation"  # observation|hint_pattern|struggle_point|excellence
+    #   content: "Candidate struggled with async/await concepts"
+
+# Auto-save Configuration
+auto_save:
+  enabled: true
+  last_save_timestamp: ""
+  save_count: 0
+
+# Report Generation Flags
+report:
+  generated: false
+  generation_timestamp: null
+  report_file_path: ""
