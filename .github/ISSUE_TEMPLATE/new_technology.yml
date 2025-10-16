@@ -1,0 +1,104 @@
+name: New Technology Request
+description: Request support for a new programming language or technology
+title: "[Technology]: Add support for "
+labels: ["new-technology", "enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new technology! This will help us prioritize which technologies to add next.
+
+  - type: input
+    id: technology-name
+    attributes:
+      label: Technology Name
+      description: What technology would you like to see added?
+      placeholder: "e.g., Python, Java, Go, Rust"
+    validations:
+      required: true
+
+  - type: input
+    id: icon
+    attributes:
+      label: Icon Emoji
+      description: Suggest an emoji icon for this technology
+      placeholder: "e.g., 🐍 for Python, ☕ for Java"
+    validations:
+      required: false
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Technology Description
+      description: Brief description of the technology scope
+      placeholder: "e.g., Python language, Django, Flask, FastAPI, Data Science libraries"
+    validations:
+      required: true
+
+  - type: textarea
+    id: topics
+    attributes:
+      label: Suggested Topics
+      description: What topics should be covered in interviews?
+      placeholder: |
+        - Language Fundamentals
+        - Web Frameworks
+        - Testing
+        - etc.
+    validations:
+      required: true
+
+  - type: textarea
+    id: frameworks
+    attributes:
+      label: Key Frameworks/Libraries
+      description: What frameworks or libraries should be included?
+      placeholder: |
+        - Framework 1 (version X)
+        - Framework 2 (version Y)
+    validations:
+      required: false
+
+  - type: textarea
+    id: resources
+    attributes:
+      label: Learning Resources
+      description: Suggest official docs, books, or courses
+      placeholder: |
+        Official docs: https://...
+        Popular books: ...
+        Online courses: ...
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this to you?
+      options:
+        - High - I need this soon
+        - Medium - Would be nice to have
+        - Low - Just a suggestion
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      description: Would you like to contribute this technology?
+      options:
+        - label: I would like to create this technology content myself (questions, config, etc.)
+          required: false
+        - label: I can provide subject matter expertise and review questions
+          required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Any other information about this technology
+      placeholder: Why this technology is important, use cases, etc.
+    validations:
+      required: false

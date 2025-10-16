@@ -3,6 +3,8 @@
 
 An AI-powered multi-technology senior technical interviewer that helps candidates identify knowledge gaps and build personalized improvement plans.
 
+🚀 **[Try Alex the Interviewer on ChatGPT](https://chatgpt.com/g/g-68f14f92f4208191ac335aba8b4baadf-alex-the-interviewer)** - Pre-configured Custom GPT ready to use!
+
 ## What It Does
 
 This agent conducts structured technical interviews to:
@@ -14,24 +16,38 @@ This agent conducts structured technical interviews to:
 
 ## Key Features
 
-- 🔧 **Multi-Technology** - C#, Python, JavaScript, Java, Go, and more
-- 🌍 **Multilingual** - Automatically detects and speaks your language
+- 🔧 **Multi-Technology** - C#, React, Angular, and more (extensible)
+- 🌍 **Multilingual** - Choose your preferred interview language upfront
 - 🎚️ **Adaptive** - Adjusts difficulty from fresher to architect level
 - 💡 **Supportive** - 5-level progressive hint system
 - 📊 **Comprehensive** - Detailed reports with study plans and resources
 - 🎯 **Focused** - Identifies patterns in your knowledge gaps
 - 🚀 **Actionable** - Week-by-week study plans with hands-on projects
+- 🔌 **Dynamic** - Technologies loaded from GitHub via OpenAPI
 
 ## Quick Start
 
+### Option 1: Use Pre-configured Custom GPT
+🚀 **[Try Alex the Interviewer](https://chatgpt.com/g/g-68f14f92f4208191ac335aba8b4baadf-alex-the-interviewer)** - Ready to use on ChatGPT!
+
+### Option 2: Use with Your Own Agent
+
+**First Time Setup:**
+1. Agent will ask: "What language would you like to conduct this interview in?"
+2. Choose your preferred language (English, Ukrainian, Spanish, etc.)
+3. All communication will be in your chosen language
+
+**Available Commands:**
 ```bash
 # List available technologies
 *technologies
 
-# Start interview (technology optional, defaults to csharp)
-*begin mid-level              # C# interview at mid-level
-*begin senior python          # Python interview at senior level
-*begin junior javascript      # JavaScript interview at junior level
+# Start interview (both level and technology are REQUIRED)
+*begin mid-level csharp       # C# interview at mid-level
+*begin senior csharp          # C# interview at senior level
+*begin junior frontend-react  # React interview at junior level
+
+# If you forget the technology, agent will show the list automatically
 
 # During interview:
 *hint            # Get a hint for current question
@@ -47,14 +63,15 @@ This agent conducts structured technical interviews to:
 ## Supported Technologies
 
 ### Currently Available
-- **#️⃣ C# & .NET** - Language fundamentals, ASP.NET Core, Entity Framework
-  - Topics: OOP, Memory Management, Threading, Web Development, Data Access
+- **#️⃣ C# & .NET** - C# language fundamentals, .NET Framework/Core, ASP.NET Core, Entity Framework
+  - 200+ questions across 10 topics
+  - Topics: OOP, Memory Management, Threading, Collections, Web Development, Data Access, Advanced Patterns
 
 ### Coming Soon
-- **🐍 Python** - Django, Flask, FastAPI, Data Science
-- **🟨 JavaScript/TypeScript** - React, Node.js, Angular, Vue
-- **☕ Java** - Spring Boot, Microservices, Enterprise patterns
-- **🔷 Go** - Cloud-native, Concurrency, Backend development
+- **🟦 Frontend/React** - JavaScript/TypeScript, React, Node.js
+- **🅰️ Frontend/Angular** - JavaScript/TypeScript, Angular
+
+Want to add your favorite technology? See [CONTRIBUTING.md](CONTRIBUTING.md)!
 
 ## Experience Levels
 
@@ -100,14 +117,15 @@ interview-agent/
 
 ## Adding New Technologies
 
-To add a new technology:
+Want to add Python, Java, Go, or another technology? We'd love your contribution!
 
-1. Create `technologies/{tech-id}/` directory
-2. Add `config.yaml` with technology metadata, topics, and resources
-3. Add `questions.md` with technology-specific interview questions
-4. Register in `agent.yaml` technology registry
+See [CONTRIBUTING.md](CONTRIBUTING.md) for a detailed guide on:
+- Creating technology configurations
+- Writing quality interview questions
+- Adding learning resources
+- Submitting your contribution
 
-See `technologies/csharp/` as a reference implementation.
+Reference implementation: `technologies/csharp/`
 
 ## Technology Configuration
 
@@ -121,24 +139,38 @@ Each technology has its own:
 ## Integration
 
 This agent can be integrated into:
+- **ChatGPT Custom GPT** - [Alex the Interviewer](https://chatgpt.com/g/g-68f14f92f4208191ac335aba8b4baadf-alex-the-interviewer)
 - LLM-based assistants (Claude, GPT, etc.)
 - CLI applications
 - Web interfaces
 - Chat platforms
 
+The OpenAPI schema (`openapi-schema.yaml`) enables dynamic content loading from GitHub.
+
 ## Contributing
 
-Want to add a new technology? See the contribution guide:
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+
+Quick overview:
 1. Fork the repository
-2. Create technology folder with config.yaml and questions.md
+2. Create technology folder with `config.yaml` and `questions.md`
 3. Follow the format in `technologies/csharp/`
-4. Submit a pull request
+4. Update `technologies.json`
+5. Submit a pull request
+
+All contributors are recognized in the project!
+
+## Privacy
+
+This project does not collect any personal data. See [PRIVACY.md](PRIVACY.md) for details.
 
 ## Version History
 
-- **v2.0.0** - Multi-technology support with dynamic loading
+- **v2.0.0** - Multi-technology support with dynamic loading, Custom GPT integration
 - **v1.0.0** - Initial C#/.NET interview agent
 
 ## License
 
-Created by Vladyslav Bardin as part of BMAD-inspired agent framework.
+MIT License - see [LICENSE](LICENSE) for details.
+
+Created by [Vladyslav Bardin](https://github.com/bardin08)

@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 General Discussion
+    url: https://github.com/bardin08/interview-agent/discussions
+    about: Ask questions, share ideas, or discuss the project
+  - name: 🤖 Try Alex the Interviewer
+    url: https://chatgpt.com/g/g-68f14f92f4208191ac335aba8b4baadf-alex-the-interviewer
+    about: Use the pre-configured Custom GPT on ChatGPT
+  - name: 📖 Documentation
+    url: https://github.com/bardin08/interview-agent#readme
+    about: Read the README and contribution guidelines
