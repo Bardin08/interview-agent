@@ -1,0 +1,86 @@
+name: Question Improvement
+description: Report an issue with an existing question or suggest improvements
+title: "[Question]: "
+labels: ["question-content"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve our interview questions!
+
+  - type: dropdown
+    id: technology
+    attributes:
+      label: Technology
+      description: Which technology is this question for?
+      options:
+        - C# & .NET
+        - Frontend/React
+        - Frontend/Angular
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: topic
+    attributes:
+      label: Topic
+      description: Which topic does this question belong to?
+      placeholder: "e.g., Object-Oriented Programming, Memory Management"
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Question Text
+      description: Copy the question text or provide enough details to identify it
+      placeholder: "What is the difference between..."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Issue Type
+      description: What kind of issue is this?
+      options:
+        - Incorrect Answer
+        - Outdated Information
+        - Unclear Wording
+        - Wrong Difficulty Level
+        - Missing Key Points
+        - Typo/Grammar
+        - Duplicate Question
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Issue Details
+      description: Explain what's wrong or what needs improvement
+      placeholder: Describe the issue in detail...
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested Fix
+      description: How should this be corrected or improved?
+      placeholder: Your suggestion for improvement...
+    validations:
+      required: false
+
+  - type: textarea
+    id: references
+    attributes:
+      label: References
+      description: Links to documentation or sources supporting your suggestion
+      placeholder: |
+        - https://docs.microsoft.com/...
+        - https://stackoverflow.com/...
+    validations:
+      required: false
