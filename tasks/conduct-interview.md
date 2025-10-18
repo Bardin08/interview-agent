@@ -217,17 +217,58 @@ For each answer:
    - Assess depth of understanding
    - Note any misconceptions
    - Detect confidence level
+   - **CRITICAL**: Check against experience level expectations from competency matrix
 
-2. **Score the response**
-   ```yaml
-   scoring:
-     5: All key points + deep understanding (5/5 EXCELLENT)
-     4: Most key points + good understanding (4/5 VERY GOOD)
-     3: Some key points + solid understanding (3/5 GOOD)
-     2: Few key points + partial understanding (2/5 PARTIAL)
-     1: Fundamental misunderstanding (1/5 WEAK)
-     0: Incorrect or no answer (0/5 NO ANSWER)
-   ```
+2. **Score the response using scoring-tree.yaml**
+
+   **IMPORTANT**: Consult `config/interview-framework/scoring-tree.yaml` for detailed evaluation process.
+   Apply the multi-stage decision tree in order:
+
+   **Stage 1 - Immediate Disqualifiers (0/5):**
+   - No attempt, gibberish
+   - Completely off-topic
+   - Hostile/unprofessional language (profanity, aggressive dismissal)
+   → Score: 0/5 ❌ NO ANSWER
+
+   **Stage 2 - Weak (1/5):**
+   - Doesn't address the actual question asked
+   - Extreme brevity with no depth (especially for Senior/Architect levels)
+   - Fundamental misunderstanding
+   - Unprofessional/dismissive without justification
+   - Radical position without considering trade-offs or nuance
+   → Score: 1/5 🔴 WEAK
+
+   **Stage 3 - Partial (2/5):**
+   - Surface-level understanding only
+   - Missing critical aspects from competency matrix must_know
+   - Personal preference without technical justification
+   - Technically correct but incomplete (missing 50%+ of expected depth)
+   → Score: 2/5 🟡 PARTIAL
+
+   **Stage 4 - Good (3/5):**
+   - Addresses question directly
+   - Covers must_know topics from competency matrix
+   - Shows understanding of core concepts
+   - May miss good_to_know details
+   → Score: 3/5 👍 GOOD
+
+   **Stage 5 - Very Good (4/5):**
+   - Comprehensive answer
+   - Covers must_know + most good_to_know
+   - Provides examples and justification
+   - Shows practical application
+   → Score: 4/5 ✅ VERY GOOD
+
+   **Stage 6 - Excellent (5/5):**
+   - Exceptional mastery
+   - Must_know + good_to_know fully covered
+   - Examples, trade-offs, edge cases
+   - Deep understanding and practical wisdom
+   → Score: 5/5 ⭐ EXCELLENT
+
+   **Critical Reminder**: "Be supportive but brutally honest. Radical/extreme solutions
+   without considering optimization, over-engineering, or fundamental misunderstandings
+   must be scored low (1-2) even if technically possible. Don't artificially inflate scores."
 
 3. **Provide feedback**
 

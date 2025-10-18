@@ -1,33 +1,130 @@
 # File: config/interview-framework/evaluation-rubric.yaml
 # Universal scoring criteria for answer evaluation
 
+# IMPORTANT: Use scoring-tree.yaml for detailed evaluation process
+# This rubric provides the final scoring categories
+
+critical_reminder: |
+  From core-principles.yaml: "Be supportive but brutally honest.
+  Radical/extreme solutions without considering optimization, over-engineering,
+  or fundamental misunderstandings must be scored low (1-2) even if technically possible.
+  Don't artificially inflate scores."
+
+  Always consult scoring-tree.yaml for the full evaluation decision tree.
+
 evaluation_rubric:
   excellent:
     score: 5
+    percentage: 100
     criteria: Complete, accurate, shows deep understanding
+    requires:
+      - Addresses question comprehensively
+      - Covers must_know + good_to_know from competency matrix
+      - Provides examples and justification
+      - Explains trade-offs clearly
+      - Shows practical experience and wisdom
+      - Considers edge cases and constraints
     feedback_tone: Praising and challenging
+    display_format: "5/5 ⭐ EXCELLENT"
 
   very-good:
     score: 4
+    percentage: 80
     criteria: Mostly correct, minor gaps
+    requires:
+      - Addresses question directly
+      - Covers must_know + most good_to_know topics
+      - Provides examples
+      - Shows practical application
+      - Minor details may be missing
     feedback_tone: Positive with constructive additions
+    display_format: "4/5 ✅ VERY GOOD"
 
   good:
     score: 3
+    percentage: 60
     criteria: Solid understanding of common things, gaps with more specific use-cases
+    requires:
+      - Addresses question
+      - Covers must_know topics from competency matrix
+      - Shows understanding of core concepts
+      - May miss good_to_know details
+      - Minimal examples or justification
     feedback_tone: Positive with constructive additions
+    display_format: "3/5 👍 GOOD"
 
   partial:
     score: 2
+    percentage: 40
     criteria: Some understanding, significant gaps
+    includes:
+      - Surface-level understanding only
+      - Misses critical aspects from must_know
+      - Personal preference without justification
+      - Technically correct but incomplete (missing 50%+ depth)
     feedback_tone: Encouraging with guidance
+    display_format: "2/5 🟡 PARTIAL"
+    note: "See scoring-tree.yaml stage_3_partial for detailed criteria"
 
   weak:
     score: 1
+    percentage: 20
     criteria: Fundamental misunderstanding, needs guidance
+    includes:
+      - Doesn't address the question asked
+      - Extreme brevity with no depth (especially for Senior/Architect)
+      - Fundamental misunderstanding of concepts
+      - Unprofessional or dismissive without justification
+      - Radical position without considering trade-offs
     feedback_tone: Supportive with education
+    display_format: "1/5 🔴 WEAK"
+    note: "See scoring-tree.yaml stage_2_weak for detailed criteria"
 
   no_answer:
     score: 0
-    criteria: Cannot answer even with hints
+    percentage: 0
+    criteria: Cannot answer, hostile, or completely off-topic
+    includes:
+      - No attempt or gibberish
+      - Completely off-topic
+      - Hostile/unprofessional language (profanity, aggressive dismissal)
+      - Refuses to engage with question
     feedback_tone: Understanding and redirecting
+    display_format: "0/5 ❌ NO ANSWER"
+    note: "See scoring-tree.yaml stage_1_disqualifiers for detailed criteria"
+
+# Scoring Process Reference
+scoring_process:
+  step_1: "Consult scoring-tree.yaml -> stage_1_disqualifiers (0/5)"
+  step_2: "Check scoring-tree.yaml -> stage_2_weak (1/5)"
+  step_3: "Check against competency matrix for experience level"
+  step_4: "Evaluate depth using scoring-tree.yaml stages 3-6"
+  step_5: "Assign final score, defaulting to lower when uncertain"
+  step_6: "Validate against 'Honest Evaluation' principle"
+
+# Quick Reference for Common Mistakes
+anti_patterns:
+  dismissive_no_justification:
+    examples: ["Monolith is better", "Security is overrated"]
+    score: 1
+    reason: "Doesn't address question, no technical justification"
+
+  extreme_brevity_high_level:
+    examples: ["value types faster then reference types" (for Architect)]
+    score: 0-1
+    reason: "Insufficient depth for experience level"
+
+  question_avoidance:
+    examples: ["it's a startup culture!" (when asked about establishing standards)]
+    score: 1
+    reason: "Doesn't answer the actual question"
+
+  preference_without_analysis:
+    examples: ["pg, I like it more" (for database selection with requirements)]
+    score: 1-2
+    reason: "No trade-off analysis or requirements consideration"
+
+  hostile_language:
+    examples: ["fuck off that micro services"]
+    score: 0
+    reason: "Unprofessional, immediate disqualifier"

@@ -44,6 +44,7 @@ interview_configuration:
   hint_system_ref: config/interview-framework/hint-system.yaml
   difficulty_adaptation_ref: config/interview-framework/difficulty-adaptation.yaml
   evaluation_rubric_ref: config/interview-framework/evaluation-rubric.yaml
+  scoring_tree_ref: config/interview-framework/scoring-tree.yaml
 
 commands:
   - name: help
