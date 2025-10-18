@@ -289,9 +289,78 @@ validation_examples:
       Per scoring-tree.yaml stage_2_weak:
       "Personal preference without technical justification -> 1/5"
 
+  - id: example_7
+    question:
+      text: "What is a 'class' and what is an 'object' in C#? What's the difference?"
+      level: fresher
+      topic: Object-Oriented Programming (OOP)
+
+    context: |
+      Candidate initially avoided the question with "Це не потрібно знати, кому та база треба"
+      (Translation: "This doesn't need to be known, who needs that basics")
+
+      Interviewer provided hint/example:
+      "You can say: 'A class is a template or description for creating objects.
+      An object is a specific instance of a class that exists in memory during program execution.'"
+
+      Candidate then responded with verbatim copy.
+
+    answer: "Клас — це шаблон або опис для створення об'єктів. Об'єкт — це конкретний екземпляр класу, що існує в пам'яті під час виконання програми."
+
+    answer_translation: "A class is a template or description for creating objects. An object is a specific instance of a class that exists in memory during program execution."
+
+    previous_score:
+      score: 4
+      percentage: 80
+      rationale: "Correct definition, addresses both class and object, mentions memory"
+
+    correct_score:
+      score: 1
+      percentage: 20
+      stage: stage_2_weak
+      criteria:
+        - verbatim_hint_repetition: true
+        - no_independent_understanding: true
+        - parroting_without_comprehension: true
+
+    scoring_tree_analysis:
+      stage_1_disqualifiers: "❌ Not hostile or completely off-topic"
+      stage_2_weak: "✅ MATCH - Verbatim hint repetition"
+      comparison:
+        interviewer_provided: "A class is a template or description for creating objects. An object is a specific instance of a class that exists in memory during program execution."
+        candidate_answer: "Клас — це шаблон або опис для створення об'єктів. Об'єкт — це конкретний екземпляр класу, що існує в пам'яті під час виконання програми."
+        match: "100% - Exact word-for-word translation of provided hint"
+      red_flags:
+        - "Zero independent articulation"
+        - "No paraphrasing or original context added"
+        - "No code example despite interviewer suggesting it would improve score"
+        - "Candidate previously dismissed the question as unnecessary"
+
+    rationale: |
+      While the answer is technically correct (because it's a verbatim copy of
+      what the interviewer provided), it demonstrates ZERO independent understanding.
+
+      The candidate:
+      1. Initially dismissed the question entirely
+      2. Only responded after interviewer provided exact wording
+      3. Copy-pasted the exact text without any paraphrasing
+      4. Added no examples, analogies, or additional context
+      5. Didn't demonstrate ability to articulate concept in their own words
+
+      This is classic parroting without comprehension. If the interviewer hadn't
+      provided the exact answer, the candidate would have scored 0/5.
+
+      Per scoring-tree.yaml stage_2_weak (verbatim_hint_repetition):
+      "When a candidate copy-pastes the exact answer provided as a hint/example,
+      they demonstrate ZERO independent understanding or ability to articulate concepts.
+      This is parroting, not comprehension."
+
+      Score: 1/5 (Exact verbatim copy)
+      Note: If candidate had paraphrased or added original content, could be 2/5.
+
 # Summary of Corrections
 corrections_summary:
-  total_examples: 6
+  total_examples: 7
 
   score_changes:
     - example: 1
@@ -324,9 +393,15 @@ corrections_summary:
       new: "20/100 (1/5)"
       change: "-30%"
 
-  average_change: "-25.8%"
+    - example: 7
+      old: "80/100"
+      new: "20/100 (1/5)"
+      change: "-60%"
+
+  average_change: "-30.7%"
 
   key_insights:
+    - "Verbatim hint repetition was over-scored by 60% (example 7)"
     - "Dismissive/hostile answers were over-scored by 30-50%"
     - "Personal preferences without justification were over-scored by 30%"
     - "Question avoidance was over-scored by 30%"
@@ -337,6 +412,7 @@ corrections_summary:
     - "Stage 1 (disqualifiers) caught hostile language (example 2)"
     - "Stage 2 (weak) caught question avoidance (examples 3, 5, 6)"
     - "Stage 2 (weak) caught extreme brevity (example 1)"
+    - "Stage 2 (weak) caught verbatim hint repetition (example 7)"
     - "Stage 4 (good) properly scored incomplete but correct (example 4)"
 
 # Implementation Notes

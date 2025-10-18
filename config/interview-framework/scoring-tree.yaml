@@ -87,6 +87,23 @@ scoring_tree:
           Architect-level requires nuanced thinking.
           Radical absolutism without justification = 1/5.
 
+      - id: verbatim_hint_repetition
+        description: "Candidate copies exact text from interviewer's hint/example without paraphrasing"
+        examples:
+          - "Interviewer: 'You can say: X is Y' -> Candidate: 'X is Y'"
+          - "Copying provided definition word-for-word with no additional context"
+          - "Repeating suggestion verbatim without demonstrating independent understanding"
+        severity: critical
+        evaluation: |
+          When a candidate copy-pastes the exact answer provided as a hint/example,
+          they demonstrate ZERO independent understanding or ability to articulate concepts.
+          This is parroting, not comprehension.
+        score_adjustment: |
+          - Exact verbatim copy: 1/5
+          - Verbatim copy + minor original addition: 2/5
+          - Paraphrased with own words: Score normally
+        note: "Distinguish between learning and parroting - the latter shows no actual knowledge"
+
   # Stage 3: Partial Understanding (Score: 2/5)
   stage_3_partial:
     description: "Answer shows some understanding but significant gaps"
@@ -194,17 +211,22 @@ evaluation_process:
       decision: "If any match -> Score = 0/5, STOP"
 
     - step: 3
+      action: "Check for verbatim hint repetition"
+      decision: "If candidate copied exact text from your hint/example -> Score = 1/5, STOP"
+      note: "Compare candidate's answer to any hints, examples, or suggestions you provided"
+
+    - step: 4
       action: "Apply Stage 2 checks (Weak)"
       decision: "If multiple matches -> Score = 1/5, STOP"
 
-    - step: 4
+    - step: 5
       action: "Check against competency matrix for experience level"
       questions:
         - "Does answer cover must_know topics?"
         - "What percentage of good_to_know topics covered?"
         - "Are there fundamental misunderstandings?"
 
-    - step: 5
+    - step: 6
       action: "Evaluate depth and quality"
       criteria:
         - Specificity vs vagueness
@@ -213,11 +235,11 @@ evaluation_process:
         - Practical application shown
         - Edge cases considered
 
-    - step: 6
+    - step: 7
       action: "Assign score based on Stage 3-6 criteria"
       note: "Default to lower score when uncertain between two levels"
 
-    - step: 7
+    - step: 8
       action: "Validate against core principle: Honest Evaluation"
       reminder: |
         "Be supportive but brutally honest. Radical/extreme solutions
@@ -247,6 +269,11 @@ common_mistakes:
     right: "pg, I like it more (20-40/100)"
     reasoning: "Architect must justify with requirements, trade-offs, constraints analysis"
 
+  - mistake: "Rewarding verbatim repetition of provided hints/examples"
+    wrong: "Interviewer suggests: 'Class is a template' -> Candidate: 'Class is a template' (80/100)"
+    right: "Interviewer suggests: 'Class is a template' -> Candidate: 'Class is a template' (20/100)"
+    reasoning: "Candidate demonstrated zero independent understanding, just copy-pasted the hint"
+
 # Red Flags Checklist
 red_flags:
   professionalism:
@@ -268,6 +295,11 @@ red_flags:
     - Doesn't address the question -> 0-1/5
     - Addresses related but different topic -> 1-2/5
     - Addresses question but misses main point -> 2-3/5
+
+  independence:
+    - Verbatim copy of interviewer's hint/example -> 1/5
+    - Parroting without understanding -> 1-2/5
+    - Unable to articulate in own words -> Max 2/5
 
 # Experience Level Multipliers
 level_strictness:
