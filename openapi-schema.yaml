@@ -19,8 +19,8 @@ paths:
   /config/{filepath}:
     get:
       operationId: getConfigResource
-      summary: Load configuration file
-      description: Load config files. Start with index.yaml to discover available configs, then load specific files. Supports nested paths.
+      summary: Load agent configuration files
+      description: "Step 1: Call with filepath='index.yaml'. Step 2: Use file names from response (e.g., filepath='core-principles.yaml'). DO NOT prefix with 'config/'."
       security:
         - githubToken: []
         - {}
@@ -28,10 +28,19 @@ paths:
         - name: filepath
           in: path
           required: true
-          description: File path relative to config directory
+          description: "Relative path only. Examples: 'index.yaml', 'core-principles.yaml', 'interview-framework/hint-system.yaml'. Never: 'config/index.yaml'"
           schema:
             type: string
-          example: index.yaml
+          examples:
+            index:
+              value: "index.yaml"
+              summary: First call to list all configs
+            root_file:
+              value: "core-principles.yaml"
+              summary: Load file from config root
+            nested_file:
+              value: "interview-framework/hint-system.yaml"
+              summary: Load file from subdirectory
       responses:
         '200':
           description: Configuration file content in YAML format
@@ -45,8 +54,8 @@ paths:
   /technologies/{filepath}:
     get:
       operationId: getTechnologiesResource
-      summary: Load technology resource
-      description: Load tech resources. Start with index.yaml for registry, then load tech-specific configs, questions, or competency matrices.
+      summary: Load technology resources
+      description: "Step 1: filepath='index.yaml' for navigation. Step 2: filepath='supported-technologies.yaml' for tech registry. Step 3: filepath='csharp/config.yaml' for specific resources."
       security:
         - githubToken: []
         - {}
@@ -54,10 +63,25 @@ paths:
         - name: filepath
           in: path
           required: true
-          description: File path relative to technologies directory
+          description: "Relative path only. Examples: 'index.yaml', 'supported-technologies.yaml', 'csharp/config.yaml'. Never: 'technologies/...'"
           schema:
             type: string
-          example: index.yaml
+          examples:
+            index:
+              value: "index.yaml"
+              summary: First call - navigation index
+            registry:
+              value: "supported-technologies.yaml"
+              summary: Second call - technology registry with IDs
+            tech_config:
+              value: "csharp/config.yaml"
+              summary: Load C# technology config
+            tech_questions:
+              value: "csharp/questions.md"
+              summary: Load C# questions bank
+            tech_matrix:
+              value: "csharp/competency-matrix.yaml"
+              summary: Load C# competency matrix
       responses:
         '200':
           description: Technology resource content (YAML or Markdown)
@@ -71,8 +95,8 @@ paths:
   /tasks/{filepath}:
     get:
       operationId: getTasksResource
-      summary: Load task file
-      description: Load task workflow files. Start with index.yaml to discover available tasks, then load specific task definitions.
+      summary: Load task workflow files
+      description: "Step 1: Call with filepath='index.yaml'. Step 2: Use file names from response (e.g., filepath='conduct-interview.md'). DO NOT prefix with 'tasks/'."
       security:
         - githubToken: []
         - {}
@@ -80,10 +104,16 @@ paths:
         - name: filepath
           in: path
           required: true
-          description: File path relative to tasks directory
+          description: "Relative path only. Examples: 'index.yaml', 'conduct-interview.md'. Never: 'tasks/conduct-interview.md'"
           schema:
             type: string
-          example: index.yaml
+          examples:
+            index:
+              value: "index.yaml"
+              summary: First call to list all tasks
+            task_file:
+              value: "conduct-interview.md"
+              summary: Load specific task workflow
       responses:
         '200':
           description: Task file content in Markdown format
@@ -97,8 +127,8 @@ paths:
   /templates/{filepath}:
     get:
       operationId: getTemplatesResource
-      summary: Load template file
-      description: Load template files. Start with index.yaml to discover available templates, then load specific report or session templates.
+      summary: Load template files
+      description: "Step 1: Call with filepath='index.yaml'. Step 2: Use file names from response (e.g., filepath='interview-report-tmpl.md'). DO NOT prefix with 'templates/'."
       security:
         - githubToken: []
         - {}
@@ -106,10 +136,16 @@ paths:
         - name: filepath
           in: path
           required: true
-          description: File path relative to templates directory
+          description: "Relative path only. Examples: 'index.yaml', 'interview-report-tmpl.md'. Never: 'templates/interview-report-tmpl.md'"
           schema:
             type: string
-          example: index.yaml
+          examples:
+            index:
+              value: "index.yaml"
+              summary: First call to list all templates
+            template_file:
+              value: "interview-report-tmpl.md"
+              summary: Load specific template
       responses:
         '200':
           description: Template file content (YAML or Markdown)

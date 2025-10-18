@@ -62,7 +62,7 @@ commands:
       technologies:
         type: string
         description: One or more technologies (comma-separated for multi-tech interviews)
-        source: "technologies/index.yaml -> technologies[].id"
+        source: "technologies/supported-technologies.yaml -> technologies[].id"
         required: true
     behavior: |
       - Parse comma-separated technology list
@@ -99,7 +99,7 @@ commands:
   - name: technologies
     description: List all available technologies for interviews
     usage: "*technologies"
-    behavior: Displays supported technologies from technologies/index.yaml
+    behavior: Displays supported technologies from technologies/supported-technologies.yaml
 
   - name: topics
     description: Show list of available topic clusters for selected technology(ies)
@@ -148,7 +148,8 @@ dependencies:
     description: All supported technologies and their configurations
     structure: |
       technologies/
-        index.yaml - Registry of all technologies
+        index.yaml - Navigation index for all technology resources
+        supported-technologies.yaml - Registry of all supported technologies
         {technology_id}/
           config.yaml - Technology-specific configuration
           competency-matrix.yaml - Level definitions and topic expectations
@@ -191,10 +192,82 @@ performance_metrics_ref: config/interview-framework/performance-metrics.yaml
 
 report_configuration_ref: config/report-framework/report-config.yaml
 
+api_usage_instructions:
+  description: How to use the OpenAPI endpoints to load resources from GitHub repository
+
+  important_rules:
+    - ALWAYS call index.yaml FIRST for each category to get list of available resources
+    - filepath parameter is RELATIVE to category directory, never include category prefix
+    - Use two-step pattern - load index, parse it, then load specific files
+
+  endpoint_patterns:
+    config:
+      operation: getConfigResource
+      first_call:
+        endpoint: /config/{filepath}
+        filepath: "index.yaml"
+        result: Returns list of all config files
+      subsequent_calls:
+        example_1:
+          filepath: "core-principles.yaml"
+          loads: /config/core-principles.yaml
+        example_2:
+          filepath: "interview-framework/hint-system.yaml"
+          loads: /config/interview-framework/hint-system.yaml
+
+    technologies:
+      operation: getTechnologiesResource
+      first_call:
+        endpoint: /technologies/{filepath}
+        filepath: "index.yaml"
+        result: Returns index with navigation to all technology resources
+      second_call:
+        filepath: "supported-technologies.yaml"
+        result: Returns technology registry with all available tech IDs, names, and status
+      subsequent_calls:
+        example_1:
+          filepath: "csharp/config.yaml"
+          loads: /technologies/csharp/config.yaml
+        example_2:
+          filepath: "csharp/questions.md"
+          loads: /technologies/csharp/questions.md
+        example_3:
+          filepath: "csharp/competency-matrix.yaml"
+          loads: /technologies/csharp/competency-matrix.yaml
+
+    tasks:
+      operation: getTasksResource
+      first_call:
+        endpoint: /tasks/{filepath}
+        filepath: "index.yaml"
+        result: Returns list of all task files
+      subsequent_calls:
+        example_1:
+          filepath: "conduct-interview.md"
+          loads: /tasks/conduct-interview.md
+
+    templates:
+      operation: getTemplatesResource
+      first_call:
+        endpoint: /templates/{filepath}
+        filepath: "index.yaml"
+        result: Returns list of all template files
+      subsequent_calls:
+        example_1:
+          filepath: "interview-report-tmpl.md"
+          loads: /templates/interview-report-tmpl.md
+
+  common_mistakes_to_avoid:
+    - "WRONG: filepath='config/index.yaml' -> Results in /config/config/index.yaml"
+    - "CORRECT: filepath='index.yaml' -> Results in /config/index.yaml"
+    - "WRONG: filepath='technologies/csharp/config.yaml' -> Results in /technologies/technologies/csharp/config.yaml"
+    - "CORRECT: filepath='csharp/config.yaml' -> Results in /technologies/csharp/config.yaml"
+
 activation_instructions:
   steps:
     - Read this complete YAML configuration
-    - Load technologies/index.yaml to understand available technologies
+    - Load technologies index using getTechnologiesResource with filepath='index.yaml'
+    - Load technology registry using getTechnologiesResource with filepath='supported-technologies.yaml'
     - Adopt persona defined above
     - Initialize session tracking system
     - Ask user "What language would you like to conduct this interview in?"
@@ -204,10 +277,11 @@ activation_instructions:
 
   on_begin_command:
     - Parse technology list from command
-    - Load competency matrix for each selected technology
+    - Load competency matrix for each selected technology using getTechnologiesResource with filepath='{tech_id}/competency-matrix.yaml'
     - Extract available levels from competency matrices
     - Validate requested level exists in all matrices
-    - Load technology config and question banks
+    - Load technology config using getTechnologiesResource with filepath='{tech_id}/config.yaml'
+    - Load question banks using getTechnologiesResource with filepath='{tech_id}/questions.md'
     - Initialize session with multi-tech support if needed
 
   critical_rules:
