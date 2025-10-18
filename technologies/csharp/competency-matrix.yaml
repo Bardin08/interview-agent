@@ -427,12 +427,1998 @@ topics:
 
         hint_strategy: "Present organizational and technical constraints together"
 
-# Additional topics to be defined:
-# - Memory Management & Performance
-# - Collections & Data Structures
-# - Threading & Concurrency
-# - .NET Framework & CLR
-# - ASP.NET & Web Development
-# - ASP.NET Core
-# - Data Access
-# - Advanced Topics
+  - id: memory-management
+    name: Memory Management & Performance
+    description: Memory allocation, garbage collection, performance optimization, and resource management
+    weight: 1.1
+
+    expectations:
+      fresher:
+        must_know:
+          - Basic understanding that .NET manages memory automatically
+          - Difference between stack and heap (conceptual)
+          - What garbage collection does (basic concept)
+
+        good_to_know:
+          - Value types go on stack, reference types on heap
+          - Objects need to be cleaned up eventually
+          - Memory leaks concept
+
+        not_expected:
+          - GC generations
+          - Finalization details
+          - Performance profiling
+
+        question_types:
+          - definition
+          - basic_concept
+          - simple_comparison
+
+        evaluation_criteria:
+          excellent: |
+            Understands automatic memory management concept.
+            Can explain stack vs heap at basic level.
+          good: |
+            Knows .NET handles memory but unclear on details.
+          weak: |
+            No understanding of memory management.
+
+        hint_strategy: "Use simple analogies for stack/heap and automatic cleanup"
+
+      junior:
+        must_know:
+          - All fresher topics
+          - Stack vs heap allocation details
+          - Value types vs reference types memory implications
+          - IDisposable pattern and using statement
+          - What causes memory leaks in .NET
+          - Basic garbage collection concepts
+
+        good_to_know:
+          - GC generations (0, 1, 2)
+          - Finalizers basics
+          - Large Object Heap concept
+          - StringBuilder for string concatenation performance
+
+        not_expected:
+          - Advanced GC tuning
+          - Memory profiling tools
+          - Low-level memory optimizations
+
+        question_types:
+          - when_to_use
+          - common_mistakes
+          - simple_debugging
+          - code_improvement
+
+        evaluation_criteria:
+          excellent: |
+            Properly uses IDisposable and using statements.
+            Understands memory leak causes.
+            Explains stack/heap trade-offs correctly.
+          good: |
+            Knows concepts but may miss edge cases.
+            Can identify obvious memory issues.
+          weak: |
+            Doesn't use IDisposable properly.
+            Confused about value/reference type implications.
+
+        hint_strategy: "Show code examples with resource leaks and ask what's wrong"
+
+      mid_level:
+        must_know:
+          - All junior topics
+          - GC generations and collection strategies
+          - Finalization and its performance impact
+          - WeakReference usage
+          - Memory profiling basics (heap snapshots, allocations)
+          - Common memory leak patterns (event handlers, static references)
+          - StringBuilder vs string performance
+          - Struct vs class performance trade-offs
+
+        good_to_know:
+          - GC.Collect() and when to avoid it
+          - Large Object Heap management
+          - Memory pressure concepts
+          - Span<T> and Memory<T> for performance
+          - Object pooling patterns
+          - GC notification APIs
+
+        not_expected:
+          - Deep CLR internals
+          - Advanced GC tuning for specific scenarios
+
+        question_types:
+          - performance_analysis
+          - debugging_scenario
+          - optimization_problem
+          - code_review
+
+        evaluation_criteria:
+          excellent: |
+            Can identify and fix memory leaks.
+            Makes informed decisions about memory optimization.
+            Uses profiling tools effectively.
+            Explains GC behavior accurately.
+          good: |
+            Understands concepts but needs guidance on complex issues.
+            Can profile but may misinterpret results.
+          weak: |
+            Cannot diagnose memory problems.
+            Misuses or ignores disposal patterns.
+
+        hint_strategy: "Present performance problems with profiling data"
+
+      senior:
+        must_know:
+          - All mid-level topics
+          - Advanced GC tuning (workstation vs server, concurrent, background)
+          - Memory pool patterns and ArrayPool<T>
+          - Span<T>, Memory<T>, and stackalloc usage
+          - Benchmarking and memory measurement (BenchmarkDotNet)
+          - Reducing allocations in hot paths
+          - Cache-friendly data structures
+          - Memory leak investigation techniques
+          - Pinning and GCHandle for interop
+
+        good_to_know:
+          - GC implementation details
+          - Memory barriers
+          - NUMA awareness
+          - Native memory management
+          - Custom memory allocators
+          - ETW for performance analysis
+
+        not_expected:
+          - Complete GC algorithm implementation knowledge
+
+        question_types:
+          - complex_optimization
+          - architectural_decision
+          - team_guidance
+          - performance_regression
+
+        evaluation_criteria:
+          excellent: |
+            Expert-level memory optimization skills.
+            Can diagnose complex memory issues across large systems.
+            Mentors team on performance best practices.
+            Balances optimization with code maintainability.
+          good: |
+            Strong memory management skills.
+            May over-optimize in some cases.
+          weak: |
+            Cannot provide guidance on complex memory issues.
+            Limited profiling and optimization experience.
+
+        hint_strategy: "Present real-world performance bottlenecks with constraints"
+
+      architect:
+        must_know:
+          - All senior topics
+          - Memory architecture for large-scale systems
+          - Capacity planning and memory budgets
+          - Cross-process memory considerations
+          - Memory implications of distributed architectures
+          - Establishing performance budgets and SLAs
+          - Trade-offs between memory and other resources (CPU, I/O)
+
+        good_to_know:
+          - Custom CLR hosting scenarios
+          - Memory in containerized environments
+          - Cloud resource optimization
+          - Cost implications of memory usage at scale
+
+        not_expected: []
+
+        question_types:
+          - system_architecture
+          - capacity_planning
+          - technology_evaluation
+          - cost_optimization
+
+        evaluation_criteria:
+          excellent: |
+            Strategic thinking about memory across system boundaries.
+            Can establish memory budgets and monitoring strategies.
+            Considers cost implications of memory decisions.
+            Guides team on scalable memory management.
+          good: |
+            Strong technical memory knowledge.
+            May focus too much on micro-optimizations.
+          weak: |
+            Cannot think about memory at system scale.
+            Limited understanding of operational implications.
+
+        hint_strategy: "Present scaling scenarios with cost and performance constraints"
+
+  - id: collections
+    name: Collections & Data Structures
+    description: Built-in collections, generics, data structure selection, and LINQ
+    weight: 1.1
+
+    expectations:
+      fresher:
+        must_know:
+          - Array basics
+          - List<T> usage
+          - Dictionary<TKey, TValue> basics
+          - Iterating collections with foreach
+          - Adding/removing items from collections
+
+        good_to_know:
+          - HashSet<T> concept
+          - Queue and Stack basics
+          - When to use List vs Array
+          - Collection initialization syntax
+
+        not_expected:
+          - Collection performance characteristics
+          - Advanced LINQ
+          - Custom collections
+
+        question_types:
+          - basic_usage
+          - definition
+          - simple_example
+          - syntax
+
+        evaluation_criteria:
+          excellent: |
+            Can use List and Dictionary correctly.
+            Understands basic collection operations.
+            Uses appropriate collection for simple scenarios.
+          good: |
+            Uses collections but may not pick optimal type.
+            Minor confusion between similar collections.
+          weak: |
+            Struggles with basic collection operations.
+            Always uses arrays for everything.
+
+        hint_strategy: "Provide examples and explain when each collection is useful"
+
+      junior:
+        must_know:
+          - All fresher topics
+          - List, Dictionary, HashSet, Queue, Stack, LinkedList
+          - IEnumerable<T> vs ICollection<T> vs IList<T>
+          - Generic constraints basics
+          - Basic LINQ queries (Where, Select, First, Any)
+          - Collection interfaces vs concrete types
+          - Immutability concept (ReadOnlyCollection)
+
+        good_to_know:
+          - SortedDictionary vs Dictionary
+          - Concurrent collections overview
+          - yield return basics
+          - IQueryable vs IEnumerable
+          - Performance: List vs LinkedList
+
+        not_expected:
+          - Advanced LINQ operators
+          - Custom collection implementations
+          - Complex generic constraints
+
+        question_types:
+          - comparison
+          - when_to_use
+          - basic_linq
+          - code_improvement
+
+        evaluation_criteria:
+          excellent: |
+            Chooses appropriate collection for use case.
+            Uses basic LINQ effectively.
+            Understands collection interfaces.
+            Can explain trade-offs between similar collections.
+          good: |
+            Knows collections but picks suboptimal ones.
+            Uses LINQ but may not use it idiomatically.
+          weak: |
+            Cannot distinguish between collection types.
+            Avoids LINQ or uses it incorrectly.
+
+        hint_strategy: "Present scenarios and ask which collection fits best"
+
+      mid_level:
+        must_know:
+          - All junior topics
+          - Collection performance characteristics (O notation)
+          - Advanced LINQ (GroupBy, Join, Aggregate, SelectMany)
+          - Deferred vs immediate execution
+          - Multiple enumeration problems
+          - Concurrent collections (ConcurrentDictionary, ConcurrentBag)
+          - IComparer<T> and IEqualityComparer<T>
+          - Custom iterators with yield
+          - Collection capacity and growth
+
+        good_to_know:
+          - SortedSet, SortedList trade-offs
+          - ImmutableCollections
+          - LINQ query syntax vs method syntax
+          - PLINQ basics
+          - Custom collection implementations
+          - Memory impact of collection choices
+
+        not_expected:
+          - Complete algorithm analysis
+          - Advanced data structure implementations
+
+        question_types:
+          - performance_problem
+          - linq_optimization
+          - design_choice
+          - debugging_scenario
+
+        evaluation_criteria:
+          excellent: |
+            Makes performance-aware collection choices.
+            Masters LINQ for complex queries.
+            Understands deferred execution implications.
+            Can implement custom iterators.
+            Identifies performance issues in LINQ usage.
+          good: |
+            Strong LINQ skills but may miss performance issues.
+            Understands concepts but needs practice applying them.
+          weak: |
+            No performance awareness in collection choice.
+            Cannot write complex LINQ queries.
+            Doesn't understand deferred execution.
+
+        hint_strategy: "Present LINQ performance problems and ask for optimization"
+
+      senior:
+        must_know:
+          - All mid-level topics
+          - Deep performance analysis of collections
+          - LINQ expression trees basics
+          - Custom collection implementations
+          - Memory-efficient collection patterns
+          - ImmutableCollections use cases
+          - PLINQ and parallel collection processing
+          - Choosing data structures for specific algorithms
+          - Teaching collection concepts to juniors
+
+        good_to_know:
+          - Custom LINQ operators
+          - Expression tree manipulation
+          - Lock-free collection patterns
+          - Specialized collections (BitArray, etc.)
+          - Algorithm complexity analysis
+          - Data structure benchmarking
+
+        not_expected:
+          - Academic algorithm research
+
+        question_types:
+          - optimization_scenario
+          - architectural_decision
+          - mentorship_scenario
+          - complex_debugging
+
+        evaluation_criteria:
+          excellent: |
+            Expert-level understanding of collections and algorithms.
+            Can design optimal data structures for complex scenarios.
+            Provides mentorship on LINQ and collections.
+            Balances performance with maintainability.
+          good: |
+            Strong practical collection knowledge.
+            May be too academic or too practical.
+          weak: |
+            Cannot guide team on collection choices.
+            Limited understanding of performance implications.
+
+        hint_strategy: "Present complex performance requirements with trade-offs"
+
+      architect:
+        must_know:
+          - All senior topics
+          - Data structure choices for distributed systems
+          - Collection patterns at scale
+          - Data locality and cache-friendly structures
+          - Trade-offs between different data access patterns
+          - Establishing collection usage standards
+          - Impact of collection choices on system architecture
+
+        good_to_know:
+          - Distributed data structures
+          - Database vs in-memory collection trade-offs
+          - Sharding and partitioning strategies
+          - Event sourcing collection patterns
+
+        not_expected: []
+
+        question_types:
+          - system_architecture
+          - technology_strategy
+          - scalability_analysis
+          - team_standards
+
+        evaluation_criteria:
+          excellent: |
+            Strategic thinking about data structures across systems.
+            Can evaluate system-wide implications of collection choices.
+            Establishes patterns for consistent data management.
+            Considers operational aspects of data structure choices.
+          good: |
+            Strong architectural collection knowledge.
+            May focus too much on technical optimization.
+          weak: |
+            Cannot think about collections at system scale.
+            Limited understanding of distributed implications.
+
+        hint_strategy: "Present large-scale system scenarios with data management challenges"
+
+  - id: threading-concurrency
+    name: Threading & Concurrency
+    description: Multithreading, async/await, synchronization, parallel programming, and thread safety
+    weight: 1.2
+
+    expectations:
+      fresher:
+        must_know:
+          - Basic concept that programs can do multiple things at once
+          - async/await keywords (syntax level)
+          - Task basics
+          - Understanding that threading can cause bugs
+
+        good_to_know:
+          - Thread concept
+          - Race condition concept
+          - Deadlock concept
+          - Task.Run basics
+
+        not_expected:
+          - Thread synchronization
+          - Complex async patterns
+          - Thread pool details
+
+        question_types:
+          - definition
+          - basic_syntax
+          - simple_concept
+
+        evaluation_criteria:
+          excellent: |
+            Understands async/await syntax.
+            Knows multithreading exists and can cause issues.
+            Can use Task.Run for simple scenarios.
+          good: |
+            Uses async/await but doesn't understand deeply.
+            Vague understanding of threading issues.
+          weak: |
+            Cannot use async/await.
+            No awareness of concurrency issues.
+
+        hint_strategy: "Use simple analogies for concurrent operations"
+
+      junior:
+        must_know:
+          - All fresher topics
+          - async/await proper usage
+          - Task vs Task<T>
+          - Task.WhenAll and Task.WhenAny
+          - Avoiding .Result and .Wait() (deadlock)
+          - ConfigureAwait basics
+          - lock statement for basic synchronization
+          - Thread safety concept
+
+        good_to_know:
+          - Thread vs Task
+          - ThreadPool basics
+          - CancellationToken usage
+          - Interlocked class
+          - Volatile keyword
+          - Monitor class
+
+        not_expected:
+          - Advanced synchronization primitives
+          - Custom task schedulers
+          - Deep thread pool knowledge
+
+        question_types:
+          - async_usage
+          - common_mistakes
+          - when_to_use
+          - simple_debugging
+
+        evaluation_criteria:
+          excellent: |
+            Uses async/await correctly and idiomatically.
+            Avoids common deadlock patterns.
+            Understands when to use lock.
+            Uses CancellationToken appropriately.
+          good: |
+            Uses async/await but may not follow best practices.
+            Understands locking but may overuse it.
+          weak: |
+            Misuses async/await (Result, Wait).
+            No understanding of thread safety.
+            Doesn't use CancellationToken.
+
+        hint_strategy: "Show problematic async code and ask what could go wrong"
+
+      mid_level:
+        must_know:
+          - All junior topics
+          - Synchronization primitives (lock, Monitor, Mutex, Semaphore, ReaderWriterLock)
+          - CancellationToken patterns
+          - Task continuation patterns
+          - Parallel.ForEach and PLINQ
+          - Thread-safe collections (Concurrent*)
+          - Async best practices and anti-patterns
+          - Context capturing (SynchronizationContext)
+          - ValueTask vs Task
+
+        good_to_know:
+          - Memory barriers
+          - ThreadLocal<T>
+          - AsyncLocal<T>
+          - Custom synchronization primitives
+          - Thread pool sizing and tuning
+          - Dataflow (TPL Dataflow)
+          - Channels
+
+        not_expected:
+          - Lock-free algorithms implementation
+          - Custom schedulers
+
+        question_types:
+          - synchronization_problem
+          - performance_analysis
+          - debugging_scenario
+          - design_choice
+
+        evaluation_criteria:
+          excellent: |
+            Chooses appropriate synchronization mechanism.
+            Writes efficient and safe concurrent code.
+            Debugs concurrency issues effectively.
+            Understands async/await deeply including context.
+            Uses parallel processing appropriately.
+          good: |
+            Good async skills but may overuse locking.
+            Understands concepts but needs practice with edge cases.
+          weak: |
+            Cannot debug concurrency issues.
+            Overuses or avoids synchronization inappropriately.
+            Limited understanding of parallel patterns.
+
+        hint_strategy: "Present race conditions and deadlocks for diagnosis"
+
+      senior:
+        must_know:
+          - All mid-level topics
+          - Advanced async patterns (state machines, custom awaitables)
+          - Lock-free programming concepts
+          - Memory model and happens-before relationships
+          - Async library design
+          - Performance profiling for concurrent code
+          - Teaching threading to juniors
+          - TPL Dataflow advanced usage
+          - Channels for producer-consumer patterns
+
+        good_to_know:
+          - Custom task schedulers
+          - Lock-free data structures
+          - Volatile, MemoryBarrier details
+          - Thread affinity
+          - CPU cache and false sharing
+          - Compare-and-swap patterns
+          - Actor model patterns
+
+        not_expected:
+          - Hardware-level concurrency implementation
+
+        question_types:
+          - complex_debugging
+          - architectural_decision
+          - performance_optimization
+          - mentorship_scenario
+
+        evaluation_criteria:
+          excellent: |
+            Expert-level concurrent programming skills.
+            Can design async APIs correctly.
+            Debugs complex concurrency issues.
+            Provides mentorship on threading best practices.
+            Balances performance with code complexity.
+          good: |
+            Strong concurrent programming skills.
+            May be overly cautious or overly aggressive with concurrency.
+          weak: |
+            Cannot guide team on concurrency decisions.
+            Limited experience with complex threading scenarios.
+
+        hint_strategy: "Present complex concurrent scenarios with subtle bugs"
+
+      architect:
+        must_know:
+          - All senior topics
+          - Concurrency architecture for distributed systems
+          - Scalability patterns (sharding, partitioning)
+          - Consistency models (eventual consistency, etc.)
+          - Message-based concurrency (queues, pub/sub)
+          - Establishing threading standards and patterns
+          - System-wide deadlock prevention strategies
+          - Performance and scalability trade-offs
+
+        good_to_know:
+          - Distributed locking
+          - Consensus algorithms awareness
+          - Event sourcing and CQRS
+          - Reactive programming patterns
+          - Actor frameworks (Akka.NET)
+
+        not_expected: []
+
+        question_types:
+          - system_architecture
+          - scalability_design
+          - technology_evaluation
+          - team_standards
+
+        evaluation_criteria:
+          excellent: |
+            Strategic thinking about concurrency across system boundaries.
+            Can design scalable concurrent architectures.
+            Establishes patterns for safe concurrent programming.
+            Considers operational aspects (monitoring, debugging).
+          good: |
+            Strong architectural concurrency knowledge.
+            May focus too much on in-process concurrency.
+          weak: |
+            Cannot design concurrent systems at scale.
+            Limited understanding of distributed concurrency.
+
+        hint_strategy: "Present large-scale distributed system concurrency challenges"
+
+  - id: dotnet-framework-clr
+    name: .NET Framework & CLR
+    description: .NET runtime, CLR, assemblies, reflection, app domains, and framework internals
+    weight: 1.0
+
+    expectations:
+      fresher:
+        must_know:
+          - .NET Framework provides libraries and runtime
+          - Basic understanding of compilation to IL
+          - Common namespaces (System, System.Collections, etc.)
+          - NuGet package concept
+
+        good_to_know:
+          - DLL vs EXE
+          - GAC concept
+          - .NET Framework vs .NET Core difference
+          - Assembly concept
+
+        not_expected:
+          - Reflection
+          - AppDomains
+          - Deep CLR knowledge
+
+        question_types:
+          - definition
+          - basic_concept
+          - simple_comparison
+
+        evaluation_criteria:
+          excellent: |
+            Understands .NET provides runtime and libraries.
+            Knows code compiles to IL.
+            Can use NuGet packages.
+          good: |
+            Basic awareness but unclear on details.
+          weak: |
+            Doesn't understand .NET role.
+
+        hint_strategy: "Explain compilation and execution flow with simple diagrams"
+
+      junior:
+        must_know:
+          - All fresher topics
+          - IL (Intermediate Language) concept
+          - JIT compilation basics
+          - Assembly structure (DLL/EXE)
+          - Strong naming basics
+          - GAC (Global Assembly Cache)
+          - .NET Framework vs .NET Core/.NET 5+
+          - Framework class library structure
+          - Attributes basics
+
+        good_to_know:
+          - Reflection basics (Type.GetType, GetMethods)
+          - AppDomain concept
+          - Assembly versioning
+          - Culture and satellite assemblies
+          - Native image generation (NGEN)
+
+        not_expected:
+          - Advanced reflection
+          - IL writing
+          - CLR hosting
+
+        question_types:
+          - comparison
+          - when_to_use
+          - basic_configuration
+          - debugging_basics
+
+        evaluation_criteria:
+          excellent: |
+            Understands compilation and execution flow.
+            Can explain assemblies and references.
+            Knows difference between .NET variants.
+            Uses attributes appropriately.
+          good: |
+            Understands basics but fuzzy on details.
+            Can use framework but doesn't understand internals.
+          weak: |
+            Confused about assemblies and references.
+            Cannot explain .NET compilation.
+
+        hint_strategy: "Walk through compilation and execution process"
+
+      mid_level:
+        must_know:
+          - All junior topics
+          - Reflection for examining types and members
+          - Attributes creation and usage
+          - Assembly loading and resolution
+          - AppDomains and their use cases
+          - .NET Standard concept
+          - Runtime version targeting
+          - Custom assembly resolvers
+          - Weak references
+
+        good_to_know:
+          - IL reading
+          - Reflection.Emit basics
+          - Expression trees
+          - Dynamic code generation
+          - AssemblyLoadContext (.NET Core)
+          - Portable vs Platform-specific assemblies
+          - Ahead-of-time compilation
+
+        not_expected:
+          - Complete IL specification
+          - CLR hosting APIs
+          - Custom CLR modifications
+
+        question_types:
+          - reflection_usage
+          - assembly_problem
+          - framework_choice
+          - debugging_scenario
+
+        evaluation_criteria:
+          excellent: |
+            Uses reflection effectively when appropriate.
+            Understands assembly loading nuances.
+            Makes informed decisions about .NET version targeting.
+            Can diagnose assembly loading issues.
+            Knows when NOT to use reflection.
+          good: |
+            Can use reflection but may overuse it.
+            Understands concepts but limited troubleshooting experience.
+          weak: |
+            Cannot use reflection.
+            Confused about assembly dependencies.
+            No understanding of framework versioning.
+
+        hint_strategy: "Present assembly loading errors and versioning conflicts"
+
+      senior:
+        must_know:
+          - All mid-level topics
+          - Advanced reflection patterns
+          - IL code reading and understanding
+          - Custom attribute processors
+          - Assembly versioning strategies
+          - Framework vs Core migration considerations
+          - Performance implications of reflection
+          - Source generators vs reflection
+          - Debugging with symbols and source servers
+
+        good_to_know:
+          - Reflection.Emit for code generation
+          - Dynamic assembly loading patterns
+          - Portable PDB format
+          - ReadyToRun images
+          - Single-file deployment
+          - Native AOT considerations
+          - CLR hosting scenarios
+
+        not_expected:
+          - CLR source code contribution
+
+        question_types:
+          - optimization_scenario
+          - architectural_decision
+          - migration_planning
+          - complex_debugging
+
+        evaluation_criteria:
+          excellent: |
+            Expert understanding of CLR and framework internals.
+            Can make strategic framework decisions.
+            Provides guidance on reflection and code generation.
+            Understands performance implications deeply.
+          good: |
+            Strong practical framework knowledge.
+            May lack depth in some areas.
+          weak: |
+            Cannot guide on framework decisions.
+            Limited troubleshooting of complex issues.
+
+        hint_strategy: "Present framework migration or optimization scenarios"
+
+      architect:
+        must_know:
+          - All senior topics
+          - .NET strategy for organization (.NET Framework vs Core)
+          - Multi-targeting strategies
+          - Deployment models (self-contained, framework-dependent)
+          - Plugin architectures and assembly isolation
+          - Framework updates and maintenance strategies
+          - Cross-platform considerations
+          - Performance and startup time optimization at scale
+
+        good_to_know:
+          - Custom runtime configuration
+          - Runtime patches and hotfixes strategy
+          - Trimming and AOT compilation for deployment
+          - Cloud-native .NET considerations
+          - License and support implications
+
+        not_expected: []
+
+        question_types:
+          - technology_strategy
+          - migration_planning
+          - system_architecture
+          - team_standards
+
+        evaluation_criteria:
+          excellent: |
+            Strategic thinking about .NET across organization.
+            Can plan large-scale migrations.
+            Establishes framework standards and practices.
+            Considers operational and business implications.
+          good: |
+            Strong technical framework knowledge.
+            May focus too much on technical vs business considerations.
+          weak: |
+            Cannot think strategically about framework choices.
+            Limited understanding of organizational impact.
+
+        hint_strategy: "Present organizational .NET strategy decisions"
+
+  - id: aspnet-web
+    name: ASP.NET & Web Development
+    description: ASP.NET Framework (Web Forms, MVC, Web API), IIS, HTTP fundamentals
+    weight: 0.9
+
+    expectations:
+      fresher:
+        must_know:
+          - HTTP basics (GET, POST)
+          - What a web server does
+          - Basic HTML/JavaScript interaction concept
+          - Request/Response cycle
+          - URL structure
+
+        good_to_know:
+          - MVC pattern concept
+          - Status codes (200, 404, 500)
+          - Query strings and form data
+          - Cookies concept
+
+        not_expected:
+          - ASP.NET pipeline
+          - Authentication/Authorization
+          - Advanced HTTP features
+
+        question_types:
+          - definition
+          - basic_concept
+          - simple_web_scenario
+
+        evaluation_criteria:
+          excellent: |
+            Understands basic web request/response.
+            Knows common HTTP methods.
+            Can explain simple web flow.
+          good: |
+            Basic web awareness but unclear on details.
+          weak: |
+            No understanding of web fundamentals.
+
+        hint_strategy: "Use browser address bar and forms as examples"
+
+      junior:
+        must_know:
+          - All fresher topics
+          - MVC pattern (Model, View, Controller)
+          - Routing basics
+          - HTTP methods (GET, POST, PUT, DELETE)
+          - Status codes
+          - Cookies and session state
+          - ViewBag/ViewData/TempData
+          - Basic authentication concepts
+          - JSON serialization/deserialization
+          - RESTful API basics
+
+        good_to_know:
+          - Web Forms vs MVC
+          - IIS basics
+          - Action filters concept
+          - Model binding
+          - AJAX requests
+          - Partial views
+          - Areas
+
+        not_expected:
+          - Custom HTTP modules
+          - Advanced security
+          - Performance optimization
+
+        question_types:
+          - mvc_basics
+          - routing_problem
+          - api_design
+          - simple_debugging
+
+        evaluation_criteria:
+          excellent: |
+            Builds basic MVC applications correctly.
+            Understands REST principles.
+            Implements routing appropriately.
+            Handles request data correctly.
+          good: |
+            Can build web apps but may not follow best practices.
+            Basic REST understanding.
+          weak: |
+            Cannot structure MVC application.
+            Confused about routing.
+            Doesn't understand HTTP properly.
+
+        hint_strategy: "Show routing examples and request/response scenarios"
+
+      mid_level:
+        must_know:
+          - All junior topics
+          - Authentication & Authorization (Forms, Windows, Claims)
+          - Action filters and filter pipeline
+          - Model binding and validation
+          - Dependency Injection in ASP.NET
+          - Web API versioning
+          - CORS handling
+          - Content negotiation
+          - Exception handling strategies
+          - Security best practices (XSS, CSRF, SQL Injection)
+
+        good_to_know:
+          - Custom model binders
+          - HTTP modules and handlers
+          - Output caching
+          - Bundling and minification
+          - SignalR basics
+          - OWIN/Katana
+          - Web API OData
+
+        not_expected:
+          - IIS internals
+          - Complete security expertise
+
+        question_types:
+          - security_scenario
+          - api_design
+          - authentication_problem
+          - performance_issue
+
+        evaluation_criteria:
+          excellent: |
+            Implements secure web applications.
+            Designs clean RESTful APIs.
+            Uses DI effectively.
+            Handles errors appropriately.
+            Follows security best practices.
+          good: |
+            Can build web apps but may miss security issues.
+            Good API design but may violate REST occasionally.
+          weak: |
+            Creates insecure applications.
+            Poor API design.
+            Doesn't understand authentication.
+
+        hint_strategy: "Present security vulnerabilities and API design problems"
+
+      senior:
+        must_know:
+          - All mid-level topics
+          - Advanced authentication (OAuth, OpenID Connect, JWT)
+          - API gateway patterns
+          - Rate limiting and throttling
+          - Performance optimization (caching strategies, CDN)
+          - Scalability patterns
+          - Monitoring and logging strategies
+          - API documentation and versioning strategies
+          - Migration from ASP.NET to ASP.NET Core considerations
+
+        good_to_know:
+          - Custom authentication schemes
+          - IIS advanced configuration
+          - Load balancing considerations
+          - WebSockets
+          - GraphQL
+          - API security hardening
+
+        not_expected:
+          - Network infrastructure expertise
+
+        question_types:
+          - architectural_decision
+          - performance_optimization
+          - security_hardening
+          - migration_planning
+
+        evaluation_criteria:
+          excellent: |
+            Designs scalable web architectures.
+            Implements robust authentication/authorization.
+            Optimizes for performance.
+            Provides security guidance.
+            Mentors on web development best practices.
+          good: |
+            Strong web development skills.
+            May lack experience with scale.
+          weak: |
+            Cannot design scalable solutions.
+            Limited security depth.
+
+        hint_strategy: "Present scalability and security challenges"
+
+      architect:
+        must_know:
+          - All senior topics
+          - Web architecture for enterprise applications
+          - Microservices vs monolith decisions
+          - API strategy (REST, GraphQL, gRPC)
+          - Authentication/authorization at scale
+          - Multi-tenancy architectures
+          - Migration strategies (ASP.NET to Core)
+          - Cloud deployment strategies
+          - Compliance and regulatory considerations (GDPR, etc.)
+
+        good_to_know:
+          - Service mesh concepts
+          - API governance
+          - Zero-trust security models
+          - Edge computing
+
+        not_expected: []
+
+        question_types:
+          - technology_strategy
+          - system_architecture
+          - compliance_scenario
+          - migration_planning
+
+        evaluation_criteria:
+          excellent: |
+            Strategic web architecture decisions.
+            Can plan large-scale web systems.
+            Establishes web development standards.
+            Considers security, compliance, and business needs.
+          good: |
+            Strong architectural knowledge.
+            May focus too much on technology vs business.
+          weak: |
+            Cannot think strategically about web architecture.
+            Limited understanding of enterprise concerns.
+
+        hint_strategy: "Present enterprise web architecture scenarios"
+
+  - id: aspnet-core
+    name: ASP.NET Core
+    description: ASP.NET Core framework, middleware, dependency injection, Razor Pages, Web API, gRPC
+    weight: 1.3
+
+    expectations:
+      fresher:
+        must_know:
+          - ASP.NET Core is cross-platform
+          - Basic controller and action concept
+          - Routing basics ([Route], [HttpGet])
+          - Returning data from API (IActionResult)
+          - appsettings.json usage
+
+        good_to_know:
+          - Dependency injection basics
+          - Middleware concept
+          - Model validation basics
+          - Program.cs and Startup.cs purpose
+
+        not_expected:
+          - Custom middleware
+          - Advanced DI patterns
+          - Performance optimization
+
+        question_types:
+          - basic_syntax
+          - simple_api_creation
+          - configuration_basics
+          - routing_basics
+
+        evaluation_criteria:
+          excellent: |
+            Can create simple API endpoints.
+            Uses routing attributes correctly.
+            Reads configuration from appsettings.
+          good: |
+            Can create endpoints but may not follow conventions.
+            Basic understanding of structure.
+          weak: |
+            Cannot create basic API.
+            Confused about project structure.
+
+        hint_strategy: "Provide controller templates and explain each part"
+
+      junior:
+        must_know:
+          - All fresher topics
+          - Dependency injection (constructor injection, lifetimes)
+          - Middleware pipeline
+          - Model binding and validation
+          - Configuration system (appsettings, environment variables)
+          - Logging (ILogger)
+          - Error handling (exception filters, middleware)
+          - Entity Framework Core basics
+          - Authentication/Authorization basics ([Authorize])
+          - CORS configuration
+
+        good_to_know:
+          - Custom middleware
+          - Action filters
+          - Razor Pages
+          - Health checks
+          - Options pattern
+          - Background services (IHostedService)
+          - HTTP client factory
+
+        not_expected:
+          - Advanced middleware scenarios
+          - Custom DI containers
+          - Performance optimization
+
+        question_types:
+          - dependency_injection
+          - middleware_usage
+          - configuration_problem
+          - validation_scenario
+
+        evaluation_criteria:
+          excellent: |
+            Uses DI effectively with correct lifetimes.
+            Understands middleware pipeline.
+            Implements validation properly.
+            Configures logging and error handling.
+          good: |
+            Uses DI but may pick wrong lifetimes.
+            Understands middleware but may order incorrectly.
+          weak: |
+            Doesn't understand DI.
+            Cannot configure middleware.
+            Poor error handling.
+
+        hint_strategy: "Show DI registration issues and middleware ordering problems"
+
+      mid_level:
+        must_know:
+          - All junior topics
+          - Advanced DI patterns (factories, decorators)
+          - Custom middleware development
+          - Advanced configuration (options pattern, validation)
+          - Advanced authentication (JWT, OAuth, IdentityServer)
+          - API versioning strategies
+          - Response caching and compression
+          - SignalR for real-time communication
+          - gRPC services
+          - OpenAPI/Swagger integration
+          - EF Core advanced features (migrations, queries)
+
+        good_to_know:
+          - Custom model binding
+          - Custom authorization policies
+          - Rate limiting
+          - Background workers
+          - Minimal APIs
+          - Feature flags
+          - Distributed caching (Redis)
+          - Message queues integration
+
+        not_expected:
+          - Kestrel internals
+          - Custom hosting
+
+        question_types:
+          - authentication_implementation
+          - api_design
+          - performance_optimization
+          - middleware_development
+
+        evaluation_criteria:
+          excellent: |
+            Designs clean, scalable APIs.
+            Implements robust authentication/authorization.
+            Uses DI patterns appropriately.
+            Develops custom middleware when needed.
+            Optimizes API performance.
+          good: |
+            Strong Core skills but may overengineer.
+            Good understanding but limited production experience.
+          weak: |
+            Cannot implement advanced features.
+            Poor API design.
+            Limited DI understanding.
+
+        hint_strategy: "Present API design problems with specific requirements"
+
+      senior:
+        must_know:
+          - All mid-level topics
+          - Microservices architecture with ASP.NET Core
+          - API gateway patterns (YARP, Ocelot)
+          - Distributed tracing and monitoring (OpenTelemetry)
+          - Health checks and resilience patterns
+          - Advanced gRPC usage (streaming, interceptors)
+          - Security best practices and hardening
+          - Performance optimization (benchmarking, profiling)
+          - Migration from ASP.NET Framework
+          - Cloud-native patterns
+          - Testing strategies (integration tests, API tests)
+
+        good_to_know:
+          - Custom DI container integration
+          - Kestrel configuration and tuning
+          - HTTP/3 and QUIC
+          - Native AOT for APIs
+          - Minimal APIs advanced patterns
+          - IdentityServer/Duende IdentityServer
+
+        not_expected:
+          - Network protocol implementation
+
+        question_types:
+          - architectural_decision
+          - microservices_design
+          - performance_optimization
+          - migration_planning
+
+        evaluation_criteria:
+          excellent: |
+            Expert-level ASP.NET Core knowledge.
+            Designs microservices architectures.
+            Implements observability and resilience.
+            Provides mentorship on Core best practices.
+            Balances performance with maintainability.
+          good: |
+            Strong Core skills.
+            May lack experience with distributed systems.
+          weak: |
+            Cannot design scalable architectures.
+            Limited production experience at scale.
+
+        hint_strategy: "Present complex distributed system scenarios"
+
+      architect:
+        must_know:
+          - All senior topics
+          - Enterprise ASP.NET Core strategy
+          - Platform architecture (API platform, service mesh)
+          - Multi-tenancy at scale
+          - Zero-downtime deployment strategies
+          - API governance and standards
+          - Observability strategy (logging, metrics, tracing)
+          - Security architecture (zero-trust, defense in depth)
+          - Cost optimization in cloud environments
+          - Team organization around microservices
+
+        good_to_know:
+          - Service mesh (Istio, Linkerd)
+          - Dapr for distributed applications
+          - Kubernetes operators for .NET
+          - FinOps practices
+
+        not_expected: []
+
+        question_types:
+          - technology_strategy
+          - platform_architecture
+          - organizational_design
+          - cost_optimization
+
+        evaluation_criteria:
+          excellent: |
+            Strategic ASP.NET Core platform thinking.
+            Can design enterprise-scale architectures.
+            Establishes standards and governance.
+            Considers operational and business implications.
+            Guides organizational transformation.
+          good: |
+            Strong architectural Core knowledge.
+            May focus too much on technology vs organization.
+          weak: |
+            Cannot think at platform level.
+            Limited understanding of enterprise concerns.
+
+        hint_strategy: "Present enterprise platform design scenarios"
+
+  - id: data-access
+    name: Data Access
+    description: ADO.NET, Entity Framework, Entity Framework Core, Dapper, database patterns
+    weight: 1.1
+
+    expectations:
+      fresher:
+        must_know:
+          - Database stores data persistently
+          - SQL basics (SELECT, INSERT, UPDATE, DELETE)
+          - Connection strings concept
+          - Basic CRUD operations
+          - What ORM means
+
+        good_to_know:
+          - Entity Framework basics
+          - DbContext concept
+          - LINQ to query databases
+          - Primary keys and foreign keys
+
+        not_expected:
+          - Advanced EF features
+          - Performance optimization
+          - Complex queries
+
+        question_types:
+          - definition
+          - basic_sql
+          - simple_crud
+          - concept_explanation
+
+        evaluation_criteria:
+          excellent: |
+            Understands data persistence concept.
+            Can write basic SQL.
+            Knows what ORMs do.
+          good: |
+            Basic awareness but unclear on details.
+          weak: |
+            No understanding of databases.
+
+        hint_strategy: "Use simple table examples and CRUD analogies"
+
+      junior:
+        must_know:
+          - All fresher topics
+          - Entity Framework Core basics (DbContext, DbSet)
+          - Code-first vs database-first
+          - Migrations basics
+          - LINQ queries for data access
+          - Navigation properties
+          - Eager vs lazy loading
+          - Connection management
+          - Basic transactions
+          - Parameterized queries (SQL injection prevention)
+
+        good_to_know:
+          - ADO.NET basics (SqlConnection, SqlCommand)
+          - Change tracking
+          - Dapper awareness
+          - Stored procedures
+          - Indexes concept
+
+        not_expected:
+          - Query optimization
+          - Advanced EF features
+          - Database design
+
+        question_types:
+          - ef_usage
+          - linq_query
+          - migration_problem
+          - security_basics
+
+        evaluation_criteria:
+          excellent: |
+            Uses EF Core correctly for CRUD.
+            Writes efficient LINQ queries.
+            Manages migrations properly.
+            Prevents SQL injection.
+            Understands loading strategies.
+          good: |
+            Can use EF but may not follow best practices.
+            Basic LINQ understanding.
+          weak: |
+            Cannot use EF properly.
+            Writes vulnerable queries.
+            Doesn't understand loading.
+
+        hint_strategy: "Show EF queries and ask about loading behavior"
+
+      mid_level:
+        must_know:
+          - All junior topics
+          - Advanced EF Core (tracking, AsNoTracking, change detection)
+          - Query optimization (includes, projections, splitting)
+          - Complex LINQ queries (joins, grouping, aggregations)
+          - Repository pattern
+          - Unit of Work pattern
+          - Transactions and concurrency control
+          - Dapper for performance-critical scenarios
+          - Database design basics (normalization, relationships)
+          - Migration strategies for production
+
+        good_to_know:
+          - EF Core interceptors
+          - Global query filters
+          - Value conversions
+          - Shadow properties
+          - Temporal tables
+          - Raw SQL execution
+          - Bulk operations
+          - Database seeding
+
+        not_expected:
+          - Database administration
+          - Complete SQL Server internals
+
+        question_types:
+          - performance_problem
+          - design_pattern
+          - optimization_scenario
+          - migration_strategy
+
+        evaluation_criteria:
+          excellent: |
+            Optimizes EF queries effectively.
+            Chooses appropriate data access approach.
+            Implements repository pattern correctly.
+            Handles transactions properly.
+            Debugs N+1 and other performance issues.
+          good: |
+            Can use EF well but may miss optimization opportunities.
+            Understands patterns but may overengineer.
+          weak: |
+            Cannot optimize queries.
+            Doesn't understand change tracking.
+            Poor transaction handling.
+
+        hint_strategy: "Show N+1 queries and ask for optimization"
+
+      senior:
+        must_know:
+          - All mid-level topics
+          - EF Core internals (change tracker, query pipeline)
+          - Advanced query optimization
+          - Dapper for micro-ORMs comparison
+          - Database sharding and partitioning concepts
+          - Data access layer architecture
+          - Connection pooling and management
+          - Distributed transactions
+          - Event sourcing and CQRS patterns
+          - Database testing strategies
+          - Teaching data access to juniors
+
+        good_to_know:
+          - Custom conventions in EF
+          - Query compilation
+          - Second-level caching
+          - NoSQL databases with .NET
+          - GraphQL with databases
+          - Time-series databases
+
+        not_expected:
+          - Complete database kernel knowledge
+
+        question_types:
+          - architectural_decision
+          - performance_optimization
+          - complex_debugging
+          - team_guidance
+
+        evaluation_criteria:
+          excellent: |
+            Expert data access knowledge.
+            Designs efficient data layers.
+            Chooses appropriate persistence strategies.
+            Provides mentorship on data access.
+            Balances ORM convenience with performance.
+          good: |
+            Strong data access skills.
+            May be too ORM-focused or too raw-SQL-focused.
+          weak: |
+            Cannot guide on data architecture.
+            Limited experience with complex scenarios.
+
+        hint_strategy: "Present data architecture decisions with constraints"
+
+      architect:
+        must_know:
+          - All senior topics
+          - Data architecture strategy
+          - Polyglot persistence
+          - Database selection criteria
+          - Data consistency models (strong, eventual)
+          - Data migration at scale
+          - Multi-tenancy data isolation strategies
+          - Compliance and data governance (GDPR, retention)
+          - Disaster recovery and backup strategies
+          - Data access governance and standards
+
+        good_to_know:
+          - Distributed databases (Cosmos DB, etc.)
+          - Database cost optimization
+          - Data lake architectures
+          - Real-time analytics integration
+          - Data mesh concepts
+
+        not_expected: []
+
+        question_types:
+          - technology_strategy
+          - data_architecture
+          - compliance_scenario
+          - cost_optimization
+
+        evaluation_criteria:
+          excellent: |
+            Strategic data architecture thinking.
+            Can plan data systems at scale.
+            Establishes data access standards.
+            Considers compliance and governance.
+            Balances consistency with availability.
+          good: |
+            Strong architectural data knowledge.
+            May focus too much on technical vs business.
+          weak: |
+            Cannot think strategically about data.
+            Limited understanding of enterprise data concerns.
+
+        hint_strategy: "Present enterprise data architecture scenarios"
+
+  - id: xml-configuration
+    name: XML & Configuration
+    description: XML processing, configuration management, app.config, web.config, appsettings.json
+    weight: 0.7
+
+    expectations:
+      fresher:
+        must_know:
+          - XML structure basics (tags, attributes)
+          - appsettings.json reading
+          - Configuration stores settings
+          - Connection strings location
+
+        good_to_know:
+          - app.config / web.config purpose
+          - JSON vs XML
+          - Environment-specific settings
+          - ConfigurationManager basics
+
+        not_expected:
+          - XML schemas
+          - Complex configuration scenarios
+          - Transformation files
+
+        question_types:
+          - basic_syntax
+          - reading_config
+          - simple_xml
+
+        evaluation_criteria:
+          excellent: |
+            Can read basic XML.
+            Retrieves configuration values.
+            Understands configuration purpose.
+          good: |
+            Basic configuration awareness.
+          weak: |
+            Cannot read configuration.
+
+        hint_strategy: "Show simple config examples"
+
+      junior:
+        must_know:
+          - All fresher topics
+          - XML parsing (XmlDocument, XDocument)
+          - XML serialization/deserialization
+          - Configuration hierarchy (machine, app, user)
+          - IConfiguration in ASP.NET Core
+          - Environment variables
+          - Connection strings management
+          - appsettings.{Environment}.json pattern
+
+        good_to_know:
+          - XPath queries
+          - XML namespaces
+          - Configuration builders
+          - User secrets
+          - Config transformations
+          - Azure Key Vault for secrets
+
+        not_expected:
+          - XML schemas (XSD)
+          - XSLT transformations
+          - Complex configuration providers
+
+        question_types:
+          - xml_parsing
+          - configuration_setup
+          - environment_management
+          - security_basics
+
+        evaluation_criteria:
+          excellent: |
+            Parses and creates XML correctly.
+            Manages configuration properly.
+            Uses environment-specific settings.
+            Secures sensitive configuration.
+          good: |
+            Can work with XML and config but may not follow best practices.
+          weak: |
+            Struggles with XML parsing.
+            Hardcodes configuration.
+            Exposes secrets.
+
+        hint_strategy: "Show XML parsing tasks and configuration scenarios"
+
+      mid_level:
+        must_know:
+          - All junior topics
+          - Advanced XML (LINQ to XML, XPath)
+          - Custom configuration providers
+          - Options pattern in ASP.NET Core
+          - Configuration validation
+          - Secret management (User Secrets, Key Vault)
+          - Configuration for different environments
+          - XML schemas basics
+
+        good_to_know:
+          - XSLT for XML transformation
+          - Custom configuration sections
+          - Configuration reloading
+          - Distributed configuration (Consul, etc.)
+          - Feature flags with configuration
+
+        not_expected:
+          - Advanced XML technologies
+          - Complete configuration infrastructure
+
+        question_types:
+          - custom_configuration
+          - security_scenario
+          - multi_environment
+          - options_pattern
+
+        evaluation_criteria:
+          excellent: |
+            Creates custom configuration solutions.
+            Implements secure configuration management.
+            Uses options pattern effectively.
+            Handles environment-specific configuration well.
+          good: |
+            Good configuration skills but may hardcode occasionally.
+            Understands security but may miss edge cases.
+          weak: |
+            Cannot implement custom configuration.
+            Poor secret management.
+
+        hint_strategy: "Present configuration challenges with security requirements"
+
+      senior:
+        must_know:
+          - All mid-level topics
+          - Configuration architecture
+          - Centralized configuration management
+          - Configuration as code
+          - Dynamic configuration reloading
+          - Configuration versioning and rollback
+          - Secret rotation strategies
+          - Configuration testing strategies
+          - Teaching configuration best practices
+
+        good_to_know:
+          - Configuration management tools (Ansible, Chef)
+          - Service discovery integration
+          - Distributed configuration patterns
+          - Configuration drift detection
+
+        not_expected:
+          - Infrastructure as code expertise
+
+        question_types:
+          - architectural_decision
+          - security_hardening
+          - multi_service_config
+          - automation_strategy
+
+        evaluation_criteria:
+          excellent: |
+            Designs robust configuration systems.
+            Implements secure configuration at scale.
+            Provides guidance on configuration management.
+            Automates configuration deployment.
+          good: |
+            Strong configuration knowledge.
+            May lack experience with distributed systems.
+          weak: |
+            Cannot design configuration architecture.
+            Limited security depth.
+
+        hint_strategy: "Present configuration management for multiple services"
+
+      architect:
+        must_know:
+          - All senior topics
+          - Enterprise configuration strategy
+          - Configuration governance
+          - Compliance with configuration (audit trails)
+          - Multi-tenancy configuration
+          - Configuration in CI/CD pipelines
+          - Disaster recovery for configuration
+          - Configuration standards across organization
+
+        good_to_know:
+          - GitOps for configuration
+          - Policy as code
+          - Configuration management platforms
+
+        not_expected: []
+
+        question_types:
+          - technology_strategy
+          - governance_design
+          - compliance_scenario
+          - automation_architecture
+
+        evaluation_criteria:
+          excellent: |
+            Strategic configuration management thinking.
+            Establishes configuration governance.
+            Considers compliance and audit requirements.
+            Integrates configuration with deployment pipelines.
+          good: |
+            Strong configuration architecture.
+            May focus too much on technical implementation.
+          weak: |
+            Cannot think strategically about configuration.
+            Limited governance understanding.
+
+        hint_strategy: "Present enterprise configuration governance scenarios"
+
+  - id: advanced-topics
+    name: Advanced Topics
+    description: Advanced C# features including LINQ, delegates, events, generics, reflection, and metaprogramming
+    weight: 1.0
+
+    expectations:
+      fresher:
+        must_know:
+          - LINQ basics (Where, Select)
+          - Simple lambda expressions
+          - List manipulation with LINQ
+          - Event subscription basics
+
+        good_to_know:
+          - Delegates concept
+          - Generic collections (List<T>, Dictionary<K,V>)
+          - Extension methods concept
+          - Anonymous types
+
+        not_expected:
+          - Advanced LINQ operators
+          - Expression trees
+          - Custom attributes
+          - Reflection
+
+        question_types:
+          - basic_linq
+          - lambda_syntax
+          - simple_generic_usage
+
+        evaluation_criteria:
+          excellent: |
+            Uses basic LINQ fluently.
+            Writes simple lambda expressions.
+            Understands generic collections.
+          good: |
+            Can use LINQ but prefers loops.
+            Struggles with lambda syntax.
+          weak: |
+            Cannot use LINQ.
+            Doesn't understand lambdas.
+
+        hint_strategy: "Show LINQ equivalents to loops"
+
+      junior:
+        must_know:
+          - All fresher topics
+          - LINQ operators (Where, Select, First, Any, All, Count, Sum, GroupBy)
+          - Lambda expressions and expression syntax
+          - Delegates (Action, Func, Predicate)
+          - Events (event keyword, EventHandler)
+          - Generic constraints basics
+          - Extension methods creation
+          - Anonymous types
+          - IEnumerable<T> interface
+
+        good_to_know:
+          - Covariance and contravariance basics
+          - Expression-bodied members
+          - Tuple types
+          - Pattern matching basics
+          - Local functions
+          - Nullable reference types
+
+        not_expected:
+          - Expression trees
+          - Advanced generics (variance)
+          - Reflection
+          - Attributes
+
+        question_types:
+          - linq_query
+          - delegate_usage
+          - event_handling
+          - generic_method
+
+        evaluation_criteria:
+          excellent: |
+            Uses LINQ effectively and idiomatically.
+            Understands delegates and when to use them.
+            Implements events correctly.
+            Creates extension methods appropriately.
+          good: |
+            Can use LINQ but may write inefficient queries.
+            Uses delegates but may not understand deeply.
+          weak: |
+            Avoids LINQ and delegates.
+            Cannot implement events.
+            Doesn't understand generics.
+
+        hint_strategy: "Show scenarios where delegates and events are useful"
+
+      mid_level:
+        must_know:
+          - All junior topics
+          - Advanced LINQ (Join, GroupJoin, SelectMany, Aggregate, Zip)
+          - Custom LINQ operators (extension methods)
+          - Advanced delegates (multicast, invocation list)
+          - Advanced generics (covariance, contravariance, constraints)
+          - Expression trees basics
+          - Reflection for type examination
+          - Attributes creation and usage
+          - Dynamic type
+          - Iterator pattern with yield
+          - Pattern matching advanced features
+
+        good_to_know:
+          - Expression tree manipulation
+          - Reflection.Emit basics
+          - DynamicObject for dynamic behavior
+          - ILGenerator usage
+          - Source generators awareness
+          - Roslyn APIs basics
+
+        not_expected:
+          - Compiler implementation
+          - Complete metaprogramming expertise
+
+        question_types:
+          - linq_optimization
+          - reflection_usage
+          - attribute_processor
+          - generic_design
+
+        evaluation_criteria:
+          excellent: |
+            Masters advanced LINQ patterns.
+            Uses reflection judiciously.
+            Creates custom attributes with processors.
+            Designs generic APIs well.
+            Understands expression trees.
+          good: |
+            Strong LINQ skills but may overuse.
+            Can use reflection but may abuse it.
+          weak: |
+            Limited LINQ knowledge beyond basics.
+            Cannot use reflection.
+            Doesn't understand advanced generics.
+
+        hint_strategy: "Present complex LINQ scenarios and reflection use cases"
+
+      senior:
+        must_know:
+          - All mid-level topics
+          - Expression tree creation and manipulation
+          - Advanced reflection patterns
+          - Custom attribute processors
+          - ILSpy/dnSpy for IL analysis
+          - Source generators
+          - Roslyn APIs for code analysis
+          - Metaprogramming patterns
+          - Performance implications of dynamic features
+          - Teaching advanced C# to juniors
+
+        good_to_know:
+          - Reflection.Emit for dynamic code generation
+          - Custom LINQ providers (IQueryable)
+          - DLR (Dynamic Language Runtime)
+          - Compilation APIs
+          - Analyzers and code fixes
+
+        not_expected:
+          - Compiler contributions
+
+        question_types:
+          - metaprogramming_solution
+          - code_generation
+          - performance_optimization
+          - mentorship_scenario
+
+        evaluation_criteria:
+          excellent: |
+            Expert-level advanced C# knowledge.
+            Creates sophisticated metaprogramming solutions.
+            Uses source generators effectively.
+            Provides guidance on advanced features.
+            Balances power with code maintainability.
+          good: |
+            Strong advanced C# skills.
+            May overuse metaprogramming.
+          weak: |
+            Cannot guide on advanced features.
+            Limited metaprogramming experience.
+
+        hint_strategy: "Present problems solvable with metaprogramming"
+
+      architect:
+        must_know:
+          - All senior topics
+          - Strategic use of advanced features in organizations
+          - Code generation strategies
+          - Metaprogramming architecture patterns
+          - Performance vs maintainability trade-offs
+          - Establishing coding standards for advanced features
+          - When to use vs avoid reflection and dynamic features
+          - Migration strategies for legacy codebases
+
+        good_to_know:
+          - Language design considerations
+          - Roslyn compiler platform deep dive
+          - Custom language development on .NET
+
+        not_expected: []
+
+        question_types:
+          - technology_strategy
+          - architectural_patterns
+          - team_standards
+          - strategic_refactoring
+
+        evaluation_criteria:
+          excellent: |
+            Strategic thinking about advanced language features.
+            Establishes standards for metaprogramming use.
+            Considers long-term maintainability.
+            Guides teams on appropriate use of advanced features.
+          good: |
+            Strong technical knowledge.
+            May focus too much on clever solutions.
+          weak: |
+            Cannot think strategically about language features.
+            Limited understanding of organizational impact.
+
+        hint_strategy: "Present organizational challenges requiring advanced solutions"
