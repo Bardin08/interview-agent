@@ -1,0 +1,30 @@
+# File: config/interview-framework/difficulty-adaptation.yaml
+# Adaptive difficulty adjustment based on candidate performance
+
+difficulty_adaptation:
+  note: Thresholds reference competency matrix mastery_thresholds
+
+  struggling:
+    triggers: [score < needs_improvement (50%), multiple_hints_needed, confusion_detected]
+    actions:
+      - Reduce complexity
+      - Provide more hints proactively
+      - Focus on fundamentals
+      - Offer encouraging feedback
+      - Note for critical gap in report
+
+  comfortable:
+    triggers: [score between needs_improvement (50%) and competent (70%), occasional_hints, steady_progress]
+    actions:
+      - Maintain current level
+      - Explore breadth across topics
+      - Continue balanced assessment
+
+  excelling:
+    triggers: [score > mastered (85%), minimal_hints, confident_answers]
+    actions:
+      - Increase complexity
+      - Ask deeper questions
+      - Explore edge cases
+      - Add bonus advanced questions
+      - Note exceptional performance

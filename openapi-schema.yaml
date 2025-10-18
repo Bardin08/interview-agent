@@ -1,19 +1,13 @@
-# OpenAPI Schema for Interview Agent Custom GPT Actions
-# File: interview-agent/openapi-schema.yaml
-#
-# This schema enables dynamic loading of technology-specific content from GitHub
-# Copy this entire file into your Custom GPT's Actions configuration
-
 openapi: 3.1.0
 
 info:
   title: Interview Agent Content API
   description: |
-    Dynamic content loader for Interview Agent. Fetches technology-specific
-    configurations and question banks from GitHub repository.
+    Dynamic content loader for Interview Agent. Fetches configurations, question banks,
+    tasks, and templates from GitHub repository using index-based navigation.
 
-    Enables multi-technology support without bloating GPT context window.
-  version: 2.0.0
+    Start with index files for each category, then load specific resources as needed.
+  version: 3.0.0
   contact:
     name: Interview Agent
     url: https://github.com/bardin08/interview-agent
@@ -22,217 +16,128 @@ servers:
   - url: https://raw.githubusercontent.com/Bardin08/interview-agent/refs/heads/main/
 
 paths:
-  /technologies.json:
+  /config/{filepath}:
     get:
-      operationId: listTechnologies
-      summary: List all available interview technologies
-      description: |
-        Returns metadata for all supported technologies including:
-        - Technology ID and display name
-        - Icon and status (active/coming_soon)
-        - Brief description
-
-        Use this to show user available options or validate technology selection.
-      responses:
-        '200':
-          description: Successfully retrieved technologies list
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  technologies:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          description: Technology identifier (e.g., 'csharp', 'python')
-                          example: csharp
-                        name:
-                          type: string
-                          description: Display name
-                          example: "C# & .NET"
-                        icon:
-                          type: string
-                          description: Emoji icon
-                          example: "#️⃣"
-                        status:
-                          type: string
-                          enum: [active, coming_soon, planned]
-                          description: Availability status
-                          example: active
-                        description:
-                          type: string
-                          description: Brief technology description
-                          example: "C# language, .NET Framework, ASP.NET Core"
-                      required:
-                        - id
-                        - name
-                        - status
-              example:
-                technologies:
-                  - id: csharp
-                    name: "C# & .NET"
-                    icon: "#️⃣"
-                    status: active
-                    description: "C# language, .NET Framework, ASP.NET Core"
-                  - id: python
-                    name: Python
-                    icon: "🐍"
-                    status: active
-                    description: "Python, Django, Flask, FastAPI, Data Science"
-
-  /technologies/{tech}/config.yaml:
-    get:
-      operationId: getTechnologyConfig
-      summary: Load technology configuration
-      description: Fetches technology configuration with topics, frameworks, resources, and experience levels for interview planning.
+      operationId: getConfigResource
+      summary: Load configuration file
+      description: Load config files. Start with index.yaml to discover available configs, then load specific files. Supports nested paths.
+      security:
+        - githubToken: []
+        - {}
       parameters:
-        - name: tech
+        - name: filepath
           in: path
           required: true
-          description: Technology identifier (from listTechnologies)
+          description: File path relative to config directory
           schema:
             type: string
-            enum: [csharp, python, javascript, java, go, ruby, rust]
-          examples:
-            csharp:
-              value: csharp
-              summary: C# & .NET configuration
-            python:
-              value: python
-              summary: Python configuration
+          example: index.yaml
       responses:
         '200':
-          description: Technology configuration in YAML format
+          description: Configuration file content in YAML format
           content:
             text/plain:
               schema:
                 type: string
-                description: YAML configuration file content
-              example: |
-                technology:
-                  id: csharp
-                  name: C# & .NET
-                  icon: "#️⃣"
-                  topics:
-                    - C# Language Fundamentals
-                    - Object-Oriented Programming
-                  frameworks:
-                    - name: .NET Core
-                      versions: [8.0, 7.0, 6.0]
-                  resources:
-                    official_docs:
-                      - name: Microsoft C# Documentation
-                        url: https://docs.microsoft.com/dotnet/csharp/
         '404':
-          description: Technology not found
-          content:
-            text/plain:
-              schema:
-                type: string
-              example: "404: Not Found"
+          description: Resource not found
 
-  /technologies/{tech}/questions.md:
+  /technologies/{filepath}:
     get:
-      operationId: getTechnologyQuestions
-      summary: Load technology question bank
-      description: Fetches interview questions organized by topics with difficulty levels, key concepts, and answer points.
+      operationId: getTechnologiesResource
+      summary: Load technology resource
+      description: Load tech resources. Start with index.yaml for registry, then load tech-specific configs, questions, or competency matrices.
+      security:
+        - githubToken: []
+        - {}
       parameters:
-        - name: tech
+        - name: filepath
           in: path
           required: true
-          description: Technology identifier
+          description: File path relative to technologies directory
           schema:
             type: string
-            enum: [csharp, python, javascript, java, go, ruby, rust]
-          examples:
-            csharp:
-              value: csharp
-              summary: C# interview questions
+          example: index.yaml
       responses:
         '200':
-          description: Question bank in Markdown format
+          description: Technology resource content (YAML or Markdown)
           content:
             text/plain:
               schema:
                 type: string
-                description: Markdown file with structured questions by topic
-              example: |
-                # C# Interview Questions
-
-                ## C# Language Fundamentals
-
-                ### What's the difference between value types and reference types?
-
-                **Key Points:**
-                - Value types store data directly
-                - Reference types store memory address
-                - Value types on stack, reference on heap
         '404':
-          description: Technology question bank not found
+          description: Resource not found
+
+  /tasks/{filepath}:
+    get:
+      operationId: getTasksResource
+      summary: Load task file
+      description: Load task workflow files. Start with index.yaml to discover available tasks, then load specific task definitions.
+      security:
+        - githubToken: []
+        - {}
+      parameters:
+        - name: filepath
+          in: path
+          required: true
+          description: File path relative to tasks directory
+          schema:
+            type: string
+          example: index.yaml
+      responses:
+        '200':
+          description: Task file content in Markdown format
+          content:
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Resource not found
+
+  /templates/{filepath}:
+    get:
+      operationId: getTemplatesResource
+      summary: Load template file
+      description: Load template files. Start with index.yaml to discover available templates, then load specific report or session templates.
+      security:
+        - githubToken: []
+        - {}
+      parameters:
+        - name: filepath
+          in: path
+          required: true
+          description: File path relative to templates directory
+          schema:
+            type: string
+          example: index.yaml
+      responses:
+        '200':
+          description: Template file content (YAML or Markdown)
+          content:
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Resource not found
 
 components:
-  schemas:
-    Technology:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier
-        name:
-          type: string
-          description: Display name
-        icon:
-          type: string
-          description: Emoji icon
-        status:
-          type: string
-          enum: [active, coming_soon, planned]
-        description:
-          type: string
-      required:
-        - id
-        - name
-        - status
-
-    Topic:
-      type: object
-      properties:
-        name:
-          type: string
-        question_count:
-          type: integer
-        difficulty_range:
-          type: array
-          items:
-            type: string
+  schemas: {}
 
   securitySchemes:
-  # Optional: Add GitHub token for higher rate limits (5000 req/hour vs 60)
-  # githubToken:
-  #   type: apiKey
-  #   in: header
-  #   name: Authorization
-  #   description: |
-  #     GitHub Personal Access Token for higher rate limits.
-  #     Format: "token YOUR_GITHUB_TOKEN"
-  #
-  #     Without token: 60 requests/hour
-  #     With token: 5,000 requests/hour
+    githubToken:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: |
+        GitHub Personal Access Token for higher rate limits.
+        Format: "Bearer YOUR_GITHUB_TOKEN"
 
-# No security required for public repositories
-security: []
+        Without token: 60 requests/hour
+        With token: 5,000 requests/hour
 
-tags:
-  - name: Technologies
-    description: Technology metadata and discovery
-  - name: Content
-    description: Question banks and configurations
-  - name: Metadata
-    description: Topics and structure information
+security:
+  - githubToken: []
+  - {}
 
 externalDocs:
   description: Interview Agent Documentation

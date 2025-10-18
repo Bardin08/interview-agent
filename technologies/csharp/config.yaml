@@ -62,26 +62,11 @@ technology:
       - Memory Leaks
       - Security Best Practices
 
-  experience_levels:
-    fresher:
-      focus: [C# Fundamentals, Basic OOP, Collections]
-      typical_interview_topics: 8-10
-
-    junior:
-      focus: [C# Fundamentals, OOP, Collections, Basic .NET]
-      typical_interview_topics: 10-12
-
-    mid_level:
-      focus: [All core topics, ASP.NET, Data Access, Threading]
-      typical_interview_topics: 12-15
-
-    senior:
-      focus: [All topics, Advanced, Performance, Design Patterns]
-      typical_interview_topics: 15-18
-
-    architect:
-      focus: [Architecture, System Design, Best Practices, All Topics]
-      typical_interview_topics: 18-20
+  competency_matrix_path: technologies/csharp/competency-matrix.yaml
+  competency_matrix_description: |
+    Comprehensive competency matrix defining expectations for each experience level
+    across all C# & .NET topics. Includes must_know, good_to_know, evaluation criteria,
+    and scoring configuration for accurate candidate assessment.
 
   resources:
     official_docs:

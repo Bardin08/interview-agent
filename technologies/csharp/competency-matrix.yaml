@@ -1,0 +1,438 @@
+# File: interview-agent/technologies/csharp/competency-matrix.yaml
+# Comprehensive Competency Matrix for C# & .NET Technology
+
+metadata:
+  technology: C# & .NET
+  technology_id: csharp
+  version: 1.0.0
+  last_updated: 2025-10-18
+  description: |
+    Defines expected knowledge, skills, and evaluation criteria for each experience level
+    across all C# & .NET topics. Used for question selection, adaptive difficulty,
+    and comprehensive candidate assessment.
+
+# Experience Level Definitions
+# Levels reference universal definitions from config/experience-levels.yaml
+# Technology-specific overrides can be defined here if needed
+levels_ref: config/experience-levels.yaml
+
+# Technology-specific level customizations (optional)
+# Uncomment and modify if this technology needs different defaults
+# level_overrides:
+#   senior:
+#     question_count: 20-24  # Override default for C# complexity
+#   architect:
+#     question_count: 24-28
+
+# Topic-by-Topic Competency Expectations
+topics:
+  - id: csharp-fundamentals
+    name: C# Language Fundamentals
+    description: Core C# language syntax, data types, operators, and basic constructs
+    weight: 1.2  # Higher weight = more important for overall scoring
+
+    expectations:
+      fresher:
+        must_know:
+          - Basic syntax and program structure
+          - Primitive data types (int, string, bool, etc.)
+          - Variables and constants
+          - Operators (arithmetic, logical, comparison)
+          - Control flow (if/else, switch, loops)
+          - Basic string operations
+
+        good_to_know:
+          - Access modifiers (public, private)
+          - Simple methods and parameters
+          - Basic understanding of classes
+
+        not_expected:
+          - Advanced keywords (volatile, readonly)
+          - ref/out parameters
+          - Type inference nuances
+
+        question_types:
+          - definition
+          - basic_syntax
+          - code_reading
+
+        evaluation_criteria:
+          excellent: |
+            Explains concepts clearly with correct terminology.
+            Can write simple code snippets correctly.
+          good: |
+            Understands concepts but may struggle with precise terminology.
+            Minor syntax errors in code examples.
+          weak: |
+            Confused about basic concepts.
+            Cannot write simple code without significant help.
+
+        hint_strategy: "Provide concrete examples and relate to simple real-world scenarios"
+
+      junior:
+        must_know:
+          - All fresher topics
+          - ref/out parameters and their differences
+          - Value types vs reference types
+          - String immutability and StringBuilder
+          - Access modifiers (including protected, internal)
+          - Method overloading
+          - Properties vs fields
+
+        good_to_know:
+          - typeof vs GetType()
+          - Virtual, override, sealed basics
+          - Nullable types
+          - String interpolation
+
+        not_expected:
+          - Volatile keyword and memory barriers
+          - Advanced readonly scenarios
+          - IL/bytecode understanding
+
+        question_types:
+          - comparison
+          - when_to_use
+          - simple_debugging
+          - basic_scenario
+
+        evaluation_criteria:
+          excellent: |
+            Can explain differences with examples and use cases.
+            Understands implications of choices (e.g., ref vs out).
+            Writes clean, idiomatic code.
+          good: |
+            Knows concepts but misses some nuances.
+            Can explain with prompting but not spontaneously.
+          weak: |
+            Superficial understanding.
+            Confuses related concepts (e.g., value vs reference types).
+
+        hint_strategy: "Ask guiding questions to help connect related concepts"
+
+      mid_level:
+        must_know:
+          - All junior topics
+          - Advanced keywords (readonly, const, volatile)
+          - Type inference (var, dynamic)
+          - Expression-bodied members
+          - Pattern matching basics
+          - Tuples and deconstruction
+          - Local functions
+
+        good_to_know:
+          - Record types
+          - Init-only properties
+          - Top-level statements
+          - Global using directives
+          - Span<T> and Memory<T> basics
+
+        not_expected:
+          - Deep IL optimization knowledge
+          - Compiler internals
+
+        question_types:
+          - architecture_decision
+          - performance_implications
+          - code_review
+          - debugging_scenario
+
+        evaluation_criteria:
+          excellent: |
+            Makes informed decisions about language features.
+            Explains performance and maintainability trade-offs.
+            Can identify code smells and suggest improvements.
+          good: |
+            Understands features but may not consider all implications.
+            Needs prompting to think about edge cases.
+          weak: |
+            Uses features without understanding why.
+            Cannot explain trade-offs.
+
+        hint_strategy: "Focus on trade-offs and ask about alternative approaches"
+
+      senior:
+        must_know:
+          - All mid-level topics
+          - Memory management implications of language features
+          - Performance characteristics of different constructs
+          - Advanced pattern matching
+          - C# version evolution and feature adoption
+          - Unsafe code and pointers (when/why)
+          - Attributes and their applications
+
+        good_to_know:
+          - IL code reading
+          - Compiler optimizations
+          - Source generators
+          - Advanced Span<T> usage
+
+        not_expected:
+          - Complete compiler implementation details
+
+        question_types:
+          - optimization_scenario
+          - architectural_decision
+          - team_guidance
+          - complex_debugging
+
+        evaluation_criteria:
+          excellent: |
+            Deep understanding of language internals.
+            Can optimize code for specific scenarios.
+            Provides mentorship-quality explanations.
+            Considers team skill level in recommendations.
+          good: |
+            Strong knowledge but may miss some advanced scenarios.
+            Good practical understanding but limited theoretical depth.
+          weak: |
+            Cannot explain advanced concepts clearly.
+            Struggles with performance optimization questions.
+
+        hint_strategy: "Probe understanding of internals and real-world constraints"
+
+      architect:
+        must_know:
+          - All senior topics
+          - Language design decisions and their rationale
+          - Cross-cutting language concerns (performance, security, maintainability)
+          - Evolution of C# language and future directions
+          - Interop scenarios (C++/CLI, COM, etc.)
+          - Code generation and metaprogramming
+
+        good_to_know:
+          - Compiler implementation details
+          - Roslyn API usage
+          - Language specification details
+
+        not_expected: []
+
+        question_types:
+          - system_design
+          - technology_evaluation
+          - team_standards
+          - migration_strategy
+
+        evaluation_criteria:
+          excellent: |
+            Expert-level understanding across language features.
+            Can evaluate language features for organizational impact.
+            Establishes coding standards with clear rationale.
+            Understands historical context and future direction.
+          good: |
+            Very strong practical knowledge.
+            May lack depth in some esoteric areas.
+          weak: |
+            Cannot provide strategic guidance.
+            Limited understanding of cross-cutting concerns.
+
+        hint_strategy: "Challenge with complex scenarios requiring multiple considerations"
+
+  - id: oop
+    name: Object-Oriented Programming
+    description: OOP principles, inheritance, polymorphism, interfaces, and design patterns
+    weight: 1.3
+
+    expectations:
+      fresher:
+        must_know:
+          - What is a class and object
+          - Basic properties and methods
+          - Constructor basics
+          - Simple inheritance concept
+
+        good_to_know:
+          - Encapsulation basics
+          - Method overriding
+          - Interface concept
+
+        not_expected:
+          - Design patterns
+          - Multiple inheritance complexities
+          - Advanced polymorphism
+
+        question_types:
+          - definition
+          - basic_example
+          - simple_comparison
+
+        evaluation_criteria:
+          excellent: |
+            Can explain OOP basics with simple examples.
+            Understands difference between class and object.
+            Can write basic class with properties and methods.
+          good: |
+            Grasps concepts but examples may be unclear.
+            Minor confusion between related terms.
+          weak: |
+            Cannot distinguish between class and object.
+            Struggles to create basic class structure.
+
+        hint_strategy: "Use real-world analogies (Car class, specific car objects)"
+
+      junior:
+        must_know:
+          - All fresher topics
+          - Four OOP pillars (Encapsulation, Inheritance, Polymorphism, Abstraction)
+          - Interface vs abstract class
+          - Method overriding vs overloading
+          - Access modifiers impact on inheritance
+          - Virtual, override, sealed keywords
+
+        good_to_know:
+          - Basic design patterns (Singleton, Factory)
+          - SOLID principles overview
+          - Composition vs inheritance
+
+        not_expected:
+          - Advanced design patterns
+          - Deep SOLID application
+
+        question_types:
+          - comparison
+          - when_to_use
+          - design_choice
+          - code_improvement
+
+        evaluation_criteria:
+          excellent: |
+            Clearly explains OOP principles with examples.
+            Can choose between interface and abstract class appropriately.
+            Understands inheritance hierarchies.
+          good: |
+            Knows principles but application may be inconsistent.
+            Can explain but struggles with complex scenarios.
+          weak: |
+            Confuses interfaces and abstract classes.
+            Cannot apply OOP principles to design.
+
+        hint_strategy: "Provide scenarios and ask which OOP principle applies"
+
+      mid_level:
+        must_know:
+          - All junior topics
+          - SOLID principles with practical application
+          - Common design patterns (Factory, Strategy, Observer, Decorator)
+          - Composition over inheritance
+          - Dependency Injection principles
+          - Polymorphism in practice
+          - Interface segregation
+
+        good_to_know:
+          - Advanced design patterns (Command, Chain of Responsibility)
+          - Covariance and contravariance
+          - Generic constraints
+          - Double dispatch
+
+        not_expected:
+          - Academic design pattern theory
+          - Every GoF pattern memorized
+
+        question_types:
+          - design_problem
+          - refactoring_scenario
+          - pattern_identification
+          - architecture_decision
+
+        evaluation_criteria:
+          excellent: |
+            Applies SOLID principles naturally in design.
+            Can identify and suggest appropriate design patterns.
+            Explains trade-offs of different OOP approaches.
+            Recognizes when NOT to use patterns.
+          good: |
+            Understands SOLID but application needs refinement.
+            Knows patterns but may overuse or misuse them.
+          weak: |
+            Cannot apply SOLID principles in practice.
+            Uses patterns without understanding their purpose.
+
+        hint_strategy: "Present poorly designed code and ask for improvements"
+
+      senior:
+        must_know:
+          - All mid-level topics
+          - Deep understanding of SOLID with real-world trade-offs
+          - Design pattern selection for specific contexts
+          - OOP anti-patterns and code smells
+          - Balancing abstraction with simplicity
+          - Teaching OOP concepts to juniors
+          - Legacy code improvement strategies
+
+        good_to_know:
+          - Advanced generic patterns
+          - Functional programming vs OOP trade-offs
+          - Domain-driven design principles
+          - Event-driven architecture patterns
+
+        not_expected:
+          - Academic research on type systems
+
+        question_types:
+          - complex_refactoring
+          - mentorship_scenario
+          - code_review
+          - team_standards
+
+        evaluation_criteria:
+          excellent: |
+            Masterful application of OOP principles.
+            Can justify design decisions with multiple factors.
+            Identifies anti-patterns quickly.
+            Provides mentorship-quality guidance on OOP design.
+          good: |
+            Strong practical OOP skills.
+            May be dogmatic about certain principles.
+          weak: |
+            Cannot guide others on OOP design.
+            Struggles with complex refactoring decisions.
+
+        hint_strategy: "Present complex legacy code scenarios with constraints"
+
+      architect:
+        must_know:
+          - All senior topics
+          - System-wide OOP architecture decisions
+          - OOP in distributed systems
+          - Cross-cutting concerns (logging, security) in OOP
+          - Establishing OOP standards for teams
+          - Migration strategies (procedural to OOP, etc.)
+          - Performance implications of OOP designs at scale
+
+        good_to_know:
+          - Language design choices around OOP
+          - OOP paradigm limitations
+          - Polyglot architecture considerations
+
+        not_expected: []
+
+        question_types:
+          - system_architecture
+          - technology_strategy
+          - team_organization
+          - large_scale_refactoring
+
+        evaluation_criteria:
+          excellent: |
+            Strategic thinking about OOP in large systems.
+            Can evaluate organizational impact of design decisions.
+            Balances purity with pragmatism at scale.
+            Guides teams through complex architectural evolution.
+          good: |
+            Strong architectural OOP knowledge.
+            May focus too much on technical aspects vs organizational.
+          weak: |
+            Cannot think beyond individual components.
+            Struggles with system-wide OOP considerations.
+
+        hint_strategy: "Present organizational and technical constraints together"
+
+# Additional topics to be defined:
+# - Memory Management & Performance
+# - Collections & Data Structures
+# - Threading & Concurrency
+# - .NET Framework & CLR
+# - ASP.NET & Web Development
+# - ASP.NET Core
+# - Data Access
+# - Advanced Topics

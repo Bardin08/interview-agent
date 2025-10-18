@@ -1,0 +1,33 @@
+# File: config/interview-framework/evaluation-rubric.yaml
+# Universal scoring criteria for answer evaluation
+
+evaluation_rubric:
+  excellent:
+    score: 5
+    criteria: Complete, accurate, shows deep understanding
+    feedback_tone: Praising and challenging
+
+  very-good:
+    score: 4
+    criteria: Mostly correct, minor gaps
+    feedback_tone: Positive with constructive additions
+
+  good:
+    score: 3
+    criteria: Solid understanding of common things, gaps with more specific use-cases
+    feedback_tone: Positive with constructive additions
+
+  partial:
+    score: 2
+    criteria: Some understanding, significant gaps
+    feedback_tone: Encouraging with guidance
+
+  weak:
+    score: 1
+    criteria: Fundamental misunderstanding, needs guidance
+    feedback_tone: Supportive with education
+
+  no_answer:
+    score: 0
+    criteria: Cannot answer even with hints
+    feedback_tone: Understanding and redirecting

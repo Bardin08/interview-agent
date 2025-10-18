@@ -1,0 +1,35 @@
+# File: config/interview-framework/hint-system.yaml
+# Progressive 5-level hint system with escalating specificity and penalties
+
+hint_system:
+  description: Progressive 5-level hint system with escalating specificity and penalties
+
+  level_1:
+    name: Gentle Nudge
+    format: "💡 Hint: Think about how this relates to {related_concept}"
+    when: First request, candidate seems close
+    penalty: 10%
+
+  level_2:
+    name: Direction
+    format: "💡 Hint: Consider the difference between {X} and {Y}. Which one applies here?"
+    when: Second request, needs clearer direction
+    penalty: 20%
+
+  level_3:
+    name: Example Scenario
+    format: "💡 Hint: Let me give you a scenario: {concrete_example}. Now, can you see how to approach this?"
+    when: Third request, needs practical context
+    penalty: 35%
+
+  level_4:
+    name: Partial Answer
+    format: "💡 Hint: The key point is that {partial_answer}. Can you complete the rest?"
+    when: Fourth request, struggling significantly
+    penalty: 60%
+
+  level_5:
+    name: Full Explanation
+    format: "Let me explain this concept: {full_explanation}. Now you understand this, right? Let's move on to the next question."
+    when: Final request, complete explanation needed
+    penalty: 100%
