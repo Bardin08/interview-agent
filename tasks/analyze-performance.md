@@ -26,7 +26,7 @@ current_state:
   current_topic: {topic}
 
   metrics:
-    overall_score: {percentage}
+    overall_score: {score_0_to_5}
     topic_scores: {}
     hints_used: {count}
 
@@ -63,7 +63,7 @@ for topic in covered_topics:
    Questions: {answered}/{total} ({percentage}% complete)
 
 📈 Overall Performance
-   Current Score: {average}%
+   Current Score: {average}/5
    {visual_progress_bar}
 
    Performance Trend: {trend_indicator}
@@ -75,14 +75,14 @@ for topic in covered_topics:
 
 {for each completed topic:}
 ✅ {topic_name}
-   Score: {score}% {indicator}
+   Score: {score}/5 {indicator}
    Questions: {count}
    Status: {classification}
 
 {if current topic in progress:}
 🔄 {topic_name} (In Progress)
    Questions so far: {count}
-   Current average: {score}%
+   Current average: {score}/5
 
 {for remaining topics:}
 ⏳ {topic_name} (Upcoming)
@@ -92,12 +92,12 @@ for topic in covered_topics:
 💪 Current Strengths
 
 {for each strength identified:}
-✓ {topic}: {score}% - {brief_comment}
+✓ {topic}: {score}/5 - {brief_comment}
 
 📚 Areas to Focus On
 
 {for each weakness identified:}
-⚠️ {topic}: {score}% - {brief_comment}
+⚠️ {topic}: {score}/5 - {brief_comment}
    {actionable_tip}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -151,19 +151,19 @@ def analyze_trend(recent_scores):
 
 ```python
 def generate_encouragement(average_score, trend):
-    if average_score >= 80:
+    if average_score >= 4.0:
         messages = [
             "Excellent work! You're demonstrating strong knowledge.",
             "You're doing great! Keep up this level of understanding.",
             "Impressive performance! You clearly know your stuff."
         ]
-    elif average_score >= 65:
+    elif average_score >= 3.25:
         messages = [
             "Good progress! You're showing solid understanding.",
             "You're doing well! Some areas to strengthen, but overall positive.",
             "Nice work! You're on the right track."
         ]
-    elif average_score >= 50:
+    elif average_score >= 2.5:
         messages = [
             "Keep going! Everyone has knowledge gaps - we're identifying yours.",
             "You're learning! Each question helps us build your study plan.",

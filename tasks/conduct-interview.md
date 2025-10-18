@@ -221,16 +221,17 @@ For each answer:
 2. **Score the response**
    ```yaml
    scoring:
-     100: All key points + deep understanding
-     75: Most key points + good understanding
-     50: Some key points + partial understanding
-     25: Few key points + misunderstandings
-     0: Incorrect or no answer
+     5: All key points + deep understanding (5/5 EXCELLENT)
+     4: Most key points + good understanding (4/5 VERY GOOD)
+     3: Some key points + solid understanding (3/5 GOOD)
+     2: Few key points + partial understanding (2/5 PARTIAL)
+     1: Fundamental misunderstanding (1/5 WEAK)
+     0: Incorrect or no answer (0/5 NO ANSWER)
    ```
 
 3. **Provide feedback**
 
-   **If Excellent (≥85):**
+   **If Excellent (5/5):**
    ```text
    ✅ Excellent! You clearly understand {concept}.
    {optional: specific_strength_noted}
@@ -238,7 +239,7 @@ For each answer:
    Let's move to the next question.
    ```
 
-   **If Good (70-84):**
+   **If Very Good/Good (3-4/5):**
    ```text
    ✅ Good answer!
 
@@ -247,7 +248,7 @@ For each answer:
    Moving on...
    ```
 
-   **If Partial (50-69):**
+   **If Partial (2/5):**
    ```text
    🟡 You're on the right track with {what_was_correct}.
 
@@ -258,7 +259,7 @@ For each answer:
    Let's continue.
    ```
 
-   **If Weak (<50):**
+   **If Weak (0-1/5):**
    ```text
    🔴 I see this is challenging. Let me help clarify:
 
@@ -274,7 +275,7 @@ For each answer:
      topic: "{topic}"
      question: "{text}"
      candidate_answer: "{summary}"
-     score: {0-100}
+     score: {0-5}
      hints_given: {count}
      evaluation: "{analysis}"
      timestamp: "{ISO8601}"
@@ -506,12 +507,12 @@ Ready to continue? I'll pick up where we left off.
 Progress: {answered}/{total} questions ({percentage}%)
 Time Elapsed: {duration}
 
-Overall Score: {average_score}%
-█████████░░░░░░░ {percentage}%
+Overall Score: {average_score}/5
+█████████░░░░░░░ {score_visualization}
 
 Topics Covered:
-✅ {topic_1}: {score}% {indicator}
-✅ {topic_2}: {score}% {indicator}
+✅ {topic_1}: {score}/5 {indicator}
+✅ {topic_2}: {score}/5 {indicator}
 🔄 {current_topic}: In progress
 
 Current Strengths:
@@ -531,9 +532,9 @@ Continue when ready!
 ```
 
 **Indicators:**
-- 🟢 Strong (≥80%)
-- 🟡 Adequate (60-79%)
-- 🔴 Needs Work (<60%)
+- 🟢 Strong (≥4/5)
+- 🟡 Adequate (3/5)
+- 🔴 Needs Work (≤2/5)
 
 ## Session Conclusion
 
@@ -557,7 +558,7 @@ Strong Areas:
 Focus Areas:
 📚 {topic_list}
 
-Overall Performance: {score}% {indicator}
+Overall Performance: {score}/5 {indicator}
 
 I'm now generating your comprehensive feedback report...
 
