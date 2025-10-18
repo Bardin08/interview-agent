@@ -34,9 +34,9 @@ session:
     total_questions: 0
     questions_answered: 0
     questions_skipped: 0
-    correct_answers: 0  # score >= 85
-    partial_answers: 0  # 50 <= score < 85
-    incorrect_answers: 0  # score < 50
+    correct_answers: 0  # score >= 4.25
+    partial_answers: 0  # 2.5 <= score < 4.25
+    incorrect_answers: 0  # score < 2.5
     average_score: 0.0
     hints_used_total: 0
     time_per_question_avg_seconds: 0
@@ -46,15 +46,15 @@ session:
     # Example structure:
     # "C# Fundamentals":
     #   questions_count: 3
-    #   average_score: 75.0
+    #   average_score: 4.5
     #   hints_used: 2
     #   time_spent_seconds: 180
     #   classification: "competent"  # mastered|competent|needs_improvement|critical_gap
     #   questions:
     #     - question_number: 1
-    #       score: 100
+    #       score: 5
     #     - question_number: 2
-    #       score: 75
+    #       score: 4
 
   # Complete Question History
   question_history: []
@@ -68,7 +68,7 @@ session:
     #     - "Reference types store memory reference"
     #   candidate_answer_summary: "Value types are on stack, reference on heap..."
     #   candidate_answer_full: "..." # Full verbatim response
-    #   score: 75
+    #   score: 4
     #   evaluation: "Good answer, mentioned key concepts but missed..."
     #   hints_given: 1
     #   hint_texts:
@@ -80,12 +80,12 @@ session:
   # Identified Areas
   identified_strengths: []
     # - topic: "ASP.NET Core"
-    #   score: 90
+    #   score: 4.5
     #   note: "Strong understanding of middleware pipeline"
 
   identified_weaknesses: []
     # - topic: "Threading"
-    #   score: 35
+    #   score: 1.75
     #   priority: 1  # 1=critical, 2=needs improvement
     #   note: "Fundamental gaps in synchronization concepts"
 

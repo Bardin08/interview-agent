@@ -1,0 +1,305 @@
+# File: config/interview-framework/scoring-tree.yaml
+# Enhanced scoring decision tree for accurate answer evaluation
+
+scoring_tree:
+  description: |
+    Multi-stage decision tree for evaluating candidate answers.
+    Apply checks in order - early disqualifiers take precedence.
+    Ensures honest evaluation per core-principles.yaml.
+
+  # Stage 1: Immediate Disqualifiers (Score: 0/5)
+  stage_1_disqualifiers:
+    description: "Answers that demonstrate complete failure to engage with the question"
+    score: 0
+
+    checks:
+      - id: no_attempt
+        description: "No answer, gibberish, or 'I don't know' without context"
+        examples:
+          - ""
+          - "idk"
+          - "???"
+
+      - id: off_topic
+        description: "Answer completely unrelated to the question"
+        examples:
+          - "Question about C# -> Answer about Python"
+
+      - id: hostile_dismissal
+        description: "Hostile, unprofessional, or aggressively dismissive response"
+        examples:
+          - "fuck off that micro services"
+          - "this is stupid"
+          - "why would anyone care about this"
+        severity: critical
+        note: "Immediate 0/5 regardless of any technical merit"
+
+  # Stage 2: Fundamental Issues (Score: 1/5 - Weak)
+  stage_2_weak:
+    description: "Answer attempts to engage but has critical flaws"
+    score: 1
+    score_range: "0-20%"
+
+    checks:
+      - id: question_avoidance
+        description: "Doesn't address the actual question asked"
+        examples:
+          - "Q: How to establish standards? A: it's a startup culture!"
+          - "Q: Security audit checklist? A: security is overestimated"
+        evaluation: |
+          Even if the statement might have some merit in isolation,
+          if it doesn't address what was asked, it's weak.
+
+      - id: extreme_brevity_no_depth
+        description: "Answer is 1-5 words with zero depth or context"
+        examples:
+          - "value types faster then reference types" (for Architect-level question)
+          - "just use cache"
+          - "microservices bad"
+        level_adjustment: |
+          - Fresher/Junior: Might be acceptable for simple questions
+          - Mid-level+: Requires more depth
+          - Senior/Architect: Completely inadequate
+
+      - id: fundamental_misunderstanding
+        description: "Answer demonstrates core conceptual confusion"
+        examples:
+          - "Classes are faster than structs always"
+          - "Task and Thread are the same thing"
+          - "EF Core is slower than raw SQL, never use it"
+
+      - id: unprofessional_dismissive
+        description: "Dismissive without technical justification, unprofessional tone"
+        examples:
+          - "Monolith is better" (without context or justification)
+          - "That's old tech, nobody uses it"
+          - "Whoever designed this is an idiot"
+        note: "Different from hostile (0/5), but still unprofessional"
+
+      - id: radical_position_no_nuance
+        description: "Extreme position without considering trade-offs or alternatives"
+        examples:
+          - "Always use microservices"
+          - "Never use exceptions"
+          - "OOP is dead"
+          - "Security is overrated"
+        evaluation: |
+          Architect-level requires nuanced thinking.
+          Radical absolutism without justification = 1/5.
+
+  # Stage 3: Partial Understanding (Score: 2/5)
+  stage_3_partial:
+    description: "Answer shows some understanding but significant gaps"
+    score: 2
+    score_range: "20-40%"
+
+    checks:
+      - id: surface_level_only
+        description: "Mentions correct concept but no depth, mechanism, or reasoning"
+        examples:
+          - "Q: Explain async/await A: Makes things asynchronous"
+          - "Q: DI benefits? A: Decouples code"
+        level_adjustment: |
+          - Junior: Might be 2-3/5
+          - Senior/Architect: Definitely 2/5 or lower
+
+      - id: partial_answer_missing_critical
+        description: "Gets some points right but misses critical aspects from competency matrix must_know"
+        examples:
+          - "Value types are faster" (misses stack/heap, GC, boxing, cache locality for Architect level)
+
+      - id: personal_preference_only
+        description: "Decision based on preference without technical justification"
+        examples:
+          - "pg, I like it more" (without addressing requirements)
+          - "I prefer MongoDB because it's easier"
+        evaluation: |
+          Architect must justify with trade-offs, requirements, constraints.
+
+      - id: correct_but_incomplete
+        description: "Technically correct but missing 50%+ of expected depth"
+        examples:
+          - "Q: Migration strategy? A: Migrate simplest parts first"
+            # Missing: how to identify simple parts, blockers, tooling,
+            # success metrics, parallel infrastructure, etc.
+
+  # Stage 4: Good Understanding (Score: 3/5)
+  stage_4_good:
+    description: "Solid understanding with minor gaps"
+    score: 3
+    score_range: "60%"
+
+    characteristics:
+      - Addresses the question directly
+      - Covers must_know topics from competency matrix
+      - Shows understanding of core concepts
+      - May miss some good_to_know details
+      - Minimal examples or justification provided
+
+    level_expectations:
+      junior: "Covers basic concepts correctly"
+      mid_level: "Explains with some examples, mentions trade-offs"
+      senior: "Detailed explanation but may miss edge cases"
+      architect: "Covers main points but lacks strategic depth or organizational impact"
+
+  # Stage 5: Very Good (Score: 4/5)
+  stage_5_very_good:
+    description: "Strong answer with only minor gaps"
+    score: 4
+    score_range: "80%"
+
+    characteristics:
+      - Addresses question comprehensively
+      - Covers must_know + most good_to_know from competency matrix
+      - Provides examples and justification
+      - Shows practical application
+      - Minor details or edge cases may be missing
+
+    level_expectations:
+      junior: "Goes beyond basics, shows practical understanding"
+      mid_level: "Explains trade-offs and when to use different approaches"
+      senior: "Deep technical knowledge with practical wisdom"
+      architect: "Strategic thinking but may miss some organizational considerations"
+
+  # Stage 6: Excellent (Score: 5/5)
+  stage_6_excellent:
+    description: "Exceptional answer demonstrating mastery"
+    score: 5
+    score_range: "100%"
+
+    characteristics:
+      - Comprehensive coverage of topic
+      - Must_know + good_to_know topics covered
+      - Multiple examples and scenarios
+      - Trade-offs clearly explained
+      - Shows deep understanding and practical experience
+      - Considers edge cases and constraints
+
+    level_expectations:
+      junior: "Exceeds expectations for level, shows strong fundamentals"
+      mid_level: "Architectural thinking, considers maintainability and performance"
+      senior: "Mentorship-quality answer, considers team and organizational factors"
+      architect: "Strategic vision, cross-cutting concerns, long-term implications"
+
+# Evaluation Process
+evaluation_process:
+  description: "Step-by-step process for scoring each answer"
+
+  steps:
+    - step: 1
+      action: "Read candidate's answer completely"
+
+    - step: 2
+      action: "Apply Stage 1 checks (Disqualifiers)"
+      decision: "If any match -> Score = 0/5, STOP"
+
+    - step: 3
+      action: "Apply Stage 2 checks (Weak)"
+      decision: "If multiple matches -> Score = 1/5, STOP"
+
+    - step: 4
+      action: "Check against competency matrix for experience level"
+      questions:
+        - "Does answer cover must_know topics?"
+        - "What percentage of good_to_know topics covered?"
+        - "Are there fundamental misunderstandings?"
+
+    - step: 5
+      action: "Evaluate depth and quality"
+      criteria:
+        - Specificity vs vagueness
+        - Examples provided
+        - Trade-offs discussed
+        - Practical application shown
+        - Edge cases considered
+
+    - step: 6
+      action: "Assign score based on Stage 3-6 criteria"
+      note: "Default to lower score when uncertain between two levels"
+
+    - step: 7
+      action: "Validate against core principle: Honest Evaluation"
+      reminder: |
+        "Be supportive but brutally honest. Radical/extreme solutions
+        without considering optimization, over-engineering, or fundamental
+        misunderstandings must be scored low (1-2) even if technically possible.
+        Don't artificially inflate scores."
+
+# Common Scoring Mistakes to Avoid
+common_mistakes:
+  - mistake: "Being too generous with dismissive answers"
+    wrong: "Monolith is better (50/100)"
+    right: "Monolith is better (0-20/100)"
+    reasoning: "Doesn't address interoperability question, dismissive without justification"
+
+  - mistake: "Rewarding brevity without depth for senior/architect levels"
+    wrong: "value types faster then reference types (25/100)"
+    right: "value types faster then reference types (0-20/100)"
+    reasoning: "Architect level requires deep understanding of memory, GC, performance trade-offs"
+
+  - mistake: "Accepting question avoidance as partial credit"
+    wrong: "it's a startup culture! (50/100 for question about establishing standards)"
+    right: "it's a startup culture! (20/100)"
+    reasoning: "Doesn't answer how to establish standards, just makes an excuse"
+
+  - mistake: "Giving credit for personal preference without justification"
+    wrong: "pg, I like it more (50/100 for database selection)"
+    right: "pg, I like it more (20-40/100)"
+    reasoning: "Architect must justify with requirements, trade-offs, constraints analysis"
+
+# Red Flags Checklist
+red_flags:
+  professionalism:
+    - Profanity or hostile language -> 0/5
+    - Dismissive attitude without technical merit -> 1/5
+    - Arrogance without backing it up -> 1-2/5
+
+  depth:
+    - Single sentence for complex architect question -> Max 2/5
+    - No examples when examples are expected -> Reduce 1 point
+    - No trade-off discussion when trade-offs are key -> Reduce 1-2 points
+
+  accuracy:
+    - Fundamental technical errors -> Max 1/5
+    - Partially correct but misleading -> 2/5
+    - Correct but overly simplistic for level -> 2-3/5
+
+  relevance:
+    - Doesn't address the question -> 0-1/5
+    - Addresses related but different topic -> 1-2/5
+    - Addresses question but misses main point -> 2-3/5
+
+# Experience Level Multipliers
+level_strictness:
+  description: "How strictly to evaluate based on experience level"
+
+  fresher:
+    strictness: low
+    note: "Be encouraging, accept basic understanding"
+    min_score_for_weak_but_trying: 1
+
+  junior:
+    strictness: moderate
+    note: "Expect clear explanations with examples"
+    min_score_for_weak_but_trying: 1
+
+  mid_level:
+    strictness: moderate_high
+    note: "Expect trade-offs and practical application"
+    min_score_for_weak_but_trying: 1
+
+  senior:
+    strictness: high
+    note: "Expect deep knowledge and mentorship-quality answers"
+    min_score_for_weak_but_trying: 0
+
+  architect:
+    strictness: very_high
+    note: "Expect strategic thinking, cross-cutting concerns, organizational impact"
+    min_score_for_weak_but_trying: 0
+    evaluation_note: |
+      At architect level:
+      - Superficial answers (even if correct) get max 2/5
+      - No justification for decisions = 1-2/5
+      - Dismissive without nuance = 0-1/5
+      - Personal preference without analysis = 1-2/5

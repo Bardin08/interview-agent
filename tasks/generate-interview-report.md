@@ -61,14 +61,16 @@ session_data:
 
 ```python
 def calculate_distribution(questions):
-    excellent = count_where(score >= 85)
-    good = count_where(70 <= score < 85)
-    partial = count_where(50 <= score < 70)
-    weak = count_where(25 <= score < 50)
-    no_answer = count_where(score < 25)
+    excellent = count_where(score == 5)
+    very_good = count_where(score == 4)
+    good = count_where(score == 3)
+    partial = count_where(score == 2)
+    weak = count_where(score == 1)
+    no_answer = count_where(score == 0)
 
     return {
         'excellent': (excellent, percentage),
+        'very_good': (very_good, percentage),
         'good': (good, percentage),
         'partial': (partial, percentage),
         'weak': (weak, percentage),
@@ -80,13 +82,13 @@ def calculate_distribution(questions):
 
 ```python
 def overall_assessment(average_score):
-    if average_score >= 85:
+    if average_score >= 4.25:
         return "Excellent - Interview Ready"
-    elif average_score >= 75:
+    elif average_score >= 3.75:
         return "Good - Minor improvements needed"
-    elif average_score >= 60:
+    elif average_score >= 3.0:
         return "Competent - Focused study recommended"
-    elif average_score >= 50:
+    elif average_score >= 2.5:
         return "Developing - Significant preparation needed"
     else:
         return "Foundational - Extensive study required"
@@ -105,13 +107,13 @@ def classify_topic(topic_score, hints_used):
         'priority': None
     }
 
-    if topic_score >= 85 and hints_used < 2:
+    if topic_score >= 4.25 and hints_used < 2:
         classification['level'] = 'Mastered'
         classification['priority'] = 4  # Low priority
-    elif topic_score >= 70:
+    elif topic_score >= 3.5:
         classification['level'] = 'Competent'
         classification['priority'] = 3
-    elif topic_score >= 50:
+    elif topic_score >= 2.5:
         classification['level'] = 'Needs Improvement'
         classification['priority'] = 2
     else:
@@ -159,7 +161,7 @@ def identify_patterns(topic_data):
 
 ## 🎯 Executive Summary
 
-**Overall Performance:** {score}% - {assessment}
+**Overall Performance:** {score}/5 - {assessment}
 
 **Interview Readiness:** {readiness_assessment}
 
@@ -194,25 +196,25 @@ Performance Distribution:
 
 | Topic | Questions | Score | Level | Priority |
 |-------|-----------|-------|-------|----------|
-| {topic} | {count} | {score}% | {level} | {priority} |
+| {topic} | {count} | {score}/5 | {level} | {priority} |
 ...
 
 ### Performance Chart
 
 ```
-C# Fundamentals    ████████████████░░ 80%  🟢
-OOP Concepts       ███████████░░░░░░░ 65%  🟡
-Collections        ████████████████░░ 78%  🟢
-Threading          ████░░░░░░░░░░░░░░ 35%  🔴
-.NET Framework     ██████████████░░░░ 72%  🟡
-ASP.NET Core       ██████████████████ 90%  🟢
-Data Access        ███████░░░░░░░░░░░ 58%  🟡
+C# Fundamentals    ████████████████░░ 4.0/5  🟢
+OOP Concepts       ███████████░░░░░░░ 3.25/5 🟡
+Collections        ████████████████░░ 3.9/5  🟢
+Threading          ████░░░░░░░░░░░░░░ 1.75/5 🔴
+.NET Framework     ██████████████░░░░ 3.6/5  🟡
+ASP.NET Core       ██████████████████ 4.5/5  🟢
+Data Access        ███████░░░░░░░░░░░ 2.9/5  🟡
 ```
 
 **Legend:**
-- 🟢 Strong (≥80%) - Mastered
-- 🟡 Adequate (60-79%) - Competent
-- 🔴 Needs Work (<60%) - Requires Focus
+- 🟢 Strong (≥4.0/5) - Mastered
+- 🟡 Adequate (3.0-3.9/5) - Competent
+- 🔴 Needs Work (<3.0/5) - Requires Focus
 
 ---
 ```
@@ -224,7 +226,7 @@ Data Access        ███████░░░░░░░░░░░ 58%  �
 
 You demonstrated solid understanding in these areas:
 
-### 1. {Strength Topic #1} - {score}%
+### 1. {Strength Topic #1} - {score}/5
 
 **What You Did Well:**
 - {specific_capability_1}
@@ -239,7 +241,7 @@ You demonstrated solid understanding in these areas:
 
 ---
 
-### 2. {Strength Topic #2} - {score}%
+### 2. {Strength Topic #2} - {score}/5
 
 [Similar structure...]
 
@@ -260,7 +262,7 @@ These topics require focused attention:
 
 ### PRIORITY 1: Critical Gaps
 
-#### {Critical Topic #1} - {score}%
+#### {Critical Topic #1} - {score}/5
 
 **📍 Why This Matters:**
 {practical_importance}
@@ -325,14 +327,14 @@ Complete breakdown of all questions asked:
 ---
 
 ### Q1: {Question Text}
-**Topic:** {topic} | **Difficulty:** {level} | **Score:** {score}%
+**Topic:** {topic} | **Difficulty:** {level} | **Score:** {score}/5
 
 **Your Answer:**
 {candidate_response_summary}
 
 **Evaluation:** {evaluation_comment}
 
-{if_score_less_than_70}
+{if_score_less_than_3}
 **Complete Answer:**
 {full_correct_answer_with_explanation}
 

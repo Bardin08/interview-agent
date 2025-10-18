@@ -1,0 +1,355 @@
+# File: config/interview-framework/scoring-validation-examples.yaml
+# Validation examples showing correct scoring using the scoring-tree.yaml
+
+# These are real examples of incorrectly scored answers and their corrections
+
+validation_examples:
+  - id: example_1
+    question:
+      text: "What are the key differences between value types and reference types in C#, and how do these differences influence performance and memory usage in large-scale .NET applications?"
+      level: architect
+      topic: Memory Management & Performance
+
+    answer: "value types faster then reference types"
+
+    previous_score:
+      score: 25
+      percentage: 25
+      rationale: "Identified a true high-level idea about performance"
+
+    correct_score:
+      score: 1
+      percentage: 20
+      stage: stage_2_weak
+      criteria:
+        - extreme_brevity_no_depth: true
+        - fundamental_misunderstanding: false (technically correct but insufficient)
+        - missing_architect_depth: true
+
+    scoring_tree_analysis:
+      stage_1_disqualifiers: "❌ Not hostile, not off-topic"
+      stage_2_weak: "✅ MATCH - Extreme brevity with no depth for Architect level"
+      competency_matrix_check:
+        must_know_architect:
+          - "Stack vs heap allocation" # Missing
+          - "GC impact and pressure" # Missing
+          - "Cache locality and memory layout" # Missing
+          - "Boxing/unboxing costs" # Missing
+          - "Design implications" # Missing
+          - ".NET Core improvements (Span<T>, ref struct)" # Missing
+        coverage: "0% of must_know topics covered beyond superficial statement"
+      level_strictness: "Architect level requires very_high strictness"
+
+    rationale: |
+      For an Architect-level question, a 4-word answer with grammatical error
+      ("then" vs "than") and zero depth is completely inadequate.
+      The answer doesn't mention:
+      - Where types are stored (stack vs heap)
+      - Garbage collection impact
+      - Memory layout and cache locality
+      - Boxing/unboxing performance cost
+      - Design implications for large-scale systems
+      - Modern .NET improvements
+
+      This demonstrates extreme_brevity_no_depth from scoring-tree.yaml stage_2_weak.
+
+  - id: example_2
+    question:
+      text: "You're designing a distributed microservices system using .NET. Some services are .NET Core, others are legacy .NET Framework. What challenges might you face in interoperability, and how would you architect around them?"
+      level: architect
+      topic: System Architecture
+
+    answer: "Monolith is better, fuck off that micro services"
+
+    previous_score:
+      score: 50
+      percentage: 50
+      rationale: "Expressing strong architectural stance, recognizing complexity"
+
+    correct_score:
+      score: 0
+      percentage: 0
+      stage: stage_1_disqualifiers
+      criteria:
+        - hostile_dismissal: true
+        - profanity: true
+        - off_topic: true (doesn't address interoperability challenges)
+
+    scoring_tree_analysis:
+      stage_1_disqualifiers: "✅ MATCH - Hostile language with profanity"
+      severity: critical
+
+    rationale: |
+      Immediate disqualifier due to hostile, unprofessional language.
+      Even if the candidate had a valid architectural opinion about monoliths
+      vs microservices, this response:
+      1. Contains profanity ("fuck off")
+      2. Is aggressively dismissive
+      3. Doesn't address the actual question (interoperability challenges)
+      4. Shows no technical depth or trade-off analysis
+
+      Per scoring-tree.yaml: "Hostile, unprofessional, or aggressively dismissive
+      response -> Score = 0/5, STOP"
+
+  - id: example_3
+    question:
+      text: "You've joined a team that has no consistent coding standards, no architectural documentation, and a dozen .NET microservices with inconsistent practices. As the new architect, how would you approach establishing technical standards and aligning the team without causing disruption?"
+      level: architect
+      topic: Team Leadership & Standards
+
+    answer: "it's a startup culture!"
+
+    previous_score:
+      score: 50
+      percentage: 50
+      rationale: "Recognizing cultural context which is critical"
+
+    correct_score:
+      score: 1
+      percentage: 20
+      stage: stage_2_weak
+      criteria:
+        - question_avoidance: true
+        - dismissive_without_justification: true
+
+    scoring_tree_analysis:
+      stage_1_disqualifiers: "❌ Not hostile enough for 0/5"
+      stage_2_weak: "✅ MATCH - Doesn't address the actual question"
+      competency_matrix_check:
+        must_know_architect:
+          - "Change management strategy" # Missing
+          - "Gradual alignment approach" # Missing
+          - "Documentation strategy" # Missing
+          - "Team buy-in techniques" # Missing
+          - "Standards enforcement methods" # Missing
+        coverage: "0% - doesn't answer how to establish standards"
+
+    rationale: |
+      The question asks "HOW would you approach establishing technical standards"
+      and the answer is "it's a startup culture!" which:
+      1. Doesn't provide any approach or methodology
+      2. Makes an excuse rather than addressing the challenge
+      3. Implies standards aren't needed (wrong for architect role)
+      4. Shows no strategic thinking or leadership
+
+      This is classic question_avoidance from scoring-tree.yaml stage_2_weak:
+      "Doesn't address the actual question asked -> Score = 1/5"
+
+  - id: example_4
+    question:
+      text: "You're migrating a legacy .NET Framework monolith to .NET 8. What migration strategy would you use, and how would you prioritize what to modernize, replace, or leave alone?"
+      level: architect
+      topic: Migration Strategy
+
+    answer: "Gonna migrate simplest parts first"
+
+    previous_score:
+      score: 75
+      percentage: 75
+      rationale: "Aligns with strangler pattern, minimizes risk"
+
+    correct_score:
+      score: 3
+      percentage: 60
+      stage: stage_4_good
+      criteria:
+        - addresses_question: true
+        - correct_direction: true
+        - lacks_architect_depth: true
+
+    scoring_tree_analysis:
+      stage_1_disqualifiers: "❌ Not applicable"
+      stage_2_weak: "❌ Not applicable - addresses question"
+      stage_3_partial: "❌ More than superficial"
+      stage_4_good: "✅ MATCH - Solid understanding, but gaps in depth"
+      competency_matrix_check:
+        must_know_architect:
+          - "Migration patterns (strangler, etc.)" # ✓ Implied
+          - "Risk assessment methodology" # Missing
+          - "Technical blocker identification" # Missing (how to identify "simplest"?)
+          - "Tooling strategy" # Missing
+          - "Success metrics" # Missing
+          - "Parallel infrastructure setup" # Missing
+        coverage: "~20% - has right idea but missing critical details"
+
+    rationale: |
+      This answer is actually reasonable but lacks architect-level depth.
+      It correctly identifies a valid strategy (strangler pattern approach)
+      but doesn't explain:
+      - How to identify "simplest parts" (dependencies, coupling, platform APIs)
+      - What makes something "simple" vs "complex"
+      - Technical blockers (Web Forms, WCF, AppDomains)
+      - Tooling (.NET Upgrade Assistant, try-convert)
+      - Success metrics
+      - How to handle shared contracts
+
+      Score: 3/5 (Good) not 75/100.
+      It's correct but incomplete for architect level.
+
+  - id: example_5
+    question:
+      text: "You're reviewing a large ASP.NET Core app that's had several security incidents. Devs say, 'We use HTTPS and JWTs, so it's secure.' As an architect, what flaws might still exist in this app — and what would you look for during a security audit?"
+      level: architect
+      topic: Security Architecture
+
+    answer: "the role of cyber security is overestimated"
+
+    previous_score:
+      score: 25
+      percentage: 25
+      rationale: "Signaling security isn't free, can slow teams down"
+
+    correct_score:
+      score: 0
+      percentage: 0
+      stage: stage_2_weak
+      criteria:
+        - question_avoidance: true
+        - radical_position_no_nuance: true
+        - dismissive_without_justification: true
+
+    scoring_tree_analysis:
+      stage_1_disqualifiers: "❌ Not hostile enough for automatic 0, but close"
+      stage_2_weak: "✅ MATCH - Multiple weak criteria"
+      red_flags:
+        - "Doesn't address the question (what to audit)"
+        - "Radical dismissal of security"
+        - "No technical depth"
+        - "Dangerous mindset for architect role"
+
+    rationale: |
+      The question explicitly asks for a security audit checklist and
+      what flaws might exist. The answer "security is overestimated":
+      1. Doesn't provide any audit methodology
+      2. Doesn't identify any potential flaws
+      3. Makes a radical dismissive statement
+      4. Shows no understanding of defense-in-depth
+      5. Potentially dangerous for an architect role
+
+      Per scoring-tree.yaml:
+      - question_avoidance: "Doesn't address the actual question asked"
+      - radical_position_no_nuance: "Extreme position without considering trade-offs"
+
+      Borderline between 0/5 and 1/5. Given it's for architect and
+      shows dangerous mindset: 0-1/5, leaning toward 0/5.
+
+  - id: example_6
+    question:
+      text: "You've been asked to choose between SQL Server, PostgreSQL, and Cosmos DB for a new high-scale .NET service that needs global distribution, low latency reads, and tunable consistency. How would you approach the decision, and what trade-offs would guide your choice?"
+      level: architect
+      topic: Database Selection & Architecture
+
+    answer: "pg, I like it more"
+
+    previous_score:
+      score: 50
+      percentage: 50
+      rationale: "Made a choice, showed preference, opinionated"
+
+    correct_score:
+      score: 1
+      percentage: 20
+      stage: stage_2_weak
+      criteria:
+        - personal_preference_only: true
+        - no_requirements_analysis: true
+        - no_trade_off_discussion: true
+
+    scoring_tree_analysis:
+      stage_1_disqualifiers: "❌ Not applicable"
+      stage_2_weak: "✅ MATCH - Personal preference without justification"
+      competency_matrix_check:
+        must_know_architect:
+          - "Requirements analysis" # Missing (global distribution, low latency, consistency)
+          - "Database comparison methodology" # Missing
+          - "Trade-off evaluation" # Missing
+          - "Cost considerations" # Missing
+          - "Operational complexity" # Missing
+          - "Technology-specific strengths/weaknesses" # Missing
+        coverage: "0% - only states preference"
+      red_flags:
+        - "No analysis of global distribution requirement"
+        - "No discussion of consistency models"
+        - "No cost/performance trade-offs"
+        - "Doesn't address low-latency reads requirement"
+
+    rationale: |
+      For an architect-level database selection question with specific
+      requirements (global distribution, low latency, tunable consistency),
+      "pg, I like it more" is completely inadequate.
+
+      The answer doesn't:
+      - Analyze the stated requirements
+      - Discuss how PostgreSQL handles global distribution (it doesn't natively)
+      - Compare consistency models
+      - Consider latency implications
+      - Evaluate cost vs performance
+      - Justify why preference matters
+
+      Per scoring-tree.yaml stage_2_weak:
+      "Personal preference without technical justification -> 1/5"
+
+# Summary of Corrections
+corrections_summary:
+  total_examples: 6
+
+  score_changes:
+    - example: 1
+      old: "25/100"
+      new: "20/100 (1/5)"
+      change: "-5%"
+
+    - example: 2
+      old: "50/100"
+      new: "0/100 (0/5)"
+      change: "-50%"
+
+    - example: 3
+      old: "50/100"
+      new: "20/100 (1/5)"
+      change: "-30%"
+
+    - example: 4
+      old: "75/100"
+      new: "60/100 (3/5)"
+      change: "-15%"
+
+    - example: 5
+      old: "25/100"
+      new: "0/100 (0/5)"
+      change: "-25%"
+
+    - example: 6
+      old: "50/100"
+      new: "20/100 (1/5)"
+      change: "-30%"
+
+  average_change: "-25.8%"
+
+  key_insights:
+    - "Dismissive/hostile answers were over-scored by 30-50%"
+    - "Personal preferences without justification were over-scored by 30%"
+    - "Question avoidance was over-scored by 30%"
+    - "Extreme brevity for architect level was slightly over-scored"
+    - "Reasonable but incomplete answers were slightly over-scored"
+
+  scoring_tree_effectiveness:
+    - "Stage 1 (disqualifiers) caught hostile language (example 2)"
+    - "Stage 2 (weak) caught question avoidance (examples 3, 5, 6)"
+    - "Stage 2 (weak) caught extreme brevity (example 1)"
+    - "Stage 4 (good) properly scored incomplete but correct (example 4)"
+
+# Implementation Notes
+implementation_notes:
+  for_agents:
+    - "Always consult scoring-tree.yaml before assigning score"
+    - "Apply stages in order - early matches override later stages"
+    - "Check experience level strictness - architect has very_high"
+    - "Compare answer against competency matrix must_know topics"
+    - "When uncertain between two scores, default to lower"
+    - "Remember: honest evaluation over artificial inflation"
+
+  for_developers:
+    - "These examples should be used for regression testing"
+    - "Any scoring system changes should be validated against these"
+    - "Consider adding these as unit tests if implementing automated scoring"

@@ -26,6 +26,9 @@ files:
   - name: interview-framework/evaluation-rubric.yaml
     description: Universal scoring criteria
 
+  - name: interview-framework/scoring-tree.yaml
+    description: Multi-stage decision tree for accurate answer evaluation
+
   - name: interview-framework/performance-metrics.yaml
     description: Performance tracking and classification
 

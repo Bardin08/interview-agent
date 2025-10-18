@@ -10,7 +10,7 @@
 
 ## 🎯 Executive Summary
 
-**Overall Performance:** {{overall_score}}% - {{assessment}}
+**Overall Performance:** {{overall_score}}/5 - {{assessment}}
 
 **Interview Readiness:** {{readiness_assessment}}
 
@@ -42,21 +42,21 @@ Performance Distribution:
 | Topic | Questions | Score | Level | Priority |
 |-------|-----------|-------|-------|----------|
 {{#each topic_performance}}
-| {{topic_name}} | {{question_count}} | {{score}}% | {{level}} | {{priority}} |
+| {{topic_name}} | {{question_count}} | {{score}}/5 | {{level}} | {{priority}} |
 {{/each}}
 
 ### Performance Chart
 
 ```
 {{#each topic_performance}}
-{{topic_name_padded}} {{progress_bar}} {{score}}%  {{indicator}}
+{{topic_name_padded}} {{progress_bar}} {{score}}/5  {{indicator}}
 {{/each}}
 ```
 
 **Legend:**
-- 🟢 Strong (≥80%) - Mastered
-- 🟡 Adequate (60-79%) - Competent
-- 🔴 Needs Work (<60%) - Requires Focus
+- 🟢 Strong (≥4.0/5) - Mastered
+- 🟡 Adequate (3.0-3.9/5) - Competent
+- 🔴 Needs Work (<3.0/5) - Requires Focus
 
 ---
 
@@ -65,7 +65,7 @@ Performance Distribution:
 You demonstrated solid understanding in these areas:
 
 {{#each strengths}}
-### {{number}}. {{topic_name}} - {{score}}%
+### {{number}}. {{topic_name}} - {{score}}/5
 
 **What You Did Well:**
 {{#each capabilities}}
@@ -94,7 +94,7 @@ These topics require focused attention:
 ### PRIORITY 1: Critical Gaps
 
 {{#each critical_gaps}}
-#### {{topic_name}} - {{score}}%
+#### {{topic_name}} - {{score}}/5
 
 **📍 Why This Matters:**
 {{importance}}
@@ -155,7 +155,7 @@ Complete breakdown of all questions asked:
 ---
 
 ### Q{{number}}: {{question_text}}
-**Topic:** {{topic}} | **Difficulty:** {{difficulty}} | **Score:** {{score}}%
+**Topic:** {{topic}} | **Difficulty:** {{difficulty}} | **Score:** {{score}}/5
 
 **Your Answer:**
 {{candidate_answer}}

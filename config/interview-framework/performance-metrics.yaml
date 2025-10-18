@@ -21,20 +21,20 @@ performance_metrics:
     - time_spent
 
   classification:
-    description: Universal scoring thresholds for all technologies
+    description: Universal scoring thresholds for all technologies (0-5 scale)
 
     mastered:
-      threshold: 85
+      threshold: 4.25
       label: Strong understanding, minimal gaps
       interpretation: Candidate consistently demonstrates deep knowledge. Answers show understanding of must_know and good_to_know topics from competency matrix.
 
     competent:
-      threshold: 70
+      threshold: 3.5
       label: Good foundation, minor improvements needed
       interpretation: Candidate understands must_know topics well. Some gaps in good_to_know areas from competency matrix.
 
     needs_improvement:
-      threshold: 50
+      threshold: 2.5
       label: Significant gaps, requires focused study
       interpretation: Candidate has partial knowledge of must_know topics from competency matrix. Needs targeted learning.
 
