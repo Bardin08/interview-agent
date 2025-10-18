@@ -1,0 +1,161 @@
+# File: config/experience-levels.yaml
+# Universal experience level definitions for technical interviews
+# Technologies can reference these levels and customize question counts/complexity ranges
+
+experience_levels:
+  fresher:
+    title: Entry Level / Intern
+    description: |
+      Fresh graduates or career switchers with basic programming knowledge.
+      Should understand fundamental concepts and syntax but not expected to have
+      deep architectural knowledge or extensive practical experience.
+
+    capabilities:
+      - Basic understanding of programming concepts
+      - Can write simple code with guidance
+      - Learning fundamental patterns and practices
+      - Limited production experience
+
+    question_count: 10-12  # Default, can be overridden per technology
+    hint_threshold: low
+    complexity_range: [basic, intermediate]
+
+  junior:
+    title: Junior Developer
+    description: |
+      Developers with some production experience. Should be comfortable with
+      day-to-day coding tasks, understand core principles, and can work with
+      guidance on more complex features.
+
+    capabilities:
+      - Comfortable with core language features
+      - Can implement features with supervision
+      - Understands fundamental design principles
+      - Growing production experience
+      - Learning to debug independently
+
+    question_count: 12-15
+    hint_threshold: low-medium
+    complexity_range: [basic, intermediate]
+
+  mid_level:
+    title: Mid-Level Developer
+    description: |
+      Independent contributors who can design and implement features end-to-end.
+      Should understand performance implications, design patterns, and best practices.
+      Can mentor junior developers.
+
+    capabilities:
+      - Independently designs and implements features
+      - Understands performance and security implications
+      - Applies design patterns appropriately
+      - Debugs complex issues
+      - Mentors junior team members
+      - Makes informed technical decisions
+
+    question_count: 15-18
+    hint_threshold: medium
+    complexity_range: [intermediate, advanced]
+
+  senior:
+    title: Senior Developer
+    description: |
+      Technical leaders who make architectural decisions, optimize system performance,
+      and establish best practices. Deep understanding of technology internals, design patterns,
+      and production considerations.
+
+    capabilities:
+      - Architects complex features and systems
+      - Deep understanding of technology internals
+      - Optimizes for performance and scalability
+      - Establishes team best practices
+      - Guides technical direction
+      - Solves complex production issues
+      - Provides technical mentorship
+
+    question_count: 18-22
+    hint_threshold: high
+    complexity_range: [advanced, expert]
+
+  architect:
+    title: Architect / Principal Engineer
+    description: |
+      System architects who design scalable, maintainable systems. Expert knowledge
+      across entire technology ecosystems. Can evaluate trade-offs, establish technical
+      direction, and solve complex cross-cutting concerns.
+
+    capabilities:
+      - Designs system-wide architecture
+      - Makes strategic technical decisions
+      - Evaluates technology choices for organization
+      - Solves cross-cutting concerns at scale
+      - Establishes engineering standards and culture
+      - Balances technical purity with business pragmatism
+      - Drives technical innovation
+
+    question_count: 20-25
+    hint_threshold: very_high
+    complexity_range: [advanced, expert]
+
+# Hint threshold definitions
+hint_thresholds:
+  low:
+    description: Candidate expected to need hints frequently
+    proactive_hints: true
+    hint_delay: immediate
+
+  low-medium:
+    description: Candidate may need occasional hints
+    proactive_hints: sometimes
+    hint_delay: after_brief_struggle
+
+  medium:
+    description: Candidate should manage with minimal hints
+    proactive_hints: false
+    hint_delay: after_struggle
+
+  high:
+    description: Candidate expected to need few hints
+    proactive_hints: false
+    hint_delay: after_significant_struggle
+
+  very_high:
+    description: Candidate should rarely need hints
+    proactive_hints: false
+    hint_delay: only_if_stuck
+
+# Complexity definitions
+complexity_levels:
+  basic:
+    description: Fundamental concepts, syntax, simple scenarios
+    characteristics:
+      - Direct recall of facts
+      - Simple code examples
+      - Basic use cases
+      - Minimal edge cases
+
+  intermediate:
+    description: Applied knowledge, common patterns, practical scenarios
+    characteristics:
+      - Understanding of "why" and "when"
+      - Comparison between options
+      - Real-world problem solving
+      - Common edge cases
+
+  advanced:
+    description: Deep understanding, optimization, complex scenarios
+    characteristics:
+      - Performance implications
+      - Design trade-offs
+      - Complex debugging
+      - Architecture decisions
+      - Uncommon edge cases
+
+  expert:
+    description: Mastery, internals, strategic decisions
+    characteristics:
+      - System-wide implications
+      - Technology internals
+      - Cross-cutting concerns
+      - Strategic technical direction
+      - Novel problem solving

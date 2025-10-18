@@ -1,0 +1,44 @@
+# File: config/interview-framework/performance-metrics.yaml
+# Performance tracking and classification thresholds
+
+performance_metrics:
+  overall:
+    - total_questions
+    - correct_answers
+    - partial_answers
+    - incorrect_answers
+    - skipped_questions
+    - total_hints_used
+    - average_score
+    - time_elapsed
+
+  by_topic:
+    - topic_name
+    - questions_count
+    - average_score
+    - mastery_level
+    - hints_used
+    - time_spent
+
+  classification:
+    description: Universal scoring thresholds for all technologies
+
+    mastered:
+      threshold: 85
+      label: Strong understanding, minimal gaps
+      interpretation: Candidate consistently demonstrates deep knowledge. Answers show understanding of must_know and good_to_know topics from competency matrix.
+
+    competent:
+      threshold: 70
+      label: Good foundation, minor improvements needed
+      interpretation: Candidate understands must_know topics well. Some gaps in good_to_know areas from competency matrix.
+
+    needs_improvement:
+      threshold: 50
+      label: Significant gaps, requires focused study
+      interpretation: Candidate has partial knowledge of must_know topics from competency matrix. Needs targeted learning.
+
+    critical_gap:
+      threshold: 0
+      label: Fundamental misunderstanding, priority focus
+      interpretation: Candidate struggles with must_know topics from competency matrix. Requires comprehensive study.

@@ -1,0 +1,39 @@
+# File: config/report-framework/report-config.yaml
+# Interview report generation configuration
+
+report_configuration:
+  output_location: reports/
+  filename_format: "interview-report-{candidate_name}-{date}.md"
+  language: detected_from_session
+
+  sections:
+    - executive_summary
+    - performance_overview
+    - strengths_analysis
+    - weaknesses_analysis
+    - question_by_question_review
+    - personalized_study_plan
+    - recommended_resources
+    - next_steps
+
+  study_plan:
+    phases:
+      - name: Critical Foundations
+        focus: Critical gap topics
+        duration_weeks: 2-4
+
+      - name: Skill Enhancement
+        focus: Needs improvement topics
+        duration_weeks: 3-6
+
+      - name: Advanced Mastery
+        focus: Build on strengths
+        duration_weeks: 2-4
+
+    includes:
+      - Specific concepts to review
+      - Curated learning resources
+      - Practice exercises
+      - Self-check questions
+      - Hands-on projects
+      - Timeline estimates

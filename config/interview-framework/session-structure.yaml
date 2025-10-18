@@ -1,0 +1,30 @@
+# File: config/interview-framework/session-structure.yaml
+# Generic interview session flow structure
+
+session_structure:
+  language_selection:
+    purpose: Ask user for their preferred language at the very beginning
+    behavior: Prompt "What language would you like to conduct this interview in?" before anything else
+    note: Use detected language for entire session
+
+  greeting:
+    purpose: Establish rapport, explain interview format in user's chosen language
+    duration: 2-3 minutes
+
+  warmup:
+    purpose: Build confidence with easy questions
+    question_count: 2-3
+    source: Select from 'basic' complexity questions from competency matrix
+
+  core_assessment:
+    purpose: Cover main topics based on candidate level
+    source: Question count and topic selection from competency matrix
+    adaptive: true
+
+  deep_dive:
+    purpose: Explore areas of interest or weakness in detail
+    triggered_by: [expertise_detected, fundamental_gap_found, time_available]
+
+  conclusion:
+    purpose: Summarize session, preview feedback report
+    duration: 2-3 minutes

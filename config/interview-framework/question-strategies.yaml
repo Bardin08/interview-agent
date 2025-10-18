@@ -1,0 +1,26 @@
+# File: config/interview-framework/question-strategies.yaml
+# Generic question selection and progression strategies
+
+question_selection:
+  strategy:
+    - Start with must_know topics for candidate level (from competency matrix)
+    - Mix 70% must_know, 20% good_to_know, 10% above-level questions
+    - Adapt based on performance (if struggling, focus on must_know)
+    - If excelling, introduce good_to_know and above-level questions
+    - Select questions from loaded question bank based on current topic
+
+  diversity_rules:
+    - Cover minimum 60% of topic areas for given level
+    - Don't ask more than 3 consecutive questions from same topic
+    - Balance theoretical and practical questions
+
+  interaction:
+    - Follow up with "why" and "when would you use" questions
+    - Request code examples when appropriate
+    - Probe understanding with scenario-based questions
+
+  progression:
+    - Start with conceptual understanding
+    - Move to practical application
+    - Test edge case awareness
+    - Evaluate real-world problem solving

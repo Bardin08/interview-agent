@@ -1,9 +1,3 @@
-# OpenAPI Schema for Interview Agent Custom GPT Actions
-# File: interview-agent/openapi-schema.yaml
-#
-# This schema enables dynamic loading of technology-specific content from GitHub
-# Copy this entire file into your Custom GPT's Actions configuration
-
 openapi: 3.1.0
 
 info:
@@ -33,6 +27,9 @@ paths:
         - Brief description
 
         Use this to show user available options or validate technology selection.
+      security:
+        - githubToken: []
+        - {}
       responses:
         '200':
           description: Successfully retrieved technologies list
@@ -89,6 +86,9 @@ paths:
       operationId: getTechnologyConfig
       summary: Load technology configuration
       description: Fetches technology configuration with topics, frameworks, resources, and experience levels for interview planning.
+      security:
+        - githubToken: []
+        - {}
       parameters:
         - name: tech
           in: path
@@ -96,14 +96,6 @@ paths:
           description: Technology identifier (from listTechnologies)
           schema:
             type: string
-            enum: [csharp, python, javascript, java, go, ruby, rust]
-          examples:
-            csharp:
-              value: csharp
-              summary: C# & .NET configuration
-            python:
-              value: python
-              summary: Python configuration
       responses:
         '200':
           description: Technology configuration in YAML format
@@ -140,18 +132,16 @@ paths:
       operationId: getTechnologyQuestions
       summary: Load technology question bank
       description: Fetches interview questions organized by topics with difficulty levels, key concepts, and answer points.
+      security:
+        - githubToken: []
+        - {}
       parameters:
         - name: tech
           in: path
           required: true
-          description: Technology identifier
+          description: Technology identifier (from listTechnologies)
           schema:
             type: string
-            enum: [csharp, python, javascript, java, go, ruby, rust]
-          examples:
-            csharp:
-              value: csharp
-              summary: C# interview questions
       responses:
         '200':
           description: Question bank in Markdown format
@@ -173,6 +163,35 @@ paths:
                 - Value types on stack, reference on heap
         '404':
           description: Technology question bank not found
+
+  /config/{filepath}:
+    get:
+      operationId: getConfigFile
+      summary: Load configuration file
+      description: |
+        Loads configuration files from the config directory.
+        Start with agent.yaml to get the dependency index,
+        then follow file references from the dependencies.config section.
+      security:
+        - githubToken: []
+        - {}
+      parameters:
+        - name: filepath
+          in: path
+          required: true
+          description: File path relative to config directory (e.g., 'experience-levels.yaml', 'interview-framework/hint-system.yaml')
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Configuration file content
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: YAML configuration content
+        '404':
+          description: Configuration file not found
 
 components:
   schemas:
@@ -211,20 +230,21 @@ components:
             type: string
 
   securitySchemes:
-  # Optional: Add GitHub token for higher rate limits (5000 req/hour vs 60)
-  # githubToken:
-  #   type: apiKey
-  #   in: header
-  #   name: Authorization
-  #   description: |
-  #     GitHub Personal Access Token for higher rate limits.
-  #     Format: "token YOUR_GITHUB_TOKEN"
-  #
-  #     Without token: 60 requests/hour
-  #     With token: 5,000 requests/hour
+    githubToken:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: |
+        GitHub Personal Access Token for higher rate limits.
+        Format: "Bearer YOUR_GITHUB_TOKEN"
 
-# No security required for public repositories
-security: []
+        Without token: 60 requests/hour
+        With token: 5,000 requests/hour
+
+# Security is optional but recommended for higher rate limits
+security:
+  - githubToken: []
+  - {}
 
 tags:
   - name: Technologies
