@@ -62,7 +62,7 @@ commands:
       technologies:
         type: string
         description: One or more technologies (comma-separated for multi-tech interviews)
-        source: "technologies.json -> technologies[].id"
+        source: "technologies/index.yaml -> technologies[].id"
         required: true
     behavior: |
       - Parse comma-separated technology list
@@ -99,7 +99,7 @@ commands:
   - name: technologies
     description: List all available technologies for interviews
     usage: "*technologies"
-    behavior: Displays supported technologies from registry
+    behavior: Displays supported technologies from technologies/index.yaml
 
   - name: topics
     description: Show list of available topic clusters for selected technology(ies)
@@ -140,100 +140,27 @@ commands:
 
 dependencies:
   config:
-    - name: Experience Levels
-      location: config/experience-levels.yaml
-      description: Universal experience level definitions and capabilities
+    index: config/index.yaml
+    description: All configuration files - use index for navigation
 
-    - name: Core Principles
-      location: config/core-principles.yaml
-      description: Fundamental interviewing principles and philosophy
-
-    - name: Session Structure
-      location: config/interview-framework/session-structure.yaml
-      description: Generic interview session flow
-
-    - name: Question Strategies
-      location: config/interview-framework/question-strategies.yaml
-      description: Question selection and progression rules
-
-    - name: Hint System
-      location: config/interview-framework/hint-system.yaml
-      description: Progressive 5-level hint framework
-
-    - name: Difficulty Adaptation
-      location: config/interview-framework/difficulty-adaptation.yaml
-      description: Adaptive difficulty adjustment logic
-
-    - name: Evaluation Rubric
-      location: config/interview-framework/evaluation-rubric.yaml
-      description: Universal scoring criteria
-
-    - name: Performance Metrics
-      location: config/interview-framework/performance-metrics.yaml
-      description: Performance tracking and classification
-
-    - name: Report Configuration
-      location: config/report-framework/report-config.yaml
-      description: Report generation settings
-
-  data:
-    - name: Technology Registry
-      description: Index of all supported technologies
-      location: technologies.json
-      required: true
-      note: Source of truth for available technologies
-
-    - name: Technology Configurations
-      description: Technology-specific config
-      location: technologies/{technology_id}/config.yaml
-      required: true
-      note: Loaded dynamically based on selected technology
-
-    - name: Competency Matrix
-      description: Experience level definitions and topic expectations per technology
-      location: technologies/{technology_id}/competency-matrix.yaml
-      required: true
-      note: Defines must_know, good_to_know, evaluation criteria, and scoring rules
-
-    - name: Question Banks
-      description: Technology-specific interview questions
-      location: technologies/{technology_id}/questions.md
-      required: true
-      note: Clustered by topic, linked to competency matrix expectations
+  technologies:
+    index: technologies/index.yaml
+    description: All supported technologies and their configurations
+    structure: |
+      technologies/
+        index.yaml - Registry of all technologies
+        {technology_id}/
+          config.yaml - Technology-specific configuration
+          competency-matrix.yaml - Level definitions and topic expectations
+          questions.md - Interview questions clustered by topic
 
   tasks:
-    - name: conduct-interview.md
-      description: Main interview workflow
-      location: tasks/conduct-interview.md
-      interactive: true
-
-    - name: generate-interview-report.md
-      description: Comprehensive report generation
-      location: tasks/generate-interview-report.md
-      output_file: true
-
-    - name: analyze-performance.md
-      description: Real-time performance analysis
-      location: tasks/analyze-performance.md
-      interactive: true
-
-    - name: provide-hint.md
-      description: Hint system logic
-      location: tasks/provide-hint.md
-      interactive: true
+    index: tasks/index.yaml
+    description: All task files - use index for navigation
 
   templates:
-    - name: interview-session-tmpl.yaml
-      description: Session state tracking template
-      location: templates/interview-session-tmpl.yaml
-
-    - name: interview-report-tmpl.md
-      description: Report output template
-      location: templates/interview-report-tmpl.md
-
-    - name: performance-analysis-tmpl.yaml
-      description: Performance metrics template
-      location: templates/performance-analysis-tmpl.yaml
+    index: templates/index.yaml
+    description: All template files - use index for navigation
 
 session_tracking:
   state_file: .session-state.yaml
@@ -267,7 +194,7 @@ report_configuration_ref: config/report-framework/report-config.yaml
 activation_instructions:
   steps:
     - Read this complete YAML configuration
-    - Load technologies.json to understand available technologies
+    - Load technologies/index.yaml to understand available technologies
     - Adopt persona defined above
     - Initialize session tracking system
     - Ask user "What language would you like to conduct this interview in?"

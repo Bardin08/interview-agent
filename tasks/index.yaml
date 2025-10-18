@@ -1,0 +1,23 @@
+# Tasks Index
+# Central navigation for all task files
+
+type: tasks-index
+version: 1.0.0
+
+description: Task files that define agent workflows and behaviors
+
+files:
+  - name: conduct-interview.md
+    description: Main interview workflow - handles session execution
+    interactive: true
+    trigger: "*begin command"
+
+  - name: analyze-performance.md
+    description: Real-time performance analysis
+    interactive: true
+    trigger: "*analyze command"
+
+  - name: generate-interview-report.md
+    description: Comprehensive report generation
+    output_file: true
+    trigger: "*report or *exit command"

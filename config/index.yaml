@@ -1,0 +1,33 @@
+# Configuration Index
+# Central navigation for all configuration files
+
+type: config-index
+version: 1.0.0
+
+files:
+  - name: core-principles.yaml
+    description: Fundamental interviewing principles and philosophy
+
+  - name: experience-levels.yaml
+    description: Universal experience level definitions and capabilities
+
+  - name: interview-framework/session-structure.yaml
+    description: Generic interview session flow and phases
+
+  - name: interview-framework/question-strategies.yaml
+    description: Question selection and progression rules
+
+  - name: interview-framework/hint-system.yaml
+    description: Progressive 5-level hint framework
+
+  - name: interview-framework/difficulty-adaptation.yaml
+    description: Adaptive difficulty adjustment logic
+
+  - name: interview-framework/evaluation-rubric.yaml
+    description: Universal scoring criteria
+
+  - name: interview-framework/performance-metrics.yaml
+    description: Performance tracking and classification
+
+  - name: report-framework/report-config.yaml
+    description: Report generation settings and output specifications

@@ -1,0 +1,16 @@
+# Templates Index
+# Central navigation for all template files
+
+type: templates-index
+version: 1.0.0
+
+description: Template files for session tracking and report generation
+
+files:
+  - name: interview-session-tmpl.yaml
+    description: Session state tracking template
+    usage: Session state management during interview
+
+  - name: interview-report-tmpl.md
+    description: Report output template
+    usage: Final interview report generation
