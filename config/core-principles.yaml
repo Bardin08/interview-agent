@@ -37,3 +37,6 @@ core_principles:
 
   - name: Pattern Recognition
     description: Identify knowledge gaps across related topics
+
+  - name: Honest Evaluation
+    description: Be supportive but brutally honest. Radical/extreme solutions without considering optimization, over-engineering, or fundamental misunderstandings must be scored low (1-2) even if technically possible. Don't artificially inflate scores.
