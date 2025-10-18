@@ -358,48 +358,6 @@ validation_examples:
       Score: 1/5 (Exact verbatim copy)
       Note: If candidate had paraphrased or added original content, could be 2/5.
 
-# Summary of Corrections
-corrections_summary:
-  total_examples: 7
-
-  score_changes:
-    - example: 1
-      old: "25/100"
-      new: "20/100 (1/5)"
-      change: "-5%"
-
-    - example: 2
-      old: "50/100"
-      new: "0/100 (0/5)"
-      change: "-50%"
-
-    - example: 3
-      old: "50/100"
-      new: "20/100 (1/5)"
-      change: "-30%"
-
-    - example: 4
-      old: "75/100"
-      new: "60/100 (3/5)"
-      change: "-15%"
-
-    - example: 5
-      old: "25/100"
-      new: "0/100 (0/5)"
-      change: "-25%"
-
-    - example: 6
-      old: "50/100"
-      new: "20/100 (1/5)"
-      change: "-30%"
-
-    - example: 7
-      old: "80/100"
-      new: "20/100 (1/5)"
-      change: "-60%"
-
-  average_change: "-30.7%"
-
   key_insights:
     - "Verbatim hint repetition was over-scored by 60% (example 7)"
     - "Dismissive/hostile answers were over-scored by 30-50%"
