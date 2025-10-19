@@ -1,0 +1,82 @@
+# File: interview-agent/technologies/csharp/questions/index.yaml
+# Central index for C# & .NET question bank
+
+metadata:
+  technology: C# & .NET
+  technology_id: csharp
+  version: 1.0.0
+  question_format: markdown
+  total_topics: 11
+  last_updated: 2025-10-19
+
+# Topic definitions aligned with competency-matrix.yaml
+topics:
+  - id: csharp-fundamentals
+    name: C# Language Fundamentals
+    file: csharp-fundamentals.md
+    description: Core C# language syntax, data types, operators, and basic constructs
+    estimated_questions: 10
+    weight: 1.2
+
+  - id: oop
+    name: Object-Oriented Programming
+    file: oop.md
+    description: OOP principles, inheritance, polymorphism, interfaces, and design patterns
+    estimated_questions: 9
+    weight: 1.3
+
+  - id: memory-management
+    name: Memory Management & Performance
+    file: memory-management.md
+    description: Memory allocation, garbage collection, performance optimization
+    estimated_questions: 9
+    weight: 1.1
+
+  - id: collections
+    name: Collections & Data Structures
+    file: collections.md
+    description: Built-in collections, generics, data structure selection, and LINQ
+    estimated_questions: 5
+    weight: 1.1
+
+  - id: threading-concurrency
+    name: Threading & Concurrency
+    file: threading-concurrency.md
+    description: Multithreading, async/await, synchronization, parallel programming
+    estimated_questions: 4
+    weight: 1.2
+
+  - id: dotnet-framework-clr
+    name: .NET Framework & CLR
+    file: dotnet-framework-clr.md
+    description: .NET runtime, CLR, assemblies, reflection, app domains
+    estimated_questions: 11
+    weight: 1.0
+
+  - id: aspnet-web
+    name: ASP.NET & Web Development
+    file: aspnet-web.md
+    description: ASP.NET Framework (MVC, Web API), HTTP fundamentals
+    estimated_questions: 13
+    weight: 0.9
+
+  - id: aspnet-core
+    name: ASP.NET Core
+    file: aspnet-core.md
+    description: ASP.NET Core framework, middleware, dependency injection, Web API
+    estimated_questions: 7
+    weight: 1.3
+
+  - id: data-access
+    name: Data Access
+    file: data-access.md
+    description: ADO.NET, Entity Framework, Entity Framework Core, Dapper
+    estimated_questions: 2
+    weight: 1.1
+
+  - id: advanced-topics
+    name: Advanced Topics
+    file: advanced-topics.md
+    description: LINQ, delegates, events, generics, reflection, metaprogramming
+    estimated_questions: 20
+    weight: 1.0

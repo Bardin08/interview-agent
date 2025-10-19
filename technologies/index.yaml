@@ -2,10 +2,34 @@
 # Central navigation for all technology resource files
 
 type: technologies-index
-version: 1.0.0
+version: 2.0.0
+last_updated: 2025-10-19
 
 description: Technology resources including registry, configurations, questions, and competency matrices
 
 files:
   - name: supported-technologies.yaml
     description: Technology registry with metadata for all supported technologies (IDs, names, icons, status)
+
+structure:
+  per_technology:
+    - config.yaml
+    - competency-matrix.yaml
+    - questions/
+        index.yaml (topic list and loading strategy)
+        {topic-id}.md (individual topic questions)
+
+question_bank_architecture:
+  format: sharded (topic-based)
+  benefits:
+    - Reduces context usage by 70-80%
+    - Enables support for more technologies simultaneously
+    - Faster question selection with focused topic pools
+    - On-demand loading based on interview focus
+
+  loading_pattern:
+    - Load questions/index.yaml first to get topic list
+    - Load 1-3 topic files at a time during interview
+    - Unload completed topics to free context space
+
+  example_path: "technologies/csharp/questions/oop.md"

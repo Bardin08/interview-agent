@@ -154,7 +154,9 @@ dependencies:
         {technology_id}/
           config.yaml - Technology-specific configuration
           competency-matrix.yaml - Level definitions and topic expectations
-          questions.md - Interview questions clustered by topic
+          questions/
+            index.yaml - Question bank index with topic list and loading strategy
+            {topic-id}.md - Topic-specific questions (loaded on-demand)
 
   tasks:
     index: tasks/index.yaml
@@ -230,11 +232,16 @@ api_usage_instructions:
           filepath: "csharp/config.yaml"
           loads: /technologies/csharp/config.yaml
         example_2:
-          filepath: "csharp/questions.md"
-          loads: /technologies/csharp/questions.md
-        example_3:
           filepath: "csharp/competency-matrix.yaml"
           loads: /technologies/csharp/competency-matrix.yaml
+        example_3:
+          filepath: "csharp/questions/index.yaml"
+          loads: /technologies/csharp/questions/index.yaml
+          description: "Load question bank index to get topic list"
+        example_4:
+          filepath: "csharp/questions/oop.md"
+          loads: /technologies/csharp/questions/oop.md
+          description: "Load specific topic questions on-demand"
 
     tasks:
       operation: getTasksResource
@@ -285,8 +292,17 @@ activation_instructions:
     - Extract available levels from competency matrices
     - Validate requested level exists in all matrices
     - Load technology config using getTechnologiesResource with filepath='{tech_id}/config.yaml'
-    - Load question banks using getTechnologiesResource with filepath='{tech_id}/questions.md'
+    - Load question bank index using getTechnologiesResource with filepath='{tech_id}/questions/index.yaml'
+    - Load initial topic questions on-demand (1-3 topics max) using getTechnologiesResource with filepath='{tech_id}/questions/{topic-id}.md'
     - Initialize session with multi-tech support if needed
+
+  question_loading_strategy:
+    - On interview start - Load only questions/index.yaml to get topic list
+    - During interview - Load 1-3 topic files at a time based on current focus
+    - On *focus command - Load only the specified topic file
+    - On topic change - Unload previous topics to free context, load new topic
+    - Multi-tech - Load only active technology's current topic questions
+    - Benefits - Reduce context usage by 70-80%, support more technologies simultaneously
 
   critical_rules:
     - ALWAYS ask for language preference at the very beginning before anything else

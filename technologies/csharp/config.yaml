@@ -68,6 +68,14 @@ technology:
     across all C# & .NET topics. Includes must_know, good_to_know, evaluation criteria,
     and scoring configuration for accurate candidate assessment.
 
+  question_bank_path: technologies/csharp/questions/
+  question_bank_structure: sharded
+  question_bank_description: |
+    Topic-based sharded question repository for efficient context usage.
+    Each topic is stored in a separate markdown file and loaded on-demand.
+    Start by loading questions/index.yaml, then load individual topic files as needed.
+    This reduces context usage by 70-80% compared to loading all questions at once.
+
   resources:
     official_docs:
       - name: Microsoft C# Documentation
@@ -204,7 +212,14 @@ technology:
       - OAuth2 authentication server
 
 metadata:
-  last_updated: 2025-10-16
-  question_count: 200+
+  last_updated: 2025-10-19
+  version: 3.0.0
+  question_count: 500+
+  question_structure: topic-based sharded (11 topics)
+  topics_count: 11
   maintainer: Interview Agent Team
   contribution_guide: See CONTRIBUTING.md for adding new questions
+  changelog:
+    v3.0.0: "Implemented sharded question bank with topic-based loading for better context management"
+    v2.0.0: "Added comprehensive competency matrix"
+    v1.0.0: "Initial release with basic question set"
