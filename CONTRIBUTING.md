@@ -1,10 +1,11 @@
 # Contributing to Interview Agent
 
-Thank you for your interest in contributing to Interview Agent! This guide will help you add new technologies, improve existing content, or enhance the agent's capabilities.
+Thank you for your interest in contributing! This guide will help you add new technologies, improve existing content, or enhance the agent's capabilities.
 
 ## Table of Contents
 
 - [Ways to Contribute](#ways-to-contribute)
+- [Project Structure](#project-structure)
 - [Adding a New Technology](#adding-a-new-technology)
 - [Improving Existing Technologies](#improving-existing-technologies)
 - [Contribution Workflow](#contribution-workflow)
@@ -17,22 +18,55 @@ Thank you for your interest in contributing to Interview Agent! This guide will 
 - ✅ Add more questions to existing technologies
 - ✅ Improve technology configurations and resources
 - ✅ Fix typos or improve documentation
-- ✅ Suggest new features or improvements
-- ✅ Report bugs or issues
+- ✅ Report bugs or suggest features
+
+## Project Structure
+
+```
+interview-agent/
+├── agent.yaml                          # Main agent configuration
+├── technologies/
+│   ├── index.yaml                      # Technology architecture metadata
+│   ├── supported-technologies.yaml     # Technology registry
+│   └── {tech-id}/
+│       ├── config.yaml                 # Technology metadata & resources
+│       ├── competency-matrix.yaml      # Skills assessment framework
+│       └── questions/
+│           ├── index.yaml              # Topic index with weights
+│           └── {topic-id}.md           # Questions per topic
+├── tasks/                              # Interview workflows
+│   ├── conduct-interview.md
+│   ├── generate-interview-report.md
+│   └── analyze-performance.md
+├── templates/                          # Report & session templates
+├── config/                             # Framework configurations
+└── openapi-schema.yaml                 # API schema for integrations
+```
+
+### Key Architecture Features
+
+**Sharded Question Bank** - Questions are split by topic to reduce context usage by 70-80%:
+- `questions/index.yaml` - Topic list with metadata
+- `questions/{topic-id}.md` - Individual topic files
+- Topics loaded on-demand during interviews
+
+**Technology Registry** - All technologies listed in `technologies/supported-technologies.yaml` with:
+- ID, name, icon, status (active/coming_soon)
+- Topic list and question count
+- Experience levels supported
 
 ## Adding a New Technology
 
-### 1. Check Available Technologies
-
-First, check `technologies.json` to see if your technology is already listed as "coming_soon".
-
-### 2. Create Technology Directory Structure
+### Step 1: Create Directory Structure
 
 ```bash
 technologies/
 └── {tech-id}/
-    ├── config.yaml       # Technology configuration
-    └── questions.md      # Interview questions
+    ├── config.yaml
+    ├── competency-matrix.yaml
+    └── questions/
+        ├── index.yaml
+        └── {topic-id}.md  (one per topic)
 ```
 
 **Technology ID naming convention:**
@@ -40,212 +74,258 @@ technologies/
 - Use hyphens for multi-word names
 - Examples: `csharp`, `python`, `frontend-react`, `backend-java`
 
-### 3. Create `config.yaml`
+### Step 2: Create `config.yaml`
 
-Use `technologies/csharp/config.yaml` as a template. Your config should include:
+Use `technologies/csharp/config.yaml` as reference:
 
 ```yaml
 technology:
   id: your-tech-id
   name: "Technology Display Name"
-  icon: "🔷"  # Pick an appropriate emoji
-  description: Brief technology description
+  icon: "🔷"
+  version: 1.0.0
 
-topics:
-  - Topic Category 1
-  - Topic Category 2
-  # 8-12 topics recommended
+  description: |
+    Brief technology description and scope
 
-frameworks:
-  - name: Framework Name
-    description: Brief description
-    versions: [version1, version2]
+  topics:
+    - Topic Name 1
+    - Topic Name 2
+    # 8-12 topics recommended
 
-resources:
-  official_docs:
-    - name: Resource Name
-      url: https://example.com
-      description: Why this resource is valuable
+  frameworks:
+    - name: Framework Name
+      versions: [version1, version2]
 
-  books:
-    - title: Book Title
-      author: Author Name
-      level: beginner|intermediate|advanced
-      url: https://example.com
+  key_concepts:
+    category1:
+      - Concept 1
+      - Concept 2
 
-  courses:
-    - name: Course Name
-      platform: Platform Name
-      url: https://example.com
-      level: beginner|intermediate|advanced
+  # Path to competency matrix file
+  competency_matrix_path: technologies/your-tech-id/competency-matrix.yaml
+  competency_matrix_description: |
+    Competency matrix defining expectations for each experience level.
+    Includes must_know, good_to_know, evaluation criteria, and scoring.
 
-  practice:
-    - name: Practice Platform
-      url: https://example.com
-      description: What to practice
+  # Path to question bank
+  question_bank_path: technologies/your-tech-id/questions/
+  question_bank_structure: sharded
+  question_bank_description: |
+    Topic-based sharded question repository for efficient context usage.
+    Each topic is stored in a separate markdown file and loaded on-demand.
+    Start by loading questions/index.yaml, then load individual topic files as needed.
 
-common_pitfalls:
-  - pitfall: Common mistake
-    solution: How to avoid it
+  # Resources section
+  resources:
+    official_docs:
+      - name: Documentation Name
+        url: https://example.com
+        focus: What it covers
 
-project_ideas:
-  - name: Project Name
-    description: What to build
-    topics_covered: [Topic 1, Topic 2]
-    difficulty: beginner|intermediate|advanced
+    books:
+      - title: Book Title
+        author: Author Name
+        level: [beginner, intermediate, advanced]
+        focus: Key topics covered
 
-experience_levels:
-  fresher:
-    years: 0-1
-    question_count: 10-12
-    focus_topics: [Topic 1, Topic 2]
+    online_courses:
+      - platform: Platform Name
+        courses:
+          - Course Name 1
+          - Course Name 2
 
-  junior:
-    years: 1-2
-    question_count: 12-15
-    focus_topics: [Topic 1, Topic 2, Topic 3]
+    practice_platforms:
+      - name: Platform Name
+        url: https://example.com
+        focus: What to practice
 
-  mid-level:
-    years: 2-5
-    question_count: 15-18
-    focus_topics: [Topic 3, Topic 4, Topic 5]
+    communities:
+      - name: Community Name
+        url: https://example.com
+        type: Q&A|Community|Chat|Official
 
-  senior:
-    years: 5+
-    question_count: 18-22
-    focus_topics: [Topic 5, Topic 6, Advanced Topics]
+  # Common mistakes and solutions
+  common_pitfalls:
+    - topic: Topic Name
+      issue: What the common mistake is
+      impact: Why it matters
 
-  architect:
-    years: 7+
-    question_count: 20-25
-    focus_topics: [System Design, Best Practices, Architecture]
+  # Interview preparation tips
+  interview_tips:
+    preparation:
+      - Tip 1
+      - Tip 2
+
+    during_interview:
+      - Tip 1
+      - Tip 2
+
+    common_questions_to_prepare:
+      - Question topic 1
+      - Question topic 2
+
+  # Project suggestions by difficulty
+  project_ideas:
+    beginner:
+      - Project idea 1
+      - Project idea 2
+
+    intermediate:
+      - Project idea 1
+      - Project idea 2
+
+    advanced:
+      - Project idea 1
+      - Project idea 2
+
+# Metadata section
+metadata:
+  last_updated: 2025-10-19
+  version: 1.0.0
+  question_count: 150+
+  question_structure: topic-based sharded (10 topics)
+  topics_count: 10
+  maintainer: Your Name or Team
+  contribution_guide: See CONTRIBUTING.md for adding new questions
 ```
 
-### 4. Create `questions.md`
+### Step 3: Create `competency-matrix.yaml`
 
-Organize questions by topics defined in your config:
+Define skill progression across experience levels. See `technologies/csharp/competency-matrix.yaml` for reference.
+
+### Step 4: Create `questions/index.yaml`
+
+```yaml
+metadata:
+  technology: Technology Name
+  technology_id: your-tech-id
+  version: 1.0.0
+  question_format: markdown
+  total_topics: 10
+  last_updated: 2025-10-19
+
+topics:
+  - id: topic-id
+    name: Topic Display Name
+    file: topic-id.md
+    description: Topic scope
+    estimated_questions: 15
+    weight: 1.2  # Importance multiplier (0.8-1.5)
+```
+
+**Weight Guidelines:**
+- `1.3-1.5` - Critical topics (fundamental concepts, core skills)
+- `1.0-1.2` - Important topics (commonly used features)
+- `0.8-0.9` - Supplementary topics (less common but useful)
+
+### Step 5: Create Question Files
+
+Create `questions/{topic-id}.md` for each topic:
 
 ```markdown
-# {Technology Name} Interview Questions
+# Topic Name
+<!-- File: interview-agent/technologies/{tech-id}/questions/{topic-id}.md -->
 
-## Topic Category 1
+## Topic Overview
+Brief description of topic scope.
 
-### Question Title?
-
-**Difficulty:** Beginner|Intermediate|Advanced
-**Experience Level:** Fresher|Junior|Mid-Level|Senior|Architect
-
-**Key Points to Cover:**
-- Important concept 1
-- Important concept 2
-- Important concept 3
-
-**Expected Answer:**
-Detailed explanation of what a good answer should include...
-
-**Common Mistakes:**
-- Mistake candidates often make
-- Another common mistake
-
-**Follow-up Questions:**
-- Related question 1?
-- Related question 2?
+**Weight**: 1.2 (Importance level)
 
 ---
 
-### Next Question?
+## Questions
 
-[Repeat format...]
+### Question Title?
+Concise answer covering key points.
 
-## Topic Category 2
+### More Complex Question?
+**Key Points:**
+- Point 1
+- Point 2
 
-[More questions...]
+**Common Mistakes:**
+- Mistake to avoid
+
+**When to Use:**
+- Use case scenario
+
+---
 ```
 
 **Question Guidelines:**
-- Aim for 150-250 questions total
-- Distribute across all experience levels
-- Include a mix of theoretical and practical questions
-- Add real-world scenarios and code examples where applicable
-- Mark difficulty and target experience level clearly
+- Keep answers concise but complete
+- Focus on practical knowledge
+- Include common mistakes where relevant
+- Use bullet points for clarity
+- 10-20 questions per topic file
+- Mix difficulty levels within topics
 
-### 5. Update `technologies.json`
+### Step 6: Update Technology Registry
 
-Add your technology to the registry:
+Add your technology to `technologies/supported-technologies.yaml`:
 
-```json
-{
-  "id": "your-tech-id",
-  "name": "Technology Name",
-  "icon": "🔷",
-  "status": "active",
-  "description": "Brief technology description",
-  "topics": [
-    "Topic 1",
-    "Topic 2"
-  ],
-  "experience_levels": [
-    "fresher",
-    "junior",
-    "mid-level",
-    "senior",
-    "architect"
-  ],
-  "question_count": 200
-}
+```yaml
+technologies:
+  - id: your-tech-id
+    name: "Technology Name"
+    icon: "🔷"
+    status: active
+    description: Brief description
+    topics:
+      - Topic 1
+      - Topic 2
+    experience_levels:
+      - fresher
+      - junior
+      - mid-level
+      - senior
+      - architect
+    question_count: 150
 ```
 
 Update metadata:
-```json
-"metadata": {
-  "last_updated": "2025-10-17",
-  "total_technologies": 6,
-  "active_technologies": 2,
-  "total_questions": 400
-}
-```
-
-### 6. Update OpenAPI Schema (Optional)
-
-If your technology ID differs from standard patterns, add it to the enum in `openapi-schema.yaml`:
-
 ```yaml
-schema:
-  type: string
-  enum: [csharp, python, javascript, your-tech-id]
+metadata:
+  last_updated: "2025-10-19"
+  total_technologies: 4  # Increment
+  active_technologies: 2  # Increment if active
+  total_questions: 350    # Add your question count
 ```
 
 ## Improving Existing Technologies
 
 ### Adding Questions
 
-1. Follow the existing question format
-2. Ensure questions align with the topic they're under
-3. Set appropriate difficulty and experience levels
-4. Update question count in `technologies.json`
+1. Identify the appropriate topic file in `questions/`
+2. Follow existing format and style
+3. Keep answers concise and practical
+4. Update `estimated_questions` in `questions/index.yaml`
+5. Update `question_count` in `supported-technologies.yaml`
 
 ### Improving Resources
 
-1. Add valuable learning resources to `config.yaml`
-2. Include official documentation, practical courses, or hands-on platforms
-3. Provide brief descriptions of why each resource is valuable
+1. Add valuable resources to `config.yaml`
+2. Include official docs, quality courses, practice platforms
+3. Provide brief descriptions of value
+4. Keep URLs current and accessible
 
-### Updating Configuration
+### Updating Competency Matrix
 
-1. Keep topics focused and well-organized (8-12 topics ideal)
-2. Update framework versions as needed
-3. Add relevant project ideas
+1. Edit `competency-matrix.yaml`
+2. Ensure progression across experience levels makes sense
+3. Align with current industry standards
 
 ## Contribution Workflow
 
-### 1. Fork the Repository
+### 1. Fork & Clone
 
 ```bash
-git clone https://github.com/bardin08/interview-agent.git
+git clone https://github.com/YOUR-USERNAME/interview-agent.git
 cd interview-agent
 ```
 
-### 2. Create a Feature Branch
+### 2. Create Feature Branch
 
 ```bash
 git checkout -b add-python-technology
@@ -253,136 +333,131 @@ git checkout -b add-python-technology
 git checkout -b improve-csharp-questions
 ```
 
-### 3. Make Your Changes
+### 3. Make Changes
 
-- Follow the standards outlined in this guide
-- Use existing technologies as references
+- Follow structure outlined above
+- Use existing technologies as reference (see `technologies/csharp/`)
 - Keep formatting consistent
 
 ### 4. Test Your Changes
 
-See [Testing Your Changes](#testing-your-changes) section below.
+See [Testing Your Changes](#testing-your-changes) below.
 
-### 5. Commit Your Changes
+### 5. Commit
 
 ```bash
 git add .
 git commit -m "feat: add Python technology support"
 # or
-git commit -m "feat: add 50 advanced C# questions"
+git commit -m "feat: add 30 advanced C# OOP questions"
 # or
-git commit -m "docs: improve contributing guidelines"
+git commit -m "docs: update contributing guide"
 ```
 
-**Commit message format:**
+**Commit Prefixes:**
 - `feat:` - New feature or technology
 - `fix:` - Bug fix
-- `docs:` - Documentation changes
+- `docs:` - Documentation only
 - `refactor:` - Code refactoring
 - `test:` - Testing improvements
 
-### 6. Push and Create Pull Request
+### 6. Push & Create PR
 
 ```bash
 git push origin add-python-technology
 ```
 
-Then create a pull request on GitHub with:
-- Clear title describing your contribution
-- Description of what you added/changed
-- Any testing you performed
+Create pull request with:
+- Clear title
+- Description of changes
+- Reference to any issues
+- Testing performed
 
 ## Content Standards
 
 ### Quality Guidelines
 
 ✅ **DO:**
-- Write clear, concise questions
-- Provide comprehensive expected answers
-- Include practical, real-world scenarios
-- Cite authoritative sources for resources
-- Keep formatting consistent
+- Write clear, concise questions and answers
+- Provide practical, real-world examples
 - Use proper grammar and spelling
+- Keep formatting consistent
+- Cite authoritative sources
+- Test YAML syntax validity
 
 ❌ **DON'T:**
-- Copy questions from other sources without attribution
+- Copy content without attribution
 - Add overly trivial or "gotcha" questions
-- Include outdated framework versions
-- Use offensive or inappropriate content
-- Add broken or spam resource links
+- Include outdated information
+- Use broken or spam links
+- Leave incomplete configurations
 
-### YAML Formatting
+### File Formatting
 
-- Use 2 spaces for indentation
-- Keep line length reasonable (< 120 characters)
-- Use consistent key ordering
-- Add comments for complex sections
+**YAML Files:**
+- 2 spaces for indentation
+- No tabs
+- Consistent key ordering
+- Comments for complex sections
 
-### Markdown Formatting
-
-- Use ATX-style headers (`#`, `##`, `###`)
-- Include blank lines between sections
-- Use code blocks with language specification
-- Keep bullet lists consistent
+**Markdown Files:**
+- ATX-style headers (`#`, `##`, `###`)
+- Blank lines between sections
+- Code blocks with language tags
+- Consistent bullet list style
 
 ## Testing Your Changes
 
-### 1. Validate YAML Files
+### 1. Validate YAML Syntax
 
 ```bash
-# If you have Python/PyYAML installed
+# Python with PyYAML
 python3 -c "import yaml; yaml.safe_load(open('technologies/your-tech/config.yaml'))"
 
-# Or use online YAML validators
+# Or use online validators like yamllint.com
 ```
 
-### 2. Validate JSON Files
+### 2. Check File Structure
 
 ```bash
-# Use jq if available
-jq empty technologies.json
-
-# Or use online JSON validators
+# Verify all referenced files exist
+ls technologies/your-tech/questions/index.yaml
+ls technologies/your-tech/questions/*.md
 ```
 
-### 3. Check OpenAPI Schema
+### 3. Verify Question Counts
 
-Use the ChatGPT Custom GPT Actions editor to validate the schema:
-1. Copy `openapi-schema.yaml` content
-2. Paste into ChatGPT Actions schema editor
-3. Click "Format" to check for errors
+Ensure `estimated_questions` in `questions/index.yaml` matches actual questions in topic files.
 
-### 4. Test with Custom GPT
+### 4. Test with Custom GPT (Optional)
 
-1. Update your fork on GitHub
-2. Update the server URL in `openapi-schema.yaml` to point to your fork
-3. Configure a test Custom GPT with your schema
-4. Test the interview flow with your new technology
+1. Fork repository and push changes
+2. Update `openapi-schema.yaml` server URL to your fork
+3. Configure test Custom GPT
+4. Test interview flow with new technology
 
 ### 5. Verify Links
 
-- Check that all resource URLs are accessible
+- Check all resource URLs are accessible
 - Ensure documentation links are current
-- Verify course/book links are valid
+- Test course/book links
 
 ## Review Process
 
-Once you submit a pull request:
-
 1. **Automated Checks** - Basic validation runs automatically
 2. **Content Review** - Maintainers review quality and accuracy
-3. **Feedback** - You may receive requests for changes
-4. **Approval** - Once approved, your contribution will be merged!
+3. **Feedback** - You may receive change requests
+4. **Approval** - Contribution merged once approved
 
 ## Questions or Issues?
 
-- **Questions:** Open a [GitHub Discussion](https://github.com/bardin08/interview-agent/discussions)
-- **Bugs:** Open a [GitHub Issue](https://github.com/bardin08/interview-agent/issues)
-- **Ideas:** Open a [Feature Request](https://github.com/bardin08/interview-agent/issues/new)
+- **Questions:** [GitHub Discussions](https://github.com/bardin08/interview-agent/discussions)
+- **Bugs:** [GitHub Issues](https://github.com/bardin08/interview-agent/issues)
+- **Ideas:** [Feature Requests](https://github.com/Bardin08/interview-agent/issues)
 
 ## Recognition
 
-All contributors will be recognized in the repository. Thank you for helping make Interview Agent better!
+All contributors are recognized in the repository. Thank you for helping improve Interview Agent!
 
 ## License
 
